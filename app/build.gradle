@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion compile_sdk_version
+    defaultConfig {
+        applicationId application_id
+        minSdkVersion 19
+        targetSdkVersion target_sdk_version
+        versionCode version_code
+        versionName version_name
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // android
+    implementation "com.android.support:appcompat-v7:${v7}"
+    implementation "com.android.support:recyclerview-v7:${v7}"
+    implementation "com.android.support.constraint:constraint-layout:${constraint_layout}"
+    implementation "android.arch.lifecycle:extensions:${lifecycle}"
+    implementation "android.arch.paging:runtime:${paging}"
+
+    // three party platform
+    implementation "com.jakewharton:butterknife:${butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
+    implementation "com.squareup.retrofit2:retrofit:${retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${converter_gson}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${adapter_rxjava2}"
+    implementation "io.reactivex.rxjava2:rxjava:${rxjava}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
+    implementation "com.github.GrenderG:Toasty:${toasty}"
+    implementation "org.greenrobot:eventbus:${event_bus}"
+
+
+    // myself
+    implementation "com.github.BeauteousJade.blade:inject:${injector}"
+    annotationProcessor "com.github.BeauteousJade.blade:processor:${injector}"
+}

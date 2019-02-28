@@ -1,0 +1,13 @@
+package com.example.pby.gam_study;
+
+public final class AccessIds {
+
+    public static final String VIEW_MODEL = "view_model";
+    public static final String FRAGMENT = "fragment";
+    public static final String RECYCLER_VIEW = "recycler_view";
+    public static final String RECYCLER_ADAPTER = "recycler_adapter";
+    public static final String LAYOUT_MANAGER = "layout_manager";
+    public static final String ITEM_POSITION = "item_position";
+    public static final String ITEM_DATA = "item_data";
+    public static final String ITEM_VIEW = "item_view";
+}

@@ -1,0 +1,29 @@
+ext {
+
+    application_id = "com.example.pby.gam_study"
+    compile_sdk_version = 28
+    target_sdk_version = 28
+    min_sdk_version = 19
+    version_code = 1
+    version_name = "1.0.0"
+
+    // android
+    v7 = "28.0.0"
+    constraint_layout = "1.1.3"
+    lifecycle = "1.1.1"
+    paging = "1.0.1"
+
+    // three party platform
+    butterknife = "8.8.1"
+    retrofit = "2.5.0"
+    converter_gson = "2.3.0"
+    adapter_rxjava2 = "2.3.0"
+    rxjava = "2.2.5"
+    rxandroid="2.1.1"
+    gson = "2.8.5"
+    toasty = "1.4.0"
+    event_bus = "3.1.1"
+
+    // myself
+    injector = "1.3.0"
+}
