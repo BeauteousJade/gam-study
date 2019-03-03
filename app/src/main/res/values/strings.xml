@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">gam-study</string>
+    <string name="app_name">片刻学习</string>
 
     <string name="forget_password">忘记密码？</string>
     <string name="login">登录</string>
@@ -16,4 +16,18 @@
     <string name="title_task">每日任务</string>
     <string name="title_all">全部分类</string>
     <string name="menu_item_new_kind">创建分类</string>
+    <string name="menu_item_new_card">创建卡片</string>
+    <string name="login_method">登录方式</string>
+    <string name="login_failure">登录失败</string>
+    <string name="login_success">登录成功</string>
+    <string name="hint_input_kind_name">客官请输入</string>
+    <string name="kind_name">分类名字：</string>
+    <string name="kind_name_is_empty">分类名字为空</string>
+    <string name="kind_name_select">请选择你喜爱的封面</string>
+    <string name="cover_is_empty">封面为空</string>
+    <string name="new_failure">创建失败</string>
+    <string name="new_success">创建成功</string>
+    <string name="kind_nam_exist">名字已经存在了哦！</string>
+    <string name="card_count_regex_text">卡片数:%s ></string>
+    <string name="empty_data">暂无数据</string>
 </resources>

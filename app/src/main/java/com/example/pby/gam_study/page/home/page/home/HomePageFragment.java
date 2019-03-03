@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
+import com.example.pby.gam_study.fragment.BaseFragment;
 import com.example.pby.gam_study.fragment.RecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.home.page.HomePage;
 import com.example.pby.gam_study.page.home.page.home.item.AllKindFragment;
 import com.example.pby.gam_study.page.home.page.home.item.DailyTaskFragment;
-import com.example.pby.gam_study.page.home.page.home.item.HomePageFragmentAdapter;
-import com.example.pby.gam_study.page.home.page.home.item.RecentBrowerFragment;
+import com.example.pby.gam_study.page.home.page.home.item.RecentBrowseFragment;
 import com.example.pby.gam_study.page.home.page.home.presenter.TitleBarPresenter;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
@@ -20,10 +20,11 @@ import com.example.pby.gam_study.widget.PagerRecyclerView;
 import com.example.pby.gam_study.widget.TitleBar;
 
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 
-public class HomePageFragment extends RecyclerViewFragment<LinearLayoutManager> implements HomePage {
+public class HomePageFragment extends RecyclerViewFragment implements HomePage {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -76,12 +77,12 @@ public class HomePageFragment extends RecyclerViewFragment<LinearLayoutManager> 
 
     @Override
     protected BaseRecyclerAdapter onCreateAdapter() {
-        return new HomePageFragmentAdapter(Arrays.asList(RecentBrowerFragment.newInstance(),
+        return new HomePageFragmentAdapter(Arrays.asList(RecentBrowseFragment.newInstance(),
                 DailyTaskFragment.newInstance(), AllKindFragment.newInstance()));
     }
 
     @Override
-    protected LinearLayoutManager onCreateLayoutManager() {
+    protected RecyclerView.LayoutManager onCreateLayoutManager() {
         return new LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false);
     }
 

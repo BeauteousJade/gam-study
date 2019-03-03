@@ -10,4 +10,8 @@ public final class AccessIds {
     public static final String ITEM_POSITION = "item_position";
     public static final String ITEM_DATA = "item_data";
     public static final String ITEM_VIEW = "item_view";
+    public static final String REQUEST = "request";
+    public static final String OBSERVABLE = "observable";
+    public static final String PAYLOAD = "payload";
+    public static final String TITLE = "title";
 }

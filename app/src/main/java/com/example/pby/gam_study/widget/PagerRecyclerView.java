@@ -7,9 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 public class PagerRecyclerView extends RecyclerView {
 
+    private int mDownX;
+    private int mDownY;
     private PagerSnapHelper mPageSnapHelper;
 
     private OnPageScrollListener mOnPageScrollListener;
@@ -46,6 +49,26 @@ public class PagerRecyclerView extends RecyclerView {
     public PagerRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initialize();
+    }
+
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        final int action = ev.getActionMasked();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                mDownX = (int) ev.getX();
+                mDownY = (int) ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                final int moveX = (int) Math.abs(ev.getX() - mDownX);
+                final int moveY = (int) Math.abs(ev.getY() - mDownY);
+                if (moveX < moveY) {
+                    return false;
+                }
+                break;
+        }
+        return super.onInterceptTouchEvent(ev);
     }
 
     private void initialize() {

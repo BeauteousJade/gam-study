@@ -42,15 +42,14 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@mipmap/ic_launcher_round" />
+            android:src="@mipmap/icon_new_card" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="menu2"
+            android:text="@string/menu_item_new_card"
             android:textColor="@color/color_item_dark"
-
             android:textSize="@dimen/text_size_menu_item" />
     </LinearLayout>
 

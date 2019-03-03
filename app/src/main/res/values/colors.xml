@@ -13,11 +13,13 @@
     <color name="color_main_blue">@color/color_end_blue</color>
     <color name="color_line">@color/color_000</color>
     <color name="color_dot">#eb5534</color>
+    <color name="color_item_black">#000000</color>
     <color name="color_item_dark">#888888</color>
     <color name="color_item_selected_blue">@color/color_start_blue</color>
     <color name="color_item_selected_white">@color/white</color>
     <color name="color_title">@color/white</color>
-
+    <color name="color_dialog">#4c000000</color>
+    <color name="color_hint">#c5c5c5</color>
 
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>

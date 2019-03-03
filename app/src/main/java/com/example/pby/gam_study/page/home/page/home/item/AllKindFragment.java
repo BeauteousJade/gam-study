@@ -1,9 +1,20 @@
 package com.example.pby.gam_study.page.home.page.home.item;
 
-import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.fragment.tabhost.PageFragment;
+import android.support.v7.widget.RecyclerView;
 
-public class AllKindFragment extends PageFragment {
+import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
+import com.example.pby.gam_study.factory.LayoutManagerFactory;
+import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
+import com.example.pby.gam_study.network.request.Request;
+import com.example.pby.gam_study.page.home.page.home.adapter.KindAdapter;
+import com.example.pby.gam_study.page.home.page.home.request.KindRequest;
+import com.example.pby.gam_study.page.newKind.GridItemDecoration;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class AllKindFragment extends RefreshRecyclerViewFragment {
 
     public static AllKindFragment newInstance() {
         return new AllKindFragment();
@@ -11,17 +22,22 @@ public class AllKindFragment extends PageFragment {
 
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_all_kind;
+    protected BaseRecyclerAdapter onCreateAdapter() {
+        return new KindAdapter(new ArrayList<>());
     }
 
     @Override
-    public void onPageSelect() {
-
+    protected RecyclerView.LayoutManager onCreateLayoutManager() {
+        return LayoutManagerFactory.createGridLayoutManagerIfEmpty(requireContext(), getRecyclerAdapter(), 3, LayoutManagerFactory.DEFAULT_SPAN_FULL);
     }
 
     @Override
-    public void onPageUnSelect() {
+    public Request onCreateRequest() {
+        return new KindRequest();
+    }
 
+    @Override
+    protected List<? extends RecyclerView.ItemDecoration> onCreateItemDecoration() {
+        return Collections.singletonList(new GridItemDecoration());
     }
 }

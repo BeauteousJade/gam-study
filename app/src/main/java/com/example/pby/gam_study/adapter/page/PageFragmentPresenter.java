@@ -12,6 +12,7 @@ import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
+import com.example.pby.gam_study.fragment.BaseFragment;
 import com.example.pby.gam_study.fragment.tabhost.PageFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 
@@ -21,7 +22,7 @@ import butterknife.BindView;
 public class PageFragmentPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)
-    PageFragment mPageFragment;
+    BaseFragment mPageFragment;
     @Inject(AccessIds.ITEM_VIEW)
     View mItemFragmentContainer;
 

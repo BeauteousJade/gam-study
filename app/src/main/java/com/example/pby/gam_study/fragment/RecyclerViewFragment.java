@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -19,20 +20,19 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public abstract class RecyclerViewFragment<U extends RecyclerView.LayoutManager> extends BaseFragment {
+public abstract class RecyclerViewFragment extends BaseFragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     private BaseRecyclerAdapter mRecyclerAdapter;
-    private U mLayoutManager;
+    private RecyclerView.LayoutManager mLayoutManager;
     private List<? extends RecyclerView.ItemDecoration> mItemDecorationList;
 
 
     @Override
     public void onPrepareBaseContext() {
-        Log.i("pby123", "name = " + this.getClass().getName() + " onPrepareBaseContext");
-        mLayoutManager = onCreateLayoutManager();
         mRecyclerAdapter = onCreateAdapter();
+        mLayoutManager = onCreateLayoutManager();
         mItemDecorationList = onCreateItemDecoration();
 
         mRecyclerAdapter.setCurrentActivity((BaseActivity) requireActivity());
@@ -54,7 +54,7 @@ public abstract class RecyclerViewFragment<U extends RecyclerView.LayoutManager>
 
     protected abstract BaseRecyclerAdapter onCreateAdapter();
 
-    protected abstract U onCreateLayoutManager();
+    protected abstract RecyclerView.LayoutManager onCreateLayoutManager();
 
     protected List<? extends RecyclerView.ItemDecoration> onCreateItemDecoration() {
         return null;
@@ -68,7 +68,7 @@ public abstract class RecyclerViewFragment<U extends RecyclerView.LayoutManager>
         return mRecyclerAdapter;
     }
 
-    public final U getLayoutManager() {
+    public final RecyclerView.LayoutManager getLayoutManager() {
         return mLayoutManager;
     }
 
@@ -81,6 +81,7 @@ public abstract class RecyclerViewFragment<U extends RecyclerView.LayoutManager>
     @Override
     public Object onCreateBaseContext() {
         Context context = new Context();
+        context.mContext = (BaseFragment.Context) super.onCreateBaseContext();
         context.mRecyclerView = mRecyclerView;
         context.mRecyclerAdapter = mRecyclerAdapter;
         context.mLayoutManager = mLayoutManager;
@@ -88,6 +89,8 @@ public abstract class RecyclerViewFragment<U extends RecyclerView.LayoutManager>
     }
 
     public static class Context {
+        @Provides(deepProvides = true)
+        public BaseFragment.Context mContext;
         @Provides(value = AccessIds.RECYCLER_VIEW)
         public RecyclerView mRecyclerView;
         @Provides(value = AccessIds.RECYCLER_ADAPTER)

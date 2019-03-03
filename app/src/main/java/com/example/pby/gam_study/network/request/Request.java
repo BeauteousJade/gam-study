@@ -1,5 +1,7 @@
 package com.example.pby.gam_study.network.request;
 
+import io.reactivex.Observable;
+
 public interface Request<T> {
     void enqueue(RequestCallback<T> requestCallback);
 
@@ -7,5 +9,15 @@ public interface Request<T> {
         enqueue(null);
     }
 
+    void enqueue(RequestCallback<T> requestCallback, int start, int end);
+
+    default void enqueue(int start, int end) {
+        enqueue(null, start, end);
+    }
+
     void cancel();
+
+    Observable<T> createObservable();
+
+    Observable<T> onCreateObservable(int start, int end);
 }

@@ -1,10 +1,12 @@
 package com.example.pby.gam_study.page.home.page.home.presenter;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
+import com.example.pby.gam_study.page.newKind.NewKindActivity;
 import com.example.pby.gam_study.util.ToastUtil;
 
 import butterknife.OnClick;
@@ -33,7 +35,8 @@ public class TitleBarPresenter extends Presenter implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu1:
-                ToastUtil.info(getCurrentActivity(), "menu1");
+                Intent intent = new Intent(getCurrentActivity(), NewKindActivity.class);
+                getCurrentActivity().startActivity(intent);
                 break;
             case R.id.menu2:
                 ToastUtil.info(getCurrentActivity(), "menu2");
@@ -44,5 +47,6 @@ public class TitleBarPresenter extends Presenter implements View.OnClickListener
             default:
                 break;
         }
+        mGamDialogFragment.dismiss();
     }
 }

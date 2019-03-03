@@ -2,28 +2,26 @@ package com.example.pby.gam_study.fragment;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.annation.Provides;
+import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.inter.BaseContextLifecycle;
 import com.example.pby.gam_study.mvp.Presence;
 import com.example.pby.gam_study.mvp.Presenter;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment implements Presence, BaseContextLifecycle {
 
-    private Presenter mPresenter;
+    protected Presenter mPresenter;
 
     @Nullable
     @Override
@@ -37,7 +35,6 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         onPrepareBaseContext();
-        Log.i("pby123", "name = " + this.getClass().getName() + " onViewCreated");
         mPresenter.bind(onCreateBaseContext(), view);
     }
 
@@ -61,7 +58,9 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
     }
 
     public Object onCreateBaseContext() {
-        return null;
+        Context context = new Context();
+        context.mFragment = this;
+        return context;
     }
 
     @SuppressWarnings("unchecked")
@@ -84,5 +83,10 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
     @Override
     public Resources getCurrentResources() {
         return getResources();
+    }
+
+    public static class Context {
+        @Provides(value = AccessIds.FRAGMENT)
+        public Fragment mFragment;
     }
 }

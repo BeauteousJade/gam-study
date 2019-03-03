@@ -1,5 +1,7 @@
 package com.example.pby.gam_study.fragment.dialog;
 
+import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
@@ -24,7 +26,8 @@ public class GamDialogFragment extends DialogFragment {
 
     @IntDef({LocationStyle.STYLE_LEFT_TOP, LocationStyle.STYLE_CENTER_TOP,
             LocationStyle.STYLE_RIGHT_TOP, LocationStyle.STYLE_LEFT_BOTTOM,
-            LocationStyle.STYLE_CENTER_BOTTOM, LocationStyle.STYLE_RIGHT_BOTTOM})
+            LocationStyle.STYLE_CENTER_BOTTOM, LocationStyle.STYLE_RIGHT_BOTTOM,
+            LocationStyle.STYLE_CENTER})
     public @interface LocationStyle {
         int STYLE_LEFT_TOP = 1;
         int STYLE_CENTER_TOP = 1 << 1;
@@ -32,6 +35,7 @@ public class GamDialogFragment extends DialogFragment {
         int STYLE_LEFT_BOTTOM = 1 << 3;
         int STYLE_CENTER_BOTTOM = 1 << 4;
         int STYLE_RIGHT_BOTTOM = 1 << 5;
+        int STYLE_CENTER = 1 << 6;
     }
 
     @LocationStyle
@@ -45,6 +49,9 @@ public class GamDialogFragment extends DialogFragment {
 
     private int[] mClickIds;
     private View.OnClickListener mOnClickListener;
+
+    private boolean mCancelable = true;
+    private boolean mCanceledOnTouchOutside = true;
 
     private static GamDialogFragment newInstance(@LocationStyle int style, @LayoutRes int layoutId) {
         final GamDialogFragment customDialogFragment = new GamDialogFragment();
@@ -62,6 +69,7 @@ public class GamDialogFragment extends DialogFragment {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         return inflater.inflate(mLayoutId, null);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -91,7 +99,10 @@ public class GamDialogFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        final Window window = getDialog().getWindow();
+        final Dialog dialog = getDialog();
+        final Window window = dialog.getWindow();
+        dialog.setCanceledOnTouchOutside(mCanceledOnTouchOutside);
+        dialog.setCancelable(mCancelable);
         if (window != null) {
             window.setBackgroundDrawable(null);
             window.setGravity(Gravity.START | Gravity.TOP);
@@ -142,6 +153,10 @@ public class GamDialogFragment extends DialogFragment {
                     mTranslationY += anchorHeight;
                     mTranslationX += anchorWidth - contentWidth;
                     break;
+                case LocationStyle.STYLE_CENTER:
+                    mTranslationY += anchorHeight / 2 - contentHeight / 2;
+                    mTranslationX += anchorWidth / 2 - contentWidth / 2;
+                    break;
                 default:
                     break;
             }
@@ -173,6 +188,17 @@ public class GamDialogFragment extends DialogFragment {
             mCustomDialogFragment.mClickIds = id;
             return this;
         }
+
+        public Builder setCancel(boolean cancel) {
+            mCustomDialogFragment.mCancelable = cancel;
+            return this;
+        }
+
+        public Builder setCanceledOnTouchOutside(boolean cancelOnTouchOutside) {
+            mCustomDialogFragment.mCanceledOnTouchOutside = cancelOnTouchOutside;
+            return this;
+        }
+
 
         public GamDialogFragment build() {
             return mCustomDialogFragment;

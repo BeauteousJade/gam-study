@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.BaseFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,12 +21,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         replaceFragment();
-        EventBus.getDefault().register(this);
+        if (canRegisterEvent()) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
     protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
+        if (canRegisterEvent()) {
+            EventBus.getDefault().unregister(this);
+        }
         super.onDestroy();
     }
 
@@ -44,6 +49,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         transaction.commitAllowingStateLoss();
     }
 
+    protected boolean canRegisterEvent() {
+        return false;
+    }
+
     @SuppressWarnings("unchecked")
     public final <T extends BaseFragment> T getCurrentFragment() {
         return (T) mCurrentFragment;
@@ -52,9 +61,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract BaseFragment buildCurrentFragment();
 
     @IdRes
-    public abstract int getContentFragmentId();
+    public int getContentFragmentId() {
+        return R.id.fragment_content;
+    }
 
     @LayoutRes
-    public abstract int getLayoutId();
+    public int getLayoutId() {
+        return R.layout.activity_base;
+    }
 
 }
