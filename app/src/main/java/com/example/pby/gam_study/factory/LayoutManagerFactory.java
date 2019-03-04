@@ -2,6 +2,7 @@ package com.example.pby.gam_study.factory;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
@@ -28,6 +29,11 @@ public class LayoutManagerFactory {
         });
         return gridLayoutManager;
     }
+
+    public static RecyclerView.LayoutManager createVerticalLayoutManager(Context context) {
+        return new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+    }
+
 
     public interface SpanFull {
         boolean onFull(BaseRecyclerAdapter adapter, int position);

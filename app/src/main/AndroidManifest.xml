@@ -38,6 +38,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".page.newKind.NewKindActivity" />
         <activity android:name=".page.card.CardActivity" />
+        <activity android:name=".page.newCard.NewCardActivity" />
     </application>
 
 </manifest>

@@ -30,4 +30,5 @@
     <string name="kind_nam_exist">名字已经存在了哦！</string>
     <string name="card_count_regex_text">卡片数:%s ></string>
     <string name="empty_data">暂无数据</string>
+    <string name="select_image">请选择图片</string>
 </resources>
