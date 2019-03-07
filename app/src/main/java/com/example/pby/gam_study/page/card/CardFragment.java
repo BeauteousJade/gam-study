@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.example.annation.Provides;
@@ -15,6 +16,8 @@ import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.card.presenter.CardTitleBarPresenter;
+import com.example.pby.gam_study.widget.layoutManager.SlideItemTouchCallback;
+import com.example.pby.gam_study.widget.layoutManager.SlideLayoutManager;
 
 import java.util.ArrayList;
 
@@ -22,6 +25,7 @@ public class CardFragment extends RefreshRecyclerViewFragment {
 
     private static final String KIND_ID = "kind_id";
     private static final String KIND_NAME = "kind_name";
+    private static final int mMaxVisibleCount = 3;
     private String mKindId;
     private String mKindName;
 
@@ -75,8 +79,13 @@ public class CardFragment extends RefreshRecyclerViewFragment {
     }
 
     @Override
+    protected ItemTouchHelper onCreateItemTouchHelper() {
+        return new ItemTouchHelper(new SlideItemTouchCallback(getRecyclerAdapter(), mMaxVisibleCount));
+    }
+
+    @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return LayoutManagerFactory.createGridLayoutManagerIfEmpty(requireContext(), getRecyclerAdapter(), 3, LayoutManagerFactory.DEFAULT_SPAN_FULL);
+        return new SlideLayoutManager(mMaxVisibleCount, getItemTouchHelper(), getRecyclerView());
     }
 
     public static class Context {

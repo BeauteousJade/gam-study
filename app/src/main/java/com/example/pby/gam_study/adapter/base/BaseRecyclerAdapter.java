@@ -18,11 +18,12 @@ import com.example.pby.gam_study.mvp.Presence;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.other.Diff;
 import com.example.pby.gam_study.util.ArrayUtil;
+import com.example.pby.gam_study.widget.layoutManager.ItemTouchStatus;
 
 import java.util.List;
 import java.util.Objects;
 
-public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseViewHolder> implements Presence {
+public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseViewHolder> implements Presence, ItemTouchStatus {
 
     private static final int TYPE_EMPTY = -1;
 
@@ -135,6 +136,16 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         context.mObservable = mObservable;
         return context;
     }
+
+    @Override
+    public boolean onItemRemove(int position) {
+        mDataList.remove(position);
+        // 这里使用notifyDataSetChanged方法，避免remove时触发remove动画
+        notifyDataSetChanged();
+        return true;
+    }
+
+
 
     public boolean isShowEmpty() {
         return mDataList.size() == 1 && mDataList.get(0) == null;

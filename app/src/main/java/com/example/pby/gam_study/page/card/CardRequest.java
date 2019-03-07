@@ -1,5 +1,6 @@
 package com.example.pby.gam_study.page.card;
 
+import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.network.NetWorkManager;
 import com.example.pby.gam_study.network.Service;
 import com.example.pby.gam_study.network.bean.Card;
@@ -21,6 +22,6 @@ public class CardRequest extends BaseRequest<List<Card>> {
     public Observable<List<Card>> createObservable() {
         return NetWorkManager
                 .getService(Service.class)
-                .findAllCard(mKindId);
+                .findAllCard(mKindId, LoginManager.getCurrentUser().getId());
     }
 }

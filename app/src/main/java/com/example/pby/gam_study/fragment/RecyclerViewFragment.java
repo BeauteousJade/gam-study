@@ -5,6 +5,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.example.annation.Provides;
@@ -24,6 +25,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     private BaseRecyclerAdapter mRecyclerAdapter;
+    private ItemTouchHelper mItemTouchHelper;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<? extends RecyclerView.ItemDecoration> mItemDecorationList;
     private final Observable mObservable = new Observable();
@@ -31,6 +33,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     @Override
     public void onPrepareBaseContext() {
         mRecyclerAdapter = onCreateAdapter();
+        mItemTouchHelper = onCreateItemTouchHelper();
         mLayoutManager = onCreateLayoutManager();
         mItemDecorationList = onCreateItemDecoration();
 
@@ -49,8 +52,15 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 mRecyclerView.addItemDecoration(itemDecoration);
             }
         }
+        if (mItemTouchHelper != null) {
+            mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+        }
     }
 
+
+    protected ItemTouchHelper onCreateItemTouchHelper() {
+        return null;
+    }
 
     protected abstract BaseRecyclerAdapter onCreateAdapter();
 
@@ -70,6 +80,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     public final RecyclerView.LayoutManager getLayoutManager() {
         return mLayoutManager;
+    }
+
+    public final ItemTouchHelper getItemTouchHelper() {
+        return mItemTouchHelper;
     }
 
     @Override

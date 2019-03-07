@@ -36,7 +36,7 @@ public interface Service {
 
     @POST("/card/findAllCard")
     @FormUrlEncoded
-    Observable<List<Card>> findAllCard(@Field("kindId") String kindId);
+    Observable<List<Card>> findAllCard(@Field("kindId") String kindId, @Field("userId") String userId);
 
     @POST("/card/insertCard")
     Observable<Card> insertCard(@Body RequestBody requestBody);
