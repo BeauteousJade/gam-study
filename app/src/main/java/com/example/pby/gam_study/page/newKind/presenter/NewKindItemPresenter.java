@@ -13,11 +13,13 @@ import com.example.annation.Inject;
 import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
+import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.factory.GlideFactory;
+import com.example.pby.gam_study.fragment.util.Observable;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.newKind.NewKindAdapter;
+import com.example.pby.gam_study.page.newKind.NewKindFragment;
 import com.example.pby.gam_study.page.newKind.NewKindItem;
-import com.example.pby.gam_study.page.newKind.NewKindObservable;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
 
@@ -27,7 +29,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Optional;
 
-@Module(NewKindAdapter.Context.class)
+@Module(BaseRecyclerAdapter.Context.class)
 public class NewKindItemPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)
@@ -35,7 +37,7 @@ public class NewKindItemPresenter extends Presenter {
     @Inject(AccessIds.ITEM_POSITION)
     int position;
     @Inject(AccessIds.OBSERVABLE)
-    NewKindObservable mObservable;
+    Observable mObservable;
     @Inject(AccessIds.RECYCLER_ADAPTER)
     NewKindAdapter mAdapter;
     @Inject(AccessIds.PAYLOAD)
@@ -67,7 +69,7 @@ public class NewKindItemPresenter extends Presenter {
 
         @Override
         public void afterTextChanged(Editable s) {
-            mObservable.notifyKindName(s.toString());
+            mObservable.notifyChanged(NewKindFragment.KEY_OBSERVABLE_KIND_NAME, s.toString());
             mNewKindItem.setText(s.toString());
         }
     };
@@ -114,7 +116,7 @@ public class NewKindItemPresenter extends Presenter {
         final NewKindItem kindItem = mAdapter.getDataList().get(position);
         kindItem.setSelect(!kindItem.isSelect());
         mAdapter.notifyItemRangeChanged(2, mAdapter.getItemCount() - 2, "");
-        mObservable.notifyKindCover(kindItem.isSelect() ? kindItem.getText() : null);
+        mObservable.notifyChanged(NewKindFragment.KEY_OBSERVABLE_COVER, kindItem.isSelect() ? kindItem.getText() : null);
     }
 
 }

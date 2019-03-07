@@ -1,5 +1,6 @@
 package com.example.pby.gam_study.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -12,14 +13,19 @@ import com.example.pby.gam_study.fragment.BaseFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     private BaseFragment mCurrentFragment;
+    private List<OnActivityResultListener> mListenerList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        onPrepare();
         replaceFragment();
         if (canRegisterEvent()) {
             EventBus.getDefault().register(this);
@@ -60,6 +66,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract BaseFragment buildCurrentFragment();
 
+    protected void onPrepare() {
+
+    }
+
     @IdRes
     public int getContentFragmentId() {
         return R.id.fragment_content;
@@ -68,6 +78,35 @@ public abstract class BaseActivity extends AppCompatActivity {
     @LayoutRes
     public int getLayoutId() {
         return R.layout.activity_base;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (mListenerList != null) {
+            for (OnActivityResultListener listener : mListenerList) {
+                if (listener.onResult(requestCode, resultCode, data)) {
+                    return;
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void addOnActivityResultListener(OnActivityResultListener listener) {
+        if (mListenerList == null) {
+            mListenerList = new ArrayList<>();
+        }
+        mListenerList.add(listener);
+    }
+
+    public void removeOnActivityResultListener(OnActivityResultListener listener) {
+        if (mListenerList != null) {
+            mListenerList.remove(listener);
+        }
+    }
+
+    public interface OnActivityResultListener {
+        boolean onResult(int requestCode, int resultCode, @Nullable Intent data);
     }
 
 }

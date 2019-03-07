@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -22,12 +24,14 @@
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:noHistory="true"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent101557462" />
             </intent-filter>
         </activity>
@@ -39,6 +43,7 @@
         <activity android:name=".page.newKind.NewKindActivity" />
         <activity android:name=".page.card.CardActivity" />
         <activity android:name=".page.newCard.NewCardActivity" />
+        <activity android:name=".page.editImage.EditImageActivity" />
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import com.example.pby.gam_study.page.newKind.NewKindItem;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -36,4 +37,7 @@ public interface Service {
     @POST("/card/findAllCard")
     @FormUrlEncoded
     Observable<List<Card>> findAllCard(@Field("kindId") String kindId);
+
+    @POST("/card/insertCard")
+    Observable<Card> insertCard(@Body RequestBody requestBody);
 }

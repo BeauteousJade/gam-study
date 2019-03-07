@@ -1,12 +1,7 @@
 package com.example.pby.gam_study.page.newKind;
 
-import android.support.annotation.NonNull;
-
-import com.example.annation.Provides;
-import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
-import com.example.pby.gam_study.adapter.base.BaseViewHolder;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.newKind.presenter.NewKindItemPresenter;
 
@@ -17,11 +12,9 @@ public class NewKindAdapter extends BaseRecyclerAdapter<NewKindItem> {
     private static final int TYPE_EDIT = 0;
     private static final int TYPE_COVER = 1;
     private static final int TYPE_TITLE = 2;
-    private NewKindObservable mNewKindObservable;
 
-    public NewKindAdapter(List<NewKindItem> dataList, NewKindObservable observable) {
+    public NewKindAdapter(List<NewKindItem> dataList) {
         super(dataList);
-        mNewKindObservable = observable;
     }
 
     @Override
@@ -52,24 +45,9 @@ public class NewKindAdapter extends BaseRecyclerAdapter<NewKindItem> {
     }
 
     @Override
-    public Object onCreateContext(@NonNull BaseViewHolder baseViewHolder, int position, List<Object> payloads) {
-        Context context = new Context();
-        context.mContext = (BaseRecyclerAdapter.Context) super.onCreateContext(baseViewHolder, position, payloads);
-        context.mNewKindObservable = mNewKindObservable;
-        return context;
-    }
-
-    @Override
-    protected Presenter onCreatePresenter() {
+    protected Presenter onCreatePresenter(int viewType) {
         Presenter presenter = new Presenter();
         presenter.add(new NewKindItemPresenter());
         return presenter;
-    }
-
-    public static class Context {
-        @Provides(AccessIds.OBSERVABLE)
-        public NewKindObservable mNewKindObservable = new NewKindObservable();
-        @Provides(deepProvides = true)
-        public BaseRecyclerAdapter.Context mContext;
     }
 }

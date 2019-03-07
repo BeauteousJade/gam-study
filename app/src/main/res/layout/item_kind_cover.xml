@@ -16,7 +16,7 @@
         android:id="@+id/select"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@mipmap/icon_selected"
+        android:src="@drawable/icon_selected"
         app:layout_constraintRight_toRightOf="@id/cover"
         app:layout_constraintTop_toTopOf="@id/cover" />
 </android.support.constraint.ConstraintLayout>

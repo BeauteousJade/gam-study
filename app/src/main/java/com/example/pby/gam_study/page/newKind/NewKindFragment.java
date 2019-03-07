@@ -19,14 +19,15 @@ import java.util.List;
 
 public class NewKindFragment extends RefreshRecyclerViewFragment {
 
-    private final NewKindObservable mNewKindObservable = new NewKindObservable();
+    public static final String KEY_OBSERVABLE_KIND_NAME = "key_observable_kind_name";
+    public static final String KEY_OBSERVABLE_COVER = "key_observable_cover";
 
     @Override
     protected BaseRecyclerAdapter onCreateAdapter() {
         final List<NewKindItem> dataList = new ArrayList<>();
         dataList.add(new NewKindItem(false, ""));
         dataList.add(new NewKindItem(false, ""));
-        return new NewKindAdapter(dataList, mNewKindObservable);
+        return new NewKindAdapter(dataList);
     }
 
     @Override
@@ -45,14 +46,6 @@ public class NewKindFragment extends RefreshRecyclerViewFragment {
     }
 
     @Override
-    public Object onCreateBaseContext() {
-        Context context = new Context();
-        context.mContext = (RefreshRecyclerViewFragment.Context) super.onCreateBaseContext();
-        context.mNewKindObservable = mNewKindObservable;
-        return context;
-    }
-
-    @Override
     public Request onCreateRequest() {
         return new KindCoverRequest();
     }
@@ -68,13 +61,6 @@ public class NewKindFragment extends RefreshRecyclerViewFragment {
     @Override
     protected List<? extends RecyclerView.ItemDecoration> onCreateItemDecoration() {
         return Collections.singletonList(new GridItemDecoration());
-    }
-
-    public static class Context {
-        @Provides(AccessIds.OBSERVABLE)
-        public NewKindObservable mNewKindObservable;
-        @Provides(deepProvides = true)
-        public RefreshRecyclerViewFragment.Context mContext;
     }
 
     @Override

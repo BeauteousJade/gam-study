@@ -8,15 +8,16 @@ import com.example.annation.Inject;
 import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
+import com.example.pby.gam_study.factory.DialogFactory;
+import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
-import com.example.pby.gam_study.factory.LoadDialogFactory;
+import com.example.pby.gam_study.fragment.util.Observable;
+import com.example.pby.gam_study.fragment.util.Observer;
 import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.RequestCallback;
 import com.example.pby.gam_study.network.response.Response;
 import com.example.pby.gam_study.page.newKind.NewKindFragment;
-import com.example.pby.gam_study.page.newKind.NewKindObservable;
-import com.example.pby.gam_study.page.newKind.NewKindObserver;
 import com.example.pby.gam_study.page.newKind.request.NewKindRequest;
 import com.example.pby.gam_study.util.ResourcesUtil;
 import com.example.pby.gam_study.util.StringUtil;
@@ -25,7 +26,7 @@ import com.example.pby.gam_study.util.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(NewKindFragment.Context.class)
+@Module(RefreshRecyclerViewFragment.Context.class)
 public class NewKindTitleBarPresenter extends Presenter {
 
     @BindView(R.id.left_icon)
@@ -36,7 +37,7 @@ public class NewKindTitleBarPresenter extends Presenter {
     TextView mTitleView;
 
     @Inject(AccessIds.OBSERVABLE)
-    NewKindObservable mObservable;
+    Observable mObservable;
 
     private String mKindName;
     private String mCover;
@@ -44,15 +45,18 @@ public class NewKindTitleBarPresenter extends Presenter {
     private final NewKindRequest mRequest = new NewKindRequest();
     private GamDialogFragment mLoadDialog;
 
-    private final NewKindObserver mObserver = new NewKindObserver() {
+    private final Observer mObserver = new Observer() {
         @Override
-        public void onKindNameChanged(String kindName) {
-            mKindName = kindName;
-        }
-
-        @Override
-        public void onKindCoverChanged(String cover) {
-            mCover = cover;
+        public void onChanged(String key, Object obj) {
+            switch (key) {
+                case NewKindFragment
+                        .KEY_OBSERVABLE_COVER:
+                    mKindName = obj.toString();
+                    break;
+                case NewKindFragment.KEY_OBSERVABLE_KIND_NAME:
+                    mCover = obj.toString();
+                    break;
+            }
         }
     };
 
@@ -75,7 +79,7 @@ public class NewKindTitleBarPresenter extends Presenter {
 
     @Override
     protected void onCreate() {
-        mLoadDialog = LoadDialogFactory.getLoadDialog(getCurrentActivity());
+        mLoadDialog = DialogFactory.createLoadDialog(getCurrentActivity());
     }
 
     @Override

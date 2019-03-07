@@ -35,7 +35,7 @@ public abstract class PageFragmentAdapter extends BaseRecyclerAdapter<BaseFragme
     }
 
     @Override
-    protected Presenter onCreatePresenter() {
+    protected Presenter onCreatePresenter(int viewType) {
         Presenter presenter = new Presenter();
         presenter.add(new PageFragmentPresenter());
         return presenter;

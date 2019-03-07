@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
-import com.example.pby.gam_study.factory.LoadDialogFactory;
+import com.example.pby.gam_study.factory.DialogFactory;
 import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.User;
@@ -48,7 +48,7 @@ public class LoginPresenter extends Presenter {
     protected void onCreate() {
         mTencent = LoginManager.getTencent(getCurrentActivity().getApplicationContext());
         mId = SharedPreferencesUtil.getString(getCurrentActivity(), LoginManager.USER_ID, null);
-        mLoadDialog = LoadDialogFactory.getLoadDialog(getCurrentActivity());
+        mLoadDialog = DialogFactory.createLoadDialog(getCurrentActivity());
     }
 
     @OnClick(R.id.qq_login)

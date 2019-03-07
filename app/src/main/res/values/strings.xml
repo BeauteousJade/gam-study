@@ -31,4 +31,15 @@
     <string name="card_count_regex_text">卡片数:%s ></string>
     <string name="empty_data">暂无数据</string>
     <string name="select_image">请选择图片</string>
+    <string name="answer_title">请确认你的答案</string>
+    <string name="hint_answer">你的答案是？</string>
+    <string name="image_not_select">未选择图片哟!</string>
+    <string name="image_not_edit">图片未编辑哦，请点击图片进入编辑页面!</string>
+    <string name="answer_empty">答案为空哦！</string>
+    <string name="title_make_card">制作卡片</string>
+    <string name="title_edit_image">编辑图片</string>
+    <plurals name="error_over_count">
+        <item quantity="one">You can only select one media file</item>
+        <item quantity="many">You can only select up to %1$d media files</item>
+    </plurals>
 </resources>

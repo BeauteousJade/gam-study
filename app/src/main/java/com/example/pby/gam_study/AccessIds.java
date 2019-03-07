@@ -14,4 +14,6 @@ public final class AccessIds {
     public static final String OBSERVABLE = "observable";
     public static final String PAYLOAD = "payload";
     public static final String TITLE = "title";
+    public static final String URL = "url";
+    public static final String KIND_ID = "kind_id";
 }

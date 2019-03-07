@@ -48,6 +48,7 @@ public class CardFragment extends RefreshRecyclerViewFragment {
         Context context = new Context();
         context.mContext = (RefreshRecyclerViewFragment.Context) super.onCreateBaseContext();
         context.mKindName = mKindName;
+        context.mKindId = mKindId;
         return context;
     }
 
@@ -81,6 +82,8 @@ public class CardFragment extends RefreshRecyclerViewFragment {
     public static class Context {
         @Provides(value = AccessIds.TITLE)
         public String mKindName;
+        @Provides(value = AccessIds.KIND_ID)
+        public String mKindId;
         @Provides(deepProvides = true)
         public RefreshRecyclerViewFragment.Context mContext;
     }

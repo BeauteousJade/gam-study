@@ -24,6 +24,8 @@ ext {
     toasty = "1.4.0"
     event_bus = "3.1.1"
     glide = "4.9.0"
+    picture_library = "v2.2.3"
+    matisse = "0.5.1"
 
     // myself
     injector = "1.3.0"

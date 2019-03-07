@@ -3,6 +3,9 @@ package com.example.pby.gam_study.page.newCard;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
+import com.example.pby.gam_study.page.newCard.presenter.AnswerPresenter;
+import com.example.pby.gam_study.page.newCard.presenter.EmptyImagePresenter;
+import com.example.pby.gam_study.page.newCard.presenter.LoadImagePresenter;
 
 import java.util.List;
 
@@ -26,10 +29,9 @@ public class NewCardAdapter extends BaseRecyclerAdapter<String> {
             case TYPE_IMAGE:
                 return R.layout.item_show_image;
             case TYPE_TITLE:
-
-                break;
+                return R.layout.item_answer_title;
             case TYPE_ANSWER:
-                break;
+                return R.layout.item_answer;
             default:
                 break;
         }
@@ -51,7 +53,21 @@ public class NewCardAdapter extends BaseRecyclerAdapter<String> {
     }
 
     @Override
-    protected Presenter onCreatePresenter() {
-        return null;
+    protected Presenter onCreatePresenter(int viewType) {
+        Presenter presenter = new Presenter();
+        switch (viewType) {
+            case TYPE_IMAGE:
+                presenter.add(new LoadImagePresenter());
+                break;
+            case TYPE_ANSWER:
+                presenter.add(new AnswerPresenter());
+                break;
+            case TYPE_EMPTY_IMAGE:
+                presenter.add(new EmptyImagePresenter());
+                break;
+            default:
+                break;
+        }
+        return presenter;
     }
 }

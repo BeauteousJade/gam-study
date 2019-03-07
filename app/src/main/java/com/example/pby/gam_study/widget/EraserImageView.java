@@ -15,8 +15,10 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.pby.gam_study.network.RxSchedulers;
 
@@ -24,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -32,8 +35,8 @@ import io.reactivex.disposables.Disposable;
 
 public class EraserImageView extends View {
 
-    private static final int DEFAULT_SIZE = 100;
-    private static final int DEFAULT_PIXEL = 496;
+    private static final int DEFAULT_SIZE = 50;
+    private static final int DEFAULT_PIXEL = 1080;
     private Bitmap mBufferBitmap;
     private Canvas mBufferCanvas;
     private Paint mPaint;
@@ -42,6 +45,7 @@ public class EraserImageView extends View {
     private Path mPath;
     private float mLastX;
     private float mLastY;
+    private final Matrix mMatrix = new Matrix();
 
     private Disposable mDisposable;
 
@@ -79,11 +83,24 @@ public class EraserImageView extends View {
     }
 
     public void setBitmap(Bitmap bitmap) {
+        if (mBitmap == bitmap) {
+            return;
+        }
         if (mBitmap != null) {
             mBitmap.recycle();
         }
         mBitmap = bitmap;
-        invalidate();
+        post(() -> {
+            final int viewWidth = getMeasuredWidth();
+            final int bitmapWidth = mBitmap.getWidth();
+            final float ratio = viewWidth * 1.0f / bitmapWidth;
+            final int viewHeight = (int) (mBitmap.getHeight() * ratio);
+            ViewGroup.LayoutParams lp = getLayoutParams();
+            lp.width = viewWidth;
+            lp.height = viewHeight;
+            setLayoutParams(lp);
+            requestLayout();
+        });
     }
 
     public void setBitmapDrawable(Drawable drawable) {
@@ -99,10 +116,9 @@ public class EraserImageView extends View {
             if (mBufferBitmap == null) {
                 mBufferBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
                 mBufferCanvas = new Canvas(mBufferBitmap);
-                Matrix matrix = new Matrix();
-                final float ratio = getWidth() * 1.0f / mBitmap.getWidth();
-                matrix.setScale(ratio, ratio);
-                mBufferCanvas.drawBitmap(mBitmap, matrix, null);
+                final float ratio = Math.min(getWidth() * 1.0f / mBitmap.getWidth(), getHeight() * 1.0f / mBitmap.getHeight());
+                mMatrix.setScale(ratio, ratio);
+                mBufferCanvas.drawBitmap(mBitmap, mMatrix, null);
             }
             canvas.drawBitmap(mBufferBitmap, 0, 0, null);
         }
@@ -150,27 +166,30 @@ public class EraserImageView extends View {
         x = (int) (x * (mBufferBitmap.getWidth() * 1.0f / getMeasuredWidth()));
         y = (int) (y * (mBufferBitmap.getHeight() * 1.0f / getMeasuredHeight()));
         x = Math.max(0, x - 50);
-        if (x + DEFAULT_SIZE > mBitmap.getWidth()) {
-            x -= (x + DEFAULT_SIZE) - mBitmap.getWidth();
+        if (x + DEFAULT_SIZE > mBufferBitmap.getWidth()) {
+            x -= (x + DEFAULT_SIZE) - mBufferBitmap.getWidth();
         }
         y = Math.max(0, y - DEFAULT_SIZE / 2);
-        if (y + DEFAULT_SIZE > mBitmap.getHeight()) {
-            y -= (y + DEFAULT_SIZE) - mBitmap.getHeight();
+        if (y + DEFAULT_SIZE > mBufferBitmap.getHeight()) {
+            y -= (y + DEFAULT_SIZE) - mBufferBitmap.getHeight();
         }
         int pixels[] = new int[DEFAULT_SIZE * DEFAULT_SIZE];
         mBufferBitmap.getPixels(pixels, 0, DEFAULT_SIZE, x, y, DEFAULT_SIZE, DEFAULT_SIZE);
+        int a = 0;
         int r = 0;
         int g = 0;
         int b = 0;
         for (int i = 0; i < pixels.length; i++) {
+            a += Color.alpha(pixels[i]);
             r += Color.red(pixels[i]);
             g += Color.green(pixels[i]);
             b += Color.blue(pixels[i]);
         }
+        a = a / (DEFAULT_SIZE * DEFAULT_SIZE);
         r = r / (DEFAULT_SIZE * DEFAULT_SIZE);
         g = g / (DEFAULT_SIZE * DEFAULT_SIZE);
         b = b / (DEFAULT_SIZE * DEFAULT_SIZE);
-        return Color.rgb(r, g, b);
+        return Color.argb(a, r, g, b);
     }
 
     @Override
@@ -189,6 +208,7 @@ public class EraserImageView extends View {
         if (mDisposable != null) {
             mDisposable.dispose();
         }
+        final String path = Objects.requireNonNull(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)).getPath() + File.separator + "demo.png";
         Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
             final Matrix matrix = new Matrix();
             final float ratio = Math.min(DEFAULT_PIXEL * 1.0f / mBufferBitmap.getWidth(), 1);
@@ -204,12 +224,12 @@ public class EraserImageView extends View {
             final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] bytes = byteArrayOutputStream.toByteArray();
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-            File file = new File(path + File.separator + "demo.png");
+            File file = new File(path);
             OutputStream ops = new FileOutputStream(file);
             ops.write(bytes);
             ops.close();
-
+            emitter.onNext(true);
+            emitter.onComplete();
         })
                 .compose(RxSchedulers.ioToMain())
                 .subscribe(new Observer<Boolean>() {
@@ -221,14 +241,14 @@ public class EraserImageView extends View {
                     @Override
                     public void onNext(Boolean aBoolean) {
                         if (onSaveImageListener != null) {
-                            onSaveImageListener.onSaveFinished(true);
+                            onSaveImageListener.onSaveFinished(true, path);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         if (onSaveImageListener != null) {
-                            onSaveImageListener.onSaveFinished(false);
+                            onSaveImageListener.onSaveFinished(false, null);
                         }
                     }
 
@@ -240,6 +260,6 @@ public class EraserImageView extends View {
     }
 
     public interface OnSaveImageListener {
-        void onSaveFinished(boolean result);
+        void onSaveFinished(boolean result, String path);
     }
 }

@@ -13,6 +13,7 @@ import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.fragment.BaseFragment;
+import com.example.pby.gam_study.fragment.util.Observable;
 import com.example.pby.gam_study.mvp.Presence;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.other.Diff;
@@ -28,6 +29,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     protected List<U> mDataList;
     private BaseFragment mFragment;
     private BaseActivity mActivity;
+    private Observable mObservable;
 
     public BaseRecyclerAdapter(List<U> dataList) {
         mDataList = dataList;
@@ -73,6 +75,17 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         notifyDataSetChanged();
     }
 
+    public void setData(int index, U u, boolean notifyDataSetChanged) {
+        if (index >= 0 && mDataList.size() > index) {
+            mDataList.set(index, u);
+            if (!notifyDataSetChanged) {
+                notifyItemChanged(index);
+            } else {
+                notifyDataSetChanged();
+            }
+        }
+    }
+
     public int getItemStablePosition() {
         return -1;
     }
@@ -85,7 +98,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         final View view = LayoutInflater.from(viewGroup.getContext()).inflate(getItemViewLayoutIfEmpty(viewType), viewGroup, false);
-        final Presenter presenter = onCreatePresenter();
+        final Presenter presenter = onCreatePresenter(viewType);
         presenter.create(this);
         return new BaseViewHolder(view, presenter);
     }
@@ -119,6 +132,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         context.mItemView = baseViewHolder.itemView;
         context.mAdapter = this;
         context.mPayLoad = payloads;
+        context.mObservable = mObservable;
         return context;
     }
 
@@ -139,6 +153,10 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         mActivity = activity;
     }
 
+    public void setObservable(Observable observable) {
+        mObservable = observable;
+    }
+
     public static class Context {
         @Provides(AccessIds.ITEM_POSITION)
         public int mPosition;
@@ -150,6 +168,8 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         public RecyclerView.Adapter mAdapter;
         @Provides(AccessIds.PAYLOAD)
         public List<Object> mPayLoad;
+        @Provides(AccessIds.OBSERVABLE)
+        public Observable mObservable;
     }
 
     public final int getItemViewLayoutIfEmpty(int viewType) {
@@ -174,7 +194,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     public abstract int getItemViewLayoutNoEmpty(int viewType);
 
 
-    protected abstract Presenter onCreatePresenter();
+    protected abstract Presenter onCreatePresenter(int viewType);
 
 
     @Override
@@ -206,7 +226,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
 
     public static class DiffUtilCallback<T> extends DiffUtil.Callback {
 
-        public List<T> mOldList;
+        private List<T> mOldList;
         private List<T> mNewList;
 
         public DiffUtilCallback(List<T> oldList, List<T> newList) {
