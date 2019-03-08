@@ -44,6 +44,7 @@
         <activity android:name=".page.card.CardActivity" />
         <activity android:name=".page.newCard.NewCardActivity" />
         <activity android:name=".page.editImage.EditImageActivity" />
+        <activity android:name=".page.cardDetail.CardDetailActivity" />
     </application>
 
 </manifest>

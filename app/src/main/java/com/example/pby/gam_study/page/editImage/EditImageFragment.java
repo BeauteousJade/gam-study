@@ -35,12 +35,13 @@ public class EditImageFragment extends BaseFragment {
     }
 
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Object onCreateBaseContext() {
+    public <T> T onCreateBaseContext() {
         Context context = new Context();
-        context.mContext = (BaseFragment.Context) super.onCreateBaseContext();
+        context.mContext = super.onCreateBaseContext();
         context.mUrl = mUrl;
-        return context;
+        return (T) context;
     }
 
     @Override

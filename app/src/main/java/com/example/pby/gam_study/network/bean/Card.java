@@ -1,8 +1,11 @@
 package com.example.pby.gam_study.network.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Card {
+public class Card implements Parcelable {
 
     @SerializedName("id")
     private String mId;
@@ -18,6 +21,28 @@ public class Card {
     private String mAnswer;
     @SerializedName("time")
     private long mTime;
+
+    protected Card(Parcel in) {
+        mId = in.readString();
+        mUserId = in.readString();
+        mKindId = in.readString();
+        mOldImageUrl = in.readString();
+        mEditImageUrl = in.readString();
+        mAnswer = in.readString();
+        mTime = in.readLong();
+    }
+
+    public static final Creator<Card> CREATOR = new Creator<Card>() {
+        @Override
+        public Card createFromParcel(Parcel in) {
+            return new Card(in);
+        }
+
+        @Override
+        public Card[] newArray(int size) {
+            return new Card[size];
+        }
+    };
 
     public String getId() {
         return mId;
@@ -73,5 +98,21 @@ public class Card {
 
     public void setTime(long time) {
         this.mTime = time;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mId);
+        dest.writeString(mUserId);
+        dest.writeString(mKindId);
+        dest.writeString(mOldImageUrl);
+        dest.writeString(mEditImageUrl);
+        dest.writeString(mAnswer);
+        dest.writeLong(mTime);
     }
 }

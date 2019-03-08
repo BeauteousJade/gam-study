@@ -47,12 +47,13 @@ public class NewCardFragment extends RecyclerViewFragment {
         return new NewCardAdapter(dataList);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Object onCreateBaseContext() {
+    public <T> T onCreateBaseContext() {
         Context context = new Context();
-        context.mContext = (RecyclerViewFragment.Context) super.onCreateBaseContext();
+        context.mContext = super.onCreateBaseContext();
         context.mKindId = mKindId;
-        return context;
+        return (T) context;
     }
 
     @Override

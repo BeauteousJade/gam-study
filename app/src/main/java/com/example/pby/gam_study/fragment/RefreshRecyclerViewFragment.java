@@ -28,12 +28,13 @@ public abstract class RefreshRecyclerViewFragment extends RecyclerViewFragment {
         return presenter;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Object onCreateBaseContext() {
+    public <T> T onCreateBaseContext() {
         Context context = new Context();
-        context.mContext = (RecyclerViewFragment.Context) super.onCreateBaseContext();
+        context.mContext = super.onCreateBaseContext();
         context.mRequest = mRequest;
-        return context;
+        return (T) context;
     }
 
     public static class Context {

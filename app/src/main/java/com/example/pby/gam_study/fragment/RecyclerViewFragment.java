@@ -15,6 +15,7 @@ import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.fragment.util.Observable;
 import com.example.pby.gam_study.util.ArrayUtil;
+import com.example.pby.gam_study.widget.layoutManager.ItemTouchStatus;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     private BaseRecyclerAdapter mRecyclerAdapter;
+    private ItemTouchHelper.Callback mCallback;
     private ItemTouchHelper mItemTouchHelper;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<? extends RecyclerView.ItemDecoration> mItemDecorationList;
@@ -33,6 +35,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     @Override
     public void onPrepareBaseContext() {
         mRecyclerAdapter = onCreateAdapter();
+        mCallback = onCreateCallback();
         mItemTouchHelper = onCreateItemTouchHelper();
         mLayoutManager = onCreateLayoutManager();
         mItemDecorationList = onCreateItemDecoration();
@@ -57,6 +60,9 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         }
     }
 
+    public ItemTouchHelper.Callback onCreateCallback() {
+        return null;
+    }
 
     protected ItemTouchHelper onCreateItemTouchHelper() {
         return null;
@@ -86,21 +92,27 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         return mItemTouchHelper;
     }
 
+    public final ItemTouchHelper.Callback getCallback() {
+        return mCallback;
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_recyclerview;
     }
 
+    @SuppressWarnings("unchecked")
     @CallSuper
     @Override
-    public Object onCreateBaseContext() {
+    public <T> T onCreateBaseContext() {
         Context context = new Context();
-        context.mContext = (BaseFragment.Context) super.onCreateBaseContext();
+        context.mContext = super.onCreateBaseContext();
         context.mRecyclerView = mRecyclerView;
         context.mRecyclerAdapter = mRecyclerAdapter;
         context.mLayoutManager = mLayoutManager;
         context.mObservable = mObservable;
-        return context;
+        context.mCallback = mCallback;
+        return (T) context;
     }
 
     public static class Context {
@@ -114,6 +126,8 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         public RecyclerView.LayoutManager mLayoutManager;
         @Provides(value = AccessIds.OBSERVABLE)
         public Observable mObservable;
+        @Provides(value = AccessIds.CALLBACK)
+        public ItemTouchHelper.Callback mCallback;
     }
 
 }

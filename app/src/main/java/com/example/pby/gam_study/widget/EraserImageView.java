@@ -88,9 +88,10 @@ public class EraserImageView extends View {
         }
         if (mBitmap != null) {
             mBitmap.recycle();
+            mBitmap = null;
         }
-        mBitmap = bitmap;
         post(() -> {
+            mBitmap = bitmap;
             final int viewWidth = getMeasuredWidth();
             final int bitmapWidth = mBitmap.getWidth();
             final float ratio = viewWidth * 1.0f / bitmapWidth;
@@ -214,12 +215,13 @@ public class EraserImageView extends View {
             final float ratio = Math.min(DEFAULT_PIXEL * 1.0f / mBufferBitmap.getWidth(), 1);
             // 产生新的bitmap的目的就是为了压缩图片
             // ---
-            final Bitmap bitmap = Bitmap.createBitmap((int) (mBufferBitmap.getWidth() * ratio), (int) (mBufferBitmap.getHeight() * ratio), Bitmap.Config.ARGB_8888);
-            final Canvas canvas = new Canvas(bitmap);
+            Log.i("pby123", "ratio = " + ratio + " mBufferBitmap.getWidth() = " + mBufferBitmap.getWidth() + " mBufferBitmap.getHeight() = " + mBufferBitmap.getHeight());
+            Bitmap bitmap = Bitmap.createBitmap((int) (mBufferBitmap.getWidth() * ratio), (int) (mBufferBitmap.getHeight() * ratio), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
             matrix.setScale(ratio, ratio);
             canvas.drawBitmap(mBufferBitmap, matrix, null);
-            matrix.setScale(mBufferBitmap.getWidth() * ratio / getWidth(), mBufferBitmap.getHeight() * ratio / getHeight());
-            canvas.drawBitmap(mBufferBitmap, matrix, null);
+//            matrix.setScale(ratio, ratio);
+//            canvas.drawBitmap(mBufferBitmap, matrix, null);
             // ---
             final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);

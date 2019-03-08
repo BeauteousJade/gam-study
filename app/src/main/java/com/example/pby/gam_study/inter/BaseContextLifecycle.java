@@ -8,5 +8,5 @@ public interface BaseContextLifecycle {
      */
     void onPrepareBaseContext();
 
-    Object onCreateBaseContext();
+    <T> T onCreateBaseContext();
 }

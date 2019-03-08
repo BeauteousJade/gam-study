@@ -1,9 +1,13 @@
 package com.example.pby.gam_study.page.card;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
+import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.fragment.BaseFragment;
+import com.example.pby.gam_study.util.ResourcesUtil;
 
 public class CardActivity extends BaseActivity {
 

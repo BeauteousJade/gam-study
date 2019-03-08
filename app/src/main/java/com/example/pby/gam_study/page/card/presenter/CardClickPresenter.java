@@ -1,8 +1,7 @@
 package com.example.pby.gam_study.page.card.presenter;
 
-import android.widget.ImageView;
+import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.example.annation.Inject;
 import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
@@ -10,20 +9,19 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Card;
 import com.example.pby.gam_study.page.card.CardAdapter;
+import com.example.pby.gam_study.page.cardDetail.CardDetailActivity;
 
-import butterknife.BindView;
+import butterknife.OnClick;
 
 @Module(CardAdapter.Context.class)
-public class CardPresenter extends Presenter {
-
-    @BindView(R.id.image)
-    ImageView mImageView;
+public class CardClickPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)
     Card mCard;
 
-    @Override
-    protected void onBind() {
-        Glide.with(getCurrentFragment()).asBitmap().load(mCard.getEditImageUrl()).into(mImageView);
+
+    @OnClick(R.id.image)
+    public void onImageClick(View view) {
+        CardDetailActivity.startActivity(getCurrentActivity(), mCard);
     }
 }

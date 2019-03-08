@@ -57,10 +57,11 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
     public void onPrepareBaseContext() {
     }
 
-    public Object onCreateBaseContext() {
+    @SuppressWarnings("unchecked")
+    public <T> T onCreateBaseContext() {
         Context context = new Context();
         context.mFragment = this;
-        return context;
+        return (T) context;
     }
 
     @SuppressWarnings("unchecked")

@@ -16,6 +16,7 @@ import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.card.presenter.CardTitleBarPresenter;
+import com.example.pby.gam_study.page.card.presenter.SlideCardPresenter;
 import com.example.pby.gam_study.widget.layoutManager.SlideItemTouchCallback;
 import com.example.pby.gam_study.widget.layoutManager.SlideLayoutManager;
 
@@ -47,25 +48,27 @@ public class CardFragment extends RefreshRecyclerViewFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Object onCreateBaseContext() {
+    public <T> T onCreateBaseContext() {
         Context context = new Context();
-        context.mContext = (RefreshRecyclerViewFragment.Context) super.onCreateBaseContext();
+        context.mContext = super.onCreateBaseContext();
         context.mKindName = mKindName;
         context.mKindId = mKindId;
-        return context;
+        return (T) context;
     }
 
     @Override
     public Presenter onCreatePresenter() {
         Presenter presenter = super.onCreatePresenter();
+        presenter.add(new SlideCardPresenter());
         presenter.add(new CardTitleBarPresenter());
         return presenter;
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_refresh_title;
+        return R.layout.fragment_card;
     }
 
     @Override
@@ -79,13 +82,18 @@ public class CardFragment extends RefreshRecyclerViewFragment {
     }
 
     @Override
+    public ItemTouchHelper.Callback onCreateCallback() {
+        return new SlideItemTouchCallback(getRecyclerAdapter(), mMaxVisibleCount);
+    }
+
+    @Override
     protected ItemTouchHelper onCreateItemTouchHelper() {
-        return new ItemTouchHelper(new SlideItemTouchCallback(getRecyclerAdapter(), mMaxVisibleCount));
+        return new ItemTouchHelper(getCallback());
     }
 
     @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return new SlideLayoutManager(mMaxVisibleCount, getItemTouchHelper(), getRecyclerView());
+        return new SlideLayoutManager(mMaxVisibleCount);
     }
 
     public static class Context {

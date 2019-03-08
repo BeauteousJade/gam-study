@@ -16,4 +16,6 @@ public final class AccessIds {
     public static final String TITLE = "title";
     public static final String URL = "url";
     public static final String KIND_ID = "kind_id";
+    public static final String CALLBACK = "callback";
+    public static final String CARD = "card";
 }
