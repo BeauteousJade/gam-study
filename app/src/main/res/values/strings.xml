@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">片刻学习</string>
 
+    <string name="sure">确定</string>
     <string name="forget_password">忘记密码？</string>
     <string name="login">登录</string>
+    <string name="cancel">取消</string>
     <string name="register">注册</string>
     <string name="photo_number">手机号</string>
     <string name="validate_code">验证码</string>
@@ -28,7 +30,7 @@
     <string name="new_failure">创建失败</string>
     <string name="new_success">创建成功</string>
     <string name="kind_nam_exist">名字已经存在了哦！</string>
-    <string name="card_count_regex_text">卡片数:%s ></string>
+    <string name="card_count_regex_text">卡片数: %s ></string>
     <string name="empty_data">暂无数据</string>
     <string name="select_image">请选择图片</string>
     <string name="answer_title">请确认你的答案</string>
@@ -38,6 +40,23 @@
     <string name="answer_empty">答案为空哦！</string>
     <string name="title_make_card">制作卡片</string>
     <string name="title_edit_image">编辑图片</string>
+    <string name="item_edit_old_image">原图编辑</string>
+    <string name="item_edit_new_image">新图编辑</string>
+    <string name="edit_success">编辑成功</string>
+    <string name="edit_failure">编辑失败</string>
+    <string name="no_edit">没有进行任何编辑！</string>
+    <string name="browse_old_image">查看原图</string>
+    <string name="browse_edit_image">查看新图</string>
+    <string name="answer_regex">答案：%s</string>
+    <string name="daily_task">每日任务</string>
+    <string name="sign">签到</string>
+    <string name="signed">已签到</string>
+    <string name="daily_sign">每日签到</string>
+    <string name="daily_card">每日卡片</string>
+    <string name="complete">去完成</string>
+    <string name="completed">已完成</string>
+    <string name="sign_success">签到成功, 学习积分+5</string>
+    <string name="sign_failure">签到失败</string>
     <plurals name="error_over_count">
         <item quantity="one">You can only select one media file</item>
         <item quantity="many">You can only select up to %1$d media files</item>

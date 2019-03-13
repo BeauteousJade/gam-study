@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
@@ -15,7 +17,6 @@ import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.fragment.util.Observable;
 import com.example.pby.gam_study.util.ArrayUtil;
-import com.example.pby.gam_study.widget.layoutManager.ItemTouchStatus;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     private BaseRecyclerAdapter mRecyclerAdapter;
     private ItemTouchHelper.Callback mCallback;
     private ItemTouchHelper mItemTouchHelper;
+    private SnapHelper mSnapHelper;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<? extends RecyclerView.ItemDecoration> mItemDecorationList;
     private final Observable mObservable = new Observable();
@@ -36,6 +38,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     public void onPrepareBaseContext() {
         mRecyclerAdapter = onCreateAdapter();
         mCallback = onCreateCallback();
+        mSnapHelper = onCreateSnapHelper();
         mItemTouchHelper = onCreateItemTouchHelper();
         mLayoutManager = onCreateLayoutManager();
         mItemDecorationList = onCreateItemDecoration();
@@ -58,6 +61,19 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         if (mItemTouchHelper != null) {
             mItemTouchHelper.attachToRecyclerView(mRecyclerView);
         }
+        if (mSnapHelper != null) {
+            mSnapHelper.attachToRecyclerView(mRecyclerView);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        mRecyclerAdapter.onDestroy(getRecyclerView());
+        super.onDestroyView();
+    }
+
+    protected PagerSnapHelper onCreateSnapHelper() {
+        return null;
     }
 
     public ItemTouchHelper.Callback onCreateCallback() {
@@ -94,6 +110,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
 
     public final ItemTouchHelper.Callback getCallback() {
         return mCallback;
+    }
+
+    public final SnapHelper getSnapHelper() {
+        return mSnapHelper;
     }
 
     @Override

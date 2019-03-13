@@ -10,6 +10,7 @@ import com.example.pby.gam_study.page.card.presenter.CardPresenter;
 import java.util.List;
 
 public class CardAdapter extends BaseRecyclerAdapter<Card> {
+
     public CardAdapter(List<Card> dataList) {
         super(dataList);
     }
@@ -25,5 +26,15 @@ public class CardAdapter extends BaseRecyclerAdapter<Card> {
         presenter.add(new CardPresenter());
         presenter.add(new CardClickPresenter());
         return presenter;
+    }
+
+    @Override
+    public boolean onItemRemove(int position) {
+        mDataList.remove(position);
+        if (mDataList.isEmpty()) {
+            mDataList.add(null);
+        }
+        notifyDataSetChanged();
+        return true;
     }
 }

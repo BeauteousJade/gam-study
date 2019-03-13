@@ -5,7 +5,6 @@ import android.view.View;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.newCard.NewCardActivity;
 import com.example.pby.gam_study.page.newKind.NewKindActivity;
 import com.example.pby.gam_study.util.ToastUtil;
 
@@ -23,7 +22,7 @@ public class TitleBarPresenter extends Presenter implements View.OnClickListener
     @OnClick(R.id.right_icon)
     void onRightIconClick(View view) {
         if (mGamDialogFragment == null) {
-            mGamDialogFragment = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_RIGHT_BOTTOM, R.layout.add_menu_home)
+            mGamDialogFragment = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_RIGHT_BOTTOM, R.layout.menu_home)
                     .setAnchorView(view)
                     .setOnViewClickListener(this, R.id.menu1, R.id.menu2, R.id.menu3)
                     .build();
@@ -38,7 +37,7 @@ public class TitleBarPresenter extends Presenter implements View.OnClickListener
                 NewKindActivity.startAtivity(getCurrentActivity());
                 break;
             case R.id.menu2:
-//                NewCardActivity.startActivity(getCurrentActivity());
+//                EditCardActivity.startActivity(getCurrentActivity());
                 break;
             case R.id.menu3:
                 ToastUtil.info(getCurrentActivity(), "menu3");

@@ -26,10 +26,12 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        onPrepare();
         mPresenter = onCreatePresenter();
         mPresenter.create(this);
         return inflater.inflate(getLayoutId(), container, false);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -38,12 +40,19 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
         mPresenter.bind(onCreateBaseContext(), view);
     }
 
-
     @Override
     public void onDestroyView() {
+        mPresenter.unBind();
         mPresenter.destroy();
         super.onDestroyView();
     }
+
+
+    public final void refresh() {
+        mPresenter.unBind();
+        mPresenter.bind(onCreateBaseContext(), getRootView());
+    }
+
 
     public Presenter onCreatePresenter() {
         return new Presenter();
@@ -52,6 +61,9 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
     @LayoutRes
     protected abstract int getLayoutId();
 
+    protected void onPrepare() {
+
+    }
 
     @Override
     public void onPrepareBaseContext() {

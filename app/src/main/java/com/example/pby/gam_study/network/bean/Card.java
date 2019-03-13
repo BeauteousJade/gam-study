@@ -21,6 +21,8 @@ public class Card implements Parcelable {
     private String mAnswer;
     @SerializedName("time")
     private long mTime;
+    @SerializedName("updateTime")
+    private long mUpdateTime;
 
     protected Card(Parcel in) {
         mId = in.readString();
@@ -30,6 +32,7 @@ public class Card implements Parcelable {
         mEditImageUrl = in.readString();
         mAnswer = in.readString();
         mTime = in.readLong();
+        mUpdateTime = in.readLong();
     }
 
     public static final Creator<Card> CREATOR = new Creator<Card>() {
@@ -100,6 +103,14 @@ public class Card implements Parcelable {
         this.mTime = time;
     }
 
+    public long getUpdateTime() {
+        return mUpdateTime;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        this.mUpdateTime = updateTime;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -114,5 +125,17 @@ public class Card implements Parcelable {
         dest.writeString(mEditImageUrl);
         dest.writeString(mAnswer);
         dest.writeLong(mTime);
+        dest.writeLong(mUpdateTime);
+    }
+
+    public final void copy(Card originCard) {
+        mId = originCard.getId();
+        mUserId = originCard.getUserId();
+        mKindId = originCard.getKindId();
+        mOldImageUrl = originCard.getOldImageUrl();
+        mEditImageUrl = originCard.getEditImageUrl();
+        mAnswer = originCard.getAnswer();
+        mTime = originCard.getTime();
+        mUpdateTime = originCard.getUpdateTime();
     }
 }

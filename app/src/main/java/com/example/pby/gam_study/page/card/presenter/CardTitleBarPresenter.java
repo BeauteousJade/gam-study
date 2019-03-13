@@ -10,8 +10,12 @@ import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
+import com.example.pby.gam_study.page.browseImage.BrowseImageActivity;
 import com.example.pby.gam_study.page.card.CardFragment;
-import com.example.pby.gam_study.page.newCard.NewCardActivity;
+import com.example.pby.gam_study.page.editCard.EditCardActivity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,7 +40,7 @@ public class CardTitleBarPresenter extends Presenter implements View.OnClickList
     @Override
     protected void onBind() {
         mTitleView.setText(mKindName);
-        mLeftView.setImageResource(R.mipmap.icon_back);
+        mLeftView.setImageResource(R.drawable.bg_back);
         mRightView.setImageResource(R.drawable.add);
     }
 
@@ -48,7 +52,7 @@ public class CardTitleBarPresenter extends Presenter implements View.OnClickList
     @OnClick(R.id.right_icon)
     public void onRightClick(View view) {
         if (mDialogFragment == null) {
-            mDialogFragment = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_RIGHT_BOTTOM, R.layout.add_menu_card)
+            mDialogFragment = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_RIGHT_BOTTOM, R.layout.menu_card)
                     .setAnchorView(view)
                     .setOnViewClickListener(this, R.id.menu_new_card)
                     .build();
@@ -60,7 +64,7 @@ public class CardTitleBarPresenter extends Presenter implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu_new_card:
-                NewCardActivity.startActivity(getCurrentActivity(), mKindId);
+                EditCardActivity.startActivity(getCurrentActivity(), mKindId);
                 break;
         }
         mDialogFragment.dismiss();

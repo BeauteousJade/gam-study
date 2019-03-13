@@ -8,7 +8,7 @@ import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.home.page.home.adapter.KindAdapter;
 import com.example.pby.gam_study.page.home.page.home.request.KindRequest;
-import com.example.pby.gam_study.page.newKind.GridItemDecoration;
+import com.example.pby.gam_study.decoration.GridItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;

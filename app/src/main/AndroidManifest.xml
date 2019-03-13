@@ -42,9 +42,11 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".page.newKind.NewKindActivity" />
         <activity android:name=".page.card.CardActivity" />
-        <activity android:name=".page.newCard.NewCardActivity" />
+        <activity android:name=".page.editCard.EditCardActivity" />
         <activity android:name=".page.editImage.EditImageActivity" />
         <activity android:name=".page.cardDetail.CardDetailActivity" />
+        <activity android:name=".page.browseImage.BrowseImageActivity" />
+        <activity android:name=".page.dailyCard.DailyCardActivity" />
     </application>
 
 </manifest>

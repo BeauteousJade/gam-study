@@ -51,8 +51,8 @@ public class EditImagePresenter extends Presenter {
     @Override
     protected void onBind() {
         mTextView.setText(getString(R.string.title_edit_image));
-        mLeftView.setImageDrawable(getDrawable(R.mipmap.icon_back));
-        mRightView.setImageDrawable(getDrawable(R.mipmap.icon_ok));
+        mLeftView.setImageDrawable(getDrawable(R.drawable.bg_back));
+        mRightView.setImageDrawable(getDrawable(R.drawable.bg_ok));
         Glide.with(getCurrentFragment()).asBitmap().load(mUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(new CustomTarget<Bitmap>() {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {

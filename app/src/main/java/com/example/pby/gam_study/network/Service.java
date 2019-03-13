@@ -1,6 +1,7 @@
 package com.example.pby.gam_study.network;
 
 import com.example.pby.gam_study.network.bean.Card;
+import com.example.pby.gam_study.network.bean.DailyTask;
 import com.example.pby.gam_study.network.bean.Kind;
 import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.page.login.bean.CodeBean;
@@ -27,9 +28,17 @@ public interface Service {
     @FormUrlEncoded
     Observable<List<Kind>> findAllKind(@Field("userId") String userId);
 
+    @POST("/kind/findRecentBrowseKind")
+    @FormUrlEncoded
+    Observable<List<Kind>> findRecentBrowseKind(@Field("userId") String userId);
+
     @POST("/kind/insertKind")
     @FormUrlEncoded
     Observable<Integer> insertKind(@Field("userId") String userId, @Field("name") String kindName, @Field("cover") String cover);
+
+    @POST("/kind/updateTime")
+    @FormUrlEncoded
+    Observable<Boolean> updateTime(@Field("kindId") String kindId);
 
     @POST("/cover/findAllCover")
     Observable<List<NewKindItem>> findKindCover();
@@ -40,4 +49,19 @@ public interface Service {
 
     @POST("/card/insertCard")
     Observable<Card> insertCard(@Body RequestBody requestBody);
+
+    @POST("/card/editCard")
+    Observable<Card> editCard(@Body RequestBody requestBody);
+
+    @POST("/daily/findDailyTask")
+    @FormUrlEncoded
+    Observable<List<DailyTask>> findDailyCard(@Field("userId") String userId);
+
+    @POST("/daily/sign")
+    @FormUrlEncoded
+    Observable<Boolean> sign(@Field("userId") String userId);
+
+    @POST("/daily/updateDailyCard")
+    @FormUrlEncoded
+    Observable<Boolean> updateDailyCard(@Field("userId") String userId, @Field("cardId") String cardId);
 }

@@ -40,7 +40,7 @@ public class SlideItemTouchCallback extends ItemTouchHelper.Callback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         if (!ArrayUtil.isEmpty(mOnSlideListenerList)) {
             for (OnSlideListener listener : mOnSlideListenerList) {
-                listener.onSlided(viewHolder.itemView.getTranslationX() > 0);
+                listener.onSlided(viewHolder.itemView.getTranslationX() > 0, viewHolder.getAdapterPosition());
             }
         }
         // 从数据源中移除相应的数据
@@ -106,7 +106,7 @@ public class SlideItemTouchCallback extends ItemTouchHelper.Callback {
     public interface OnSlideListener {
         void onSlide(float dx, float dy);
 
-        void onSlided(boolean right);
+        void onSlided(boolean right, int position);
     }
 }
    

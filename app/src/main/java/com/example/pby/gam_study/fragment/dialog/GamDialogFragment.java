@@ -1,12 +1,13 @@
 package com.example.pby.gam_study.fragment.dialog;
 
 import android.app.Dialog;
-import android.os.Build;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,8 +17,10 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.util.DisplayUtil;
+import com.example.pby.gam_study.util.ResourcesUtil;
 
 public class GamDialogFragment extends DialogFragment {
 
@@ -52,6 +55,9 @@ public class GamDialogFragment extends DialogFragment {
 
     private boolean mCancelable = true;
     private boolean mCanceledOnTouchOutside = true;
+    private int mWindowWidth = -1;
+    private int mWindowHeight = -1;
+    private int mAnimationStyle;
 
     private static GamDialogFragment newInstance(@LocationStyle int style, @LayoutRes int layoutId) {
         final GamDialogFragment customDialogFragment = new GamDialogFragment();
@@ -104,8 +110,19 @@ public class GamDialogFragment extends DialogFragment {
         dialog.setCanceledOnTouchOutside(mCanceledOnTouchOutside);
         dialog.setCancelable(mCancelable);
         if (window != null) {
-            window.setBackgroundDrawable(null);
+            window.setBackgroundDrawable(new ColorDrawable(ResourcesUtil.getColor(requireContext(), R.color.transparent)));
             window.setGravity(Gravity.START | Gravity.TOP);
+            WindowManager.LayoutParams lp = window.getAttributes();
+            if (mWindowWidth > 0) {
+                lp.width = mWindowWidth;
+            }
+            if (mWindowHeight > 0) {
+                lp.height = mWindowHeight;
+            }
+            if (mAnimationStyle != 0) {
+                lp.windowAnimations = mAnimationStyle;
+            }
+            window.setAttributes(lp);
         }
     }
 
@@ -129,7 +146,7 @@ public class GamDialogFragment extends DialogFragment {
             final int[] anchorLocation = new int[2];
             mAnchorView.getLocationInWindow(anchorLocation);
             mTranslationX = anchorLocation[0];
-            mTranslationY = anchorLocation[1] - DisplayUtil.getStatusBarHeight(getContext());
+            mTranslationY = anchorLocation[1] - DisplayUtil.getStatusBarHeight(requireContext());
             switch (mLocationStyle) {
                 case LocationStyle.STYLE_LEFT_TOP:
                     mTranslationY -= contentHeight;
@@ -199,6 +216,20 @@ public class GamDialogFragment extends DialogFragment {
             return this;
         }
 
+        public Builder setWindowWidth(int widowWidth) {
+            mCustomDialogFragment.mWindowWidth = widowWidth;
+            return this;
+        }
+
+        public Builder setWindowHeight(int windowHeight) {
+            mCustomDialogFragment.mWindowHeight = windowHeight;
+            return this;
+        }
+
+        public Builder setAnimationStyle(@StyleRes int id) {
+            mCustomDialogFragment.mAnimationStyle = id;
+            return this;
+        }
 
         public GamDialogFragment build() {
             return mCustomDialogFragment;

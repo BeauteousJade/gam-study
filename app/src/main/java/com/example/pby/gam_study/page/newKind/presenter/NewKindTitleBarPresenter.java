@@ -85,8 +85,8 @@ public class NewKindTitleBarPresenter extends Presenter {
     @Override
     protected void onBind() {
         mTitleView.setText(ResourcesUtil.getString(getCurrentActivity(), R.string.menu_item_new_kind));
-        mLeftView.setImageResource(R.mipmap.icon_back);
-        mRightView.setImageResource(R.mipmap.icon_ok);
+        mLeftView.setImageResource(R.drawable.bg_back);
+        mRightView.setImageResource(R.drawable.bg_ok);
         mObservable.removeObserver(mObserver);
         mObservable.addObserver(mObserver);
     }

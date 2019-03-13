@@ -11,12 +11,13 @@ import com.example.annation.Provides;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
-import com.example.pby.gam_study.factory.LayoutManagerFactory;
 import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.card.presenter.CardTitleBarPresenter;
+import com.example.pby.gam_study.page.card.presenter.CardUpdateTimePresenter;
 import com.example.pby.gam_study.page.card.presenter.SlideCardPresenter;
+import com.example.pby.gam_study.page.card.request.CardRequest;
 import com.example.pby.gam_study.widget.layoutManager.SlideItemTouchCallback;
 import com.example.pby.gam_study.widget.layoutManager.SlideLayoutManager;
 
@@ -26,7 +27,7 @@ public class CardFragment extends RefreshRecyclerViewFragment {
 
     private static final String KIND_ID = "kind_id";
     private static final String KIND_NAME = "kind_name";
-    private static final int mMaxVisibleCount = 3;
+    private static final int MAX_VISIBLE_COUNT = 3;
     private String mKindId;
     private String mKindName;
 
@@ -63,6 +64,7 @@ public class CardFragment extends RefreshRecyclerViewFragment {
         Presenter presenter = super.onCreatePresenter();
         presenter.add(new SlideCardPresenter());
         presenter.add(new CardTitleBarPresenter());
+        presenter.add(new CardUpdateTimePresenter());
         return presenter;
     }
 
@@ -83,7 +85,7 @@ public class CardFragment extends RefreshRecyclerViewFragment {
 
     @Override
     public ItemTouchHelper.Callback onCreateCallback() {
-        return new SlideItemTouchCallback(getRecyclerAdapter(), mMaxVisibleCount);
+        return new SlideItemTouchCallback(getRecyclerAdapter(), MAX_VISIBLE_COUNT);
     }
 
     @Override
@@ -93,7 +95,7 @@ public class CardFragment extends RefreshRecyclerViewFragment {
 
     @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return new SlideLayoutManager(mMaxVisibleCount);
+        return new SlideLayoutManager(MAX_VISIBLE_COUNT, SlideLayoutManager.Gravity.bottom);
     }
 
     public static class Context {

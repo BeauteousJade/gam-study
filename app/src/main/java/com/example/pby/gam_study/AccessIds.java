@@ -18,4 +18,6 @@ public final class AccessIds {
     public static final String KIND_ID = "kind_id";
     public static final String CALLBACK = "callback";
     public static final String CARD = "card";
+    public static final String TYPE = "type";
+    public static final String LIST = "list";
 }

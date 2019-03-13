@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,12 @@ import com.example.pby.gam_study.widget.layoutManager.ItemTouchStatus;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * 如果{@link BaseRecyclerAdapter#mDataList} size = 1，并且相应位置的值为null，表示当前RecyclerView为空数据
+ * 此时有特殊含义。但是，如果size = 0的位置为null，size大于1，此时没有特殊含义，让每个子类自我实现。
+ *
+ * @param <U>
+ */
 public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseViewHolder> implements Presence, ItemTouchStatus {
 
     private static final int TYPE_EMPTY = -1;
@@ -95,6 +102,10 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         return mDataList;
     }
 
+    public U getItem(int index) {
+        return mDataList.get(index);
+    }
+
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -126,6 +137,26 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         }
     }
 
+    @Override
+    public void onViewDetachedFromWindow(@NonNull BaseViewHolder holder) {
+        if (isShowEmpty()) {
+            holder.mPresenter.unBind();
+        }
+    }
+
+    public void onDestroy(RecyclerView recyclerView) {
+        if (isShowEmpty()) {
+            return;
+        }
+        final int childCount = recyclerView.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = recyclerView.getChildAt(i);
+            final BaseViewHolder viewHolder = (BaseViewHolder) recyclerView.getChildViewHolder(child);
+            viewHolder.mPresenter.destroy();
+        }
+    }
+
+
     public Object onCreateContext(@NonNull BaseViewHolder baseViewHolder, int position, List<Object> payloads) {
         Context context = new Context();
         context.mItem = mDataList.get(position);
@@ -144,7 +175,6 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         notifyDataSetChanged();
         return true;
     }
-
 
 
     public boolean isShowEmpty() {

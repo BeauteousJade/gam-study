@@ -2,10 +2,9 @@ package com.example.pby.gam_study.page.newKind;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.example.annation.Provides;
-import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
+import com.example.pby.gam_study.decoration.GridItemDecoration;
 import com.example.pby.gam_study.factory.LayoutManagerFactory;
 import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;

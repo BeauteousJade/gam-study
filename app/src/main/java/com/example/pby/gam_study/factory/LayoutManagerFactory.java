@@ -9,12 +9,7 @@ import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 
 public class LayoutManagerFactory {
 
-    public static final SpanFull DEFAULT_SPAN_FULL = (adapter, position) -> {
-        if (adapter.isShowEmpty()) {
-            return true;
-        }
-        return false;
-    };
+    public static final SpanFull DEFAULT_SPAN_FULL = (adapter, position) -> adapter.isShowEmpty();
 
     public static RecyclerView.LayoutManager createGridLayoutManagerIfEmpty(Context context, final BaseRecyclerAdapter adapter, final int spaCount, final SpanFull spanFull) {
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, spaCount);

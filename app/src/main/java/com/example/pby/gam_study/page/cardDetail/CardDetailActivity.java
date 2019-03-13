@@ -10,16 +10,19 @@ import com.example.pby.gam_study.fragment.BaseFragment;
 import com.example.pby.gam_study.network.bean.Card;
 import com.example.pby.gam_study.util.ResourcesUtil;
 
+import static com.example.pby.gam_study.RequestCode.REQUEST_UPDATE_CARD;
+
 public class CardDetailActivity extends BaseActivity {
 
     public static final String KEY_CARD = "key_card";
+    public static final String KEY_UPDATE_CARD = "update_card";
 
     private Card mCard;
 
     public static void startActivity(BaseActivity activity, Card card) {
         Intent intent = new Intent(activity, CardDetailActivity.class);
         intent.putExtra(KEY_CARD, card);
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent, REQUEST_UPDATE_CARD);
         activity.overridePendingTransition(R.anim.scale_in, 0);
     }
 

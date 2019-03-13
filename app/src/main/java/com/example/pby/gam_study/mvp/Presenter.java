@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.example.inject.Blade;
 import com.example.pby.gam_study.activity.BaseActivity;
+import com.example.pby.gam_study.fragment.BaseFragment;
 import com.example.pby.gam_study.util.ArrayUtil;
 
 import java.util.ArrayList;
@@ -40,13 +41,13 @@ public class Presenter {
 
     public final void bind(Object source, View view) {
         if (mUnBinder == null) {
-            Blade.inject(this, source);
             mUnBinder = ButterKnife.bind(this, view);
-            onBind();
-            if (!ArrayUtil.isEmpty(mPresenterList)) {
-                for (Presenter presenter : mPresenterList) {
-                    presenter.bind(source, view);
-                }
+        }
+        Blade.inject(this, source);
+        onBind();
+        if (!ArrayUtil.isEmpty(mPresenterList)) {
+            for (Presenter presenter : mPresenterList) {
+                presenter.bind(source, view);
             }
         }
     }
@@ -56,8 +57,6 @@ public class Presenter {
 
     public final void unBind() {
         if (mUnBinder != null) {
-            mUnBinder.unbind();
-            mUnBinder = null;
             onUnBind();
             if (!ArrayUtil.isEmpty(mPresenterList)) {
                 for (Presenter presenter : mPresenterList) {
@@ -73,8 +72,10 @@ public class Presenter {
     }
 
     public final void destroy() {
-        mPresence = null;
         onDestroy();
+        mUnBinder.unbind();
+        mUnBinder = null;
+        mPresence = null;
         if (!ArrayUtil.isEmpty(mPresenterList)) {
             for (Presenter presenter : mPresenterList) {
                 presenter.destroy();
@@ -92,7 +93,7 @@ public class Presenter {
         mPresenterList.add(presenter);
     }
 
-    public final Fragment getCurrentFragment() {
+    public final BaseFragment getCurrentFragment() {
         return mPresence.getCurrentFragment();
     }
 

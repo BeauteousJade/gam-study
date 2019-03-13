@@ -8,7 +8,6 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.BaseFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Card;
-import com.example.pby.gam_study.page.cardDetail.presenter.BottomBarPresenter;
 import com.example.pby.gam_study.page.cardDetail.presenter.CardDetailPresenter;
 import com.example.pby.gam_study.page.cardDetail.presenter.ImageLoadPresenter;
 
@@ -31,7 +30,6 @@ public class CardDetailFragment extends BaseFragment {
         mCard = Objects.requireNonNull(getArguments()).getParcelable(CardDetailActivity.KEY_CARD);
     }
 
-
     @SuppressWarnings("unchecked")
     @Override
     public <T> T onCreateBaseContext() {
@@ -45,7 +43,6 @@ public class CardDetailFragment extends BaseFragment {
     public Presenter onCreatePresenter() {
         Presenter presenter = new Presenter();
         presenter.add(new CardDetailPresenter());
-        presenter.add(new BottomBarPresenter());
         presenter.add(new ImageLoadPresenter());
         return presenter;
     }

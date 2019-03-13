@@ -33,6 +33,7 @@ public class HomePageFragment extends RecyclerViewFragment implements HomePage {
 
     private final PageIndicator.OnItemClickListener mOnItemClickListener = position -> getRecyclerView().smoothScrollToPosition(position);
     private final PagerRecyclerView.OnPageScrollListener mOnPageScrollListener = new PagerRecyclerView.OnPageScrollListener() {
+
         @Override
         public void onPageSelected(RecyclerView recyclerView, int position) {
             PageIndicator.PageAdapter adapter = (PageIndicator.PageAdapter) mRecyclerViewTitle.getAdapter();

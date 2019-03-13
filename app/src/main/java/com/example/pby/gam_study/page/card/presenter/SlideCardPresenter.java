@@ -30,12 +30,10 @@ public class SlideCardPresenter extends Presenter {
     private final SlideItemTouchCallback.OnSlideListener mSlideListener = new SlideItemTouchCallback.OnSlideListener() {
         @Override
         public void onSlide(float dx, float dy) {
-            endAnimation(mRememberView);
-            endAnimation(mNotRememberView);
         }
 
         @Override
-        public void onSlided(boolean right) {
+        public void onSlided(boolean right, int position) {
             startAnimation(right ? mRememberView : mNotRememberView);
         }
     };
@@ -58,10 +56,21 @@ public class SlideCardPresenter extends Presenter {
     }
 
     private void startAnimation(View view) {
-        view.animate().scaleX(1.5f).scaleY(1.5f).setDuration(500).setListener(new AnimatorListenerAdapter() {
+        endAnimation(view);
+        view.animate().scaleX(1.5f).scaleY(1.5f).setDuration(300).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                view.animate().setListener(null);
+                view.setScaleY(1.5f);
+                view.setScaleY(1.5f);
+            }
+
             @Override
             public void onAnimationEnd(Animator animation) {
-                view.animate().scaleX(1.f).scaleY(1.f).setDuration(500).start();
+                view.animate().setListener(null);
+                view.setScaleY(1.5f);
+                view.setScaleY(1.5f);
+                view.animate().scaleX(1.f).scaleY(1.f).setDuration(300).start();
             }
         }).start();
 
@@ -69,5 +78,6 @@ public class SlideCardPresenter extends Presenter {
 
     private void endAnimation(View view) {
         view.animate().cancel();
+        view.animate().setListener(null);
     }
 }

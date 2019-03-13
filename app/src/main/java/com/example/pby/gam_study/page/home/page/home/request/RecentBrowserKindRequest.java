@@ -15,6 +15,6 @@ public class RecentBrowserKindRequest extends BaseRequest<List<Kind>> {
     public Observable<List<Kind>> createObservable() {
         return NetWorkManager
                 .getService(Service.class)
-                .findAllKind(LoginManager.getCurrentUser().getId());
+                .findRecentBrowseKind(LoginManager.getCurrentUser().getId());
     }
 }

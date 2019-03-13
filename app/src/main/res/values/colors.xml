@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">@color/color_003</color>
 
-    <color name="windowBackgroundColor">#f9f9f9</color>
+    <color name="windowBackgroundColor">#eeeeee</color>
 
     <color name="color_start_blue">#4f8dfe</color>
     <color name="color_end_blue">#35bbfe</color>
@@ -33,4 +33,5 @@
     <color name="color_005">#0cd8fb</color>
     <color name="color_006">#ff72a5</color>
     <color name="color_007">#9a9a9a</color>
+    <color name="color_008">@color/windowBackgroundColor</color>
 </resources>

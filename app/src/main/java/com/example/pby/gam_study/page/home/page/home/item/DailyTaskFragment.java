@@ -1,12 +1,39 @@
 package com.example.pby.gam_study.page.home.page.home.item;
 
-import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.fragment.tabhost.PageFragment;
+import android.support.v7.widget.RecyclerView;
 
-public class DailyTaskFragment extends PageFragment {
+import com.example.pby.gam_study.R;
+import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
+import com.example.pby.gam_study.decoration.DailyTaskItemDecoration;
+import com.example.pby.gam_study.factory.LayoutManagerFactory;
+import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
+import com.example.pby.gam_study.network.bean.DailyTask;
+import com.example.pby.gam_study.network.request.Request;
+import com.example.pby.gam_study.page.home.page.home.adapter.DailyTaskAdapter;
+import com.example.pby.gam_study.page.home.page.home.request.DailyTaskRequest;
+import com.example.pby.gam_study.util.DisplayUtil;
+import com.example.pby.gam_study.util.ResourcesUtil;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class DailyTaskFragment extends RefreshRecyclerViewFragment {
 
     public static DailyTaskFragment newInstance() {
         return new DailyTaskFragment();
+    }
+
+
+    @Override
+    public void onPrepareBaseContext() {
+        super.onPrepareBaseContext();
+        getRecyclerView().setPadding(DisplayUtil.dpToPx(requireActivity(), 20), 0, DisplayUtil.dpToPx(requireActivity(), 20), 0);
+    }
+
+    @Override
+    public Request onCreateRequest() {
+        return new DailyTaskRequest();
     }
 
     @Override
@@ -15,12 +42,19 @@ public class DailyTaskFragment extends PageFragment {
     }
 
     @Override
-    public void onPageSelect() {
-
+    protected BaseRecyclerAdapter onCreateAdapter() {
+        List<DailyTask> dailyTasks = new ArrayList<>();
+        dailyTasks.add(null);
+        return new DailyTaskAdapter(dailyTasks);
     }
 
     @Override
-    public void onPageUnSelect() {
+    protected List<? extends RecyclerView.ItemDecoration> onCreateItemDecoration() {
+        return Collections.singletonList(new DailyTaskItemDecoration(requireActivity()));
+    }
 
+    @Override
+    protected RecyclerView.LayoutManager onCreateLayoutManager() {
+        return LayoutManagerFactory.createVerticalLayoutManager(requireActivity());
     }
 }

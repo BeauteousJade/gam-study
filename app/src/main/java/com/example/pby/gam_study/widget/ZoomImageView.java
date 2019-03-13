@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -29,9 +30,13 @@ public class ZoomImageView extends ImageView {
     private float mMidScale;
     private float mLastX;
     private float mLastY;
+    private int mLastPointCount;
+    private boolean mCanMove;
     private boolean mIsCheckLeftAndRight;
     private boolean mIsCheckTopAndBottom;
     private boolean mInitializeDrawable;
+    private boolean mIsScaleByGesture;
+    private ScaleGestureDetector mCurrentDetector;
     private AutoScaleRunnable mAutoScaleRunnable;
     private final Matrix mMatrix = new Matrix();
 
@@ -79,7 +84,7 @@ public class ZoomImageView extends ImageView {
                     mAutoScaleRunnable.setPivot(x, y);
                     mAutoScaleRunnable.setTargetScale(mInitScale);
                 }
-                postDelayed(mAutoScaleRunnable, 16);
+                postOnAnimation(mAutoScaleRunnable);
                 return true;
             }
         });
@@ -90,30 +95,25 @@ public class ZoomImageView extends ImageView {
                     return true;
                 }
                 float scaleFactor = detector.getScaleFactor();
+                if (scaleFactor < 1.0f) {
+                    // 使其缩放到一个点
+                    scaleFactor *= 0.97f;
+                }
                 mMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
                 setImageMatrix(mMatrix);
                 checkBoundAndCenterWhenScale();
+                mIsScaleByGesture = true;
+                mCurrentDetector = detector;
                 return true;
             }
 
             @Override
             public boolean onScaleBegin(ScaleGestureDetector detector) {
+                getParent().requestDisallowInterceptTouchEvent(true);
                 return true;
             }
-
-            @Override
-            public void onScaleEnd(ScaleGestureDetector detector) {
-                float scale = getCurrentScale();
-                if (scale > mMaxScale) {
-                    mMatrix.postScale(mMaxScale / scale, mMaxScale / scale, detector.getFocusX(), detector.getFocusY());
-                }
-                if (scale < mInitScale) {
-                    mMatrix.postScale(mInitScale / scale, mInitScale / scale, detector.getFocusX(), detector.getFocusY());
-                }
-                setImageMatrix(mMatrix);
-                checkBoundAndCenterWhenScale();
-            }
         });
+
     }
 
     public float getCurrentScale() {
@@ -175,21 +175,49 @@ public class ZoomImageView extends ImageView {
             return true;
         }
         mScaleGestureDetector.onTouchEvent(event);
-        final float x = event.getX();
-        final float y = event.getY();
+        float x = 0;
+        float y = 0;
+        final int pointCount = event.getPointerCount();
+        for (int i = 0; i < pointCount; i++) {
+            x += event.getX(i);
+            y += event.getY(i);
+        }
+        x /= pointCount * 1.0f;
+        y /= pointCount * 1.0f;
+        if (pointCount != mLastPointCount) {
+            mCanMove = false;
+            mLastX = x;
+            mLastY = y;
+        }
+        mLastPointCount = pointCount;
         final RectF rectF = getMatrixRectF();
+        final float currentScale = getCurrentScale();
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 mLastX = x;
                 mLastY = y;
+                if (currentScale != mInitScale) {
+                    Log.i("pby123", "down" + "width = " + rectF.width() + " height = " + rectF.height() + " width1 = " + getMeasuredWidth() + " height1 = " + getMeasuredHeight());
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                } else {
+                    getParent().requestDisallowInterceptTouchEvent(false);
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (currentScale != mInitScale) {
+                    Log.i("pby123", "down" + "width = " + rectF.width() + " height = " + rectF.height() + " width1 = " + getMeasuredWidth() + " height1 = " + getMeasuredHeight());
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                } else {
+                    getParent().requestDisallowInterceptTouchEvent(false);
+                }
                 float dX = mLastX - x;
                 float dY = mLastY - y;
                 mIsCheckLeftAndRight = true;
                 mIsCheckTopAndBottom = true;
-                boolean canMove = canMove(dX, dY);
-                if (canMove) {
+                if (!mCanMove) {
+                    mCanMove = canMove(dX, dY);
+                }
+                if (mCanMove) {
                     if (rectF.width() < getMeasuredWidth()) {
                         dX = 0;
                         mIsCheckLeftAndRight = false;
@@ -206,9 +234,35 @@ public class ZoomImageView extends ImageView {
                 mLastY = y;
                 break;
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                resetIfScaleByGesture();
                 break;
         }
         return true;
+    }
+
+    private void resetIfScaleByGesture() {
+        if (mIsScaleByGesture) {
+            final float currentScale = getCurrentScale();
+            float targetScale = currentScale;
+            if (currentScale > mMaxScale) {
+                targetScale = mMaxScale;
+            }
+            if (currentScale < mInitScale) {
+                targetScale = mInitScale;
+            }
+            if (targetScale != currentScale) {
+                if (mAutoScaleRunnable == null) {
+                    mAutoScaleRunnable = new AutoScaleRunnable();
+                }
+                mAutoScaleRunnable.setPivot(mCurrentDetector.getFocusX(), mCurrentDetector.getFocusY());
+                mAutoScaleRunnable.setTargetScale(targetScale);
+                mAutoScaleRunnable.setStep(0.3f);
+                postOnAnimation(mAutoScaleRunnable);
+            }
+        }
+        mIsScaleByGesture = false;
+        mCurrentDetector = null;
     }
 
     public void end() {
@@ -285,11 +339,9 @@ public class ZoomImageView extends ImageView {
         return rectf;
     }
 
-
     private class AutoScaleRunnable implements Runnable {
 
-        private static final float SCALE_SMALL = 0.95f;
-        private static final float SCALE_BIG = 1.05f;
+        private static final float DEFAULT_STEP = 0.08f;
 
 
         private float mPivotX;
@@ -297,6 +349,7 @@ public class ZoomImageView extends ImageView {
         private float mTargetScale;
         private float mTempScale = 1.0f;
         private boolean mIsRunning;
+        private float mStep = DEFAULT_STEP;
 
 
         public void setPivot(float pivotX, float pivotY) {
@@ -307,11 +360,15 @@ public class ZoomImageView extends ImageView {
         public void setTargetScale(float targetScale) {
             final float currentScale = getCurrentScale();
             if (targetScale > currentScale) {
-                mTempScale = SCALE_BIG;
+                mTempScale = 1.0f + mStep;
             } else {
-                mTempScale = SCALE_SMALL;
+                mTempScale = 1.0f - mStep;
             }
             mTargetScale = targetScale;
+        }
+
+        public void setStep(float step) {
+            mTempScale = 1.0f + step;
         }
 
         @Override
@@ -322,7 +379,7 @@ public class ZoomImageView extends ImageView {
             checkBoundAndCenterWhenScale();
             final float currentScale = getCurrentScale();
             if ((mTempScale > 1.0f && currentScale < mTargetScale) || (mTempScale < 1.0f && currentScale > mTargetScale)) {
-                postDelayed(this, 16);
+                postOnAnimation(this);
             } else {
                 end();
             }
@@ -341,6 +398,7 @@ public class ZoomImageView extends ImageView {
             setImageMatrix(mMatrix);
             checkBoundAndCenterWhenScale();
             mIsRunning = false;
+            mStep = DEFAULT_STEP;
         }
     }
 }

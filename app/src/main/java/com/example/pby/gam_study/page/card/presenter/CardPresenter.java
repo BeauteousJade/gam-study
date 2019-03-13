@@ -24,6 +24,6 @@ public class CardPresenter extends Presenter {
 
     @Override
     protected void onBind() {
-        Glide.with(getCurrentFragment()).asBitmap().load(mCard.getEditImageUrl()).into(mImageView);
+        Glide.with(getCurrentFragment()).asDrawable().load(mCard.getEditImageUrl()).into(mImageView);
     }
 }
