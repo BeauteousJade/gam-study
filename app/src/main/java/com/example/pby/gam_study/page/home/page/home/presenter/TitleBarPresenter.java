@@ -34,7 +34,7 @@ public class TitleBarPresenter extends Presenter implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu1:
-                NewKindActivity.startAtivity(getCurrentActivity());
+                NewKindActivity.startActivity(getCurrentActivity());
                 break;
             case R.id.menu2:
 //                EditCardActivity.startActivity(getCurrentActivity());

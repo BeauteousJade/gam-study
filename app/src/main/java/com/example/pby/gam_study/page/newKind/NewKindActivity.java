@@ -7,7 +7,7 @@ import com.example.pby.gam_study.fragment.BaseFragment;
 
 public class NewKindActivity extends BaseActivity {
 
-    public static void startAtivity(BaseActivity activity) {
+    public static void startActivity(BaseActivity activity) {
         Intent intent = new Intent(activity, NewKindActivity.class);
         activity.startActivity(intent);
     }

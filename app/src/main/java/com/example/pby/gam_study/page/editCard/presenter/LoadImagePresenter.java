@@ -9,6 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.annation.Inject;
 import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
+import com.example.pby.gam_study.GlideApp;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.RequestCode;
 import com.example.pby.gam_study.activity.BaseActivity;
@@ -37,7 +38,7 @@ public class LoadImagePresenter extends Presenter {
         if (requestCode == RequestCode.REQUEST_EDIT_IMAGE && resultCode == Activity.RESULT_OK) {
             mNewUrl = data != null ? data.getStringExtra(EditImageActivity.IMAGE_URL) : null;
             if (mNewUrl != null) {
-                Glide.with(getCurrentFragment()).asBitmap().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).load(mNewUrl).into(mImageView);
+                GlideApp.with(getCurrentFragment()).asBitmap().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).load(mNewUrl).into(mImageView);
                 mObservable.notifyChanged(EditCardFragment.KEY_OBSERVABLE_EDIT_IMAGE, mNewUrl);
                 return true;
             }
@@ -48,7 +49,7 @@ public class LoadImagePresenter extends Presenter {
 
     @Override
     protected void onBind() {
-        Glide.with(getCurrentFragment()).asBitmap().load(mUrl).into(mImageView);
+        GlideApp.with(getCurrentFragment()).asBitmap().load(mUrl).into(mImageView);
         getCurrentActivity().addOnActivityResultListener(mOnActivityResultListener);
     }
 

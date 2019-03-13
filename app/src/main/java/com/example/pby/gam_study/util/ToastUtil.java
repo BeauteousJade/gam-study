@@ -2,11 +2,11 @@ package com.example.pby.gam_study.util;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 import com.example.pby.gam_study.R;
 
+import androidx.annotation.StringRes;
 import es.dmoral.toasty.Toasty;
 
 public class ToastUtil {

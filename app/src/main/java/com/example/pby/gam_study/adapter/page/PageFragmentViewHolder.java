@@ -1,10 +1,11 @@
 package com.example.pby.gam_study.adapter.page;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.example.pby.gam_study.adapter.base.BaseViewHolder;
 import com.example.pby.gam_study.fragment.tabhost.PageFragment;
+
+import androidx.annotation.NonNull;
 
 public class PageFragmentViewHolder extends BaseViewHolder {
 

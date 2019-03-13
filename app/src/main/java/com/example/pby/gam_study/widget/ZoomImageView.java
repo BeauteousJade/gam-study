@@ -5,16 +5,16 @@ import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 public class ZoomImageView extends ImageView {
 
@@ -197,7 +197,6 @@ public class ZoomImageView extends ImageView {
                 mLastX = x;
                 mLastY = y;
                 if (currentScale != mInitScale) {
-                    Log.i("pby123", "down" + "width = " + rectF.width() + " height = " + rectF.height() + " width1 = " + getMeasuredWidth() + " height1 = " + getMeasuredHeight());
                     getParent().requestDisallowInterceptTouchEvent(true);
                 } else {
                     getParent().requestDisallowInterceptTouchEvent(false);
@@ -205,7 +204,6 @@ public class ZoomImageView extends ImageView {
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (currentScale != mInitScale) {
-                    Log.i("pby123", "down" + "width = " + rectF.width() + " height = " + rectF.height() + " width1 = " + getMeasuredWidth() + " height1 = " + getMeasuredHeight());
                     getParent().requestDisallowInterceptTouchEvent(true);
                 } else {
                     getParent().requestDisallowInterceptTouchEvent(false);
@@ -342,7 +340,6 @@ public class ZoomImageView extends ImageView {
     private class AutoScaleRunnable implements Runnable {
 
         private static final float DEFAULT_STEP = 0.08f;
-
 
         private float mPivotX;
         private float mPivotY;

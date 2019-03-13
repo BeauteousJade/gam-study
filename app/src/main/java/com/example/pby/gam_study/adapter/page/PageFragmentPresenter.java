@@ -1,22 +1,16 @@
 package com.example.pby.gam_study.adapter.page;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewCompat;
-import android.util.Log;
+
 import android.view.View;
 
 import com.example.annation.Inject;
 import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
-import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.fragment.BaseFragment;
-import com.example.pby.gam_study.fragment.tabhost.PageFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 
-import butterknife.BindView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 @Module(PageFragmentAdapter.Context.class)
 public class PageFragmentPresenter extends Presenter {

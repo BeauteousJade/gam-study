@@ -2,13 +2,14 @@ package com.example.pby.gam_study.page.cardDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.fragment.BaseFragment;
 import com.example.pby.gam_study.network.bean.Card;
 import com.example.pby.gam_study.util.ResourcesUtil;
+
+import androidx.annotation.Nullable;
 
 import static com.example.pby.gam_study.RequestCode.REQUEST_UPDATE_CARD;
 

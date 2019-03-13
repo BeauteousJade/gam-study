@@ -1,9 +1,10 @@
 package com.example.pby.gam_study.fragment.tabhost;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class TabHostAdapter extends RecyclerView.Adapter<TabHostAdapter.TabHostViewHolder> {
 

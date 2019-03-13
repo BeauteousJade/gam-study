@@ -1,9 +1,7 @@
 package com.example.pby.gam_study.page.browseImage;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
+
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
@@ -15,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class BrowseImageFragment extends RecyclerViewFragment {
 

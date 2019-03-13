@@ -1,16 +1,17 @@
 package com.example.pby.gam_study.widget.layoutManager;
 
 import android.graphics.Canvas;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
+
 import android.view.View;
 
 import com.example.pby.gam_study.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SlideItemTouchCallback extends ItemTouchHelper.Callback {
 

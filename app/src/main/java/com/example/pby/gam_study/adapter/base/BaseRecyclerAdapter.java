@@ -1,10 +1,7 @@
 package com.example.pby.gam_study.adapter.base;
 
 import android.content.res.Resources;
-import android.support.annotation.NonNull;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +20,10 @@ import com.example.pby.gam_study.widget.layoutManager.ItemTouchStatus;
 
 import java.util.List;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 如果{@link BaseRecyclerAdapter#mDataList} size = 1，并且相应位置的值为null，表示当前RecyclerView为空数据

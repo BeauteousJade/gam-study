@@ -1,11 +1,12 @@
 package com.example.pby.gam_study.factory;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class LayoutManagerFactory {
 
@@ -26,7 +27,7 @@ public class LayoutManagerFactory {
     }
 
     public static RecyclerView.LayoutManager createVerticalLayoutManager(Context context) {
-        return new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        return new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
     }
 
 

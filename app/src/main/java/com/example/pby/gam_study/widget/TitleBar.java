@@ -1,8 +1,6 @@
 package com.example.pby.gam_study.widget;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +8,9 @@ import android.widget.TextView;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.util.ResourcesUtil;
+
+import androidx.annotation.DrawableRes;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class TitleBar extends ConstraintLayout {
 

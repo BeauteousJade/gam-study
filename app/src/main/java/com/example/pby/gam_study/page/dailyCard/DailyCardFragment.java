@@ -1,8 +1,6 @@
 package com.example.pby.gam_study.page.dailyCard;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.example.annation.Provides;
 import com.example.pby.gam_study.AccessIds;
@@ -19,6 +17,9 @@ import com.example.pby.gam_study.widget.layoutManager.SlideLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DailyCardFragment extends RecyclerViewFragment {
 

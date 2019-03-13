@@ -4,13 +4,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DailyTaskItemDecoration extends RecyclerView.ItemDecoration {
 

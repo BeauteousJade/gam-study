@@ -2,11 +2,12 @@ package com.example.pby.gam_study.page.editImage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.example.pby.gam_study.RequestCode;
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.fragment.BaseFragment;
+
+import androidx.annotation.Nullable;
 
 public class EditImageActivity extends BaseActivity {
 

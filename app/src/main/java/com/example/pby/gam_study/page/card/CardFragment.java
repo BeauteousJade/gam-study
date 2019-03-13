@@ -1,10 +1,7 @@
 package com.example.pby.gam_study.page.card;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
 import android.view.View;
 
 import com.example.annation.Provides;
@@ -22,6 +19,11 @@ import com.example.pby.gam_study.widget.layoutManager.SlideItemTouchCallback;
 import com.example.pby.gam_study.widget.layoutManager.SlideLayoutManager;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class CardFragment extends RefreshRecyclerViewFragment {
 

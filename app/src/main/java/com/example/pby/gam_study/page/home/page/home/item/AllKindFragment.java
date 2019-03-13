@@ -1,18 +1,18 @@
 package com.example.pby.gam_study.page.home.page.home.item;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
+import com.example.pby.gam_study.decoration.GridItemDecoration;
 import com.example.pby.gam_study.factory.LayoutManagerFactory;
 import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.home.page.home.adapter.KindAdapter;
 import com.example.pby.gam_study.page.home.page.home.request.KindRequest;
-import com.example.pby.gam_study.decoration.GridItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class AllKindFragment extends RefreshRecyclerViewFragment {
 

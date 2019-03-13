@@ -1,13 +1,7 @@
 package com.example.pby.gam_study.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
 import android.view.View;
 
 import com.example.annation.Provides;
@@ -20,6 +14,13 @@ import com.example.pby.gam_study.util.ArrayUtil;
 
 import java.util.List;
 
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import butterknife.BindView;
 
 public abstract class RecyclerViewFragment extends BaseFragment {

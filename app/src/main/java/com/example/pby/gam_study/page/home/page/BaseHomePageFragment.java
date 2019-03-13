@@ -1,11 +1,10 @@
 package com.example.pby.gam_study.page.home.page;
 
-import android.support.annotation.DrawableRes;
-
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.tabhost.PageFragment;
 import com.example.pby.gam_study.widget.TitleBar;
 
+import androidx.annotation.DrawableRes;
 import butterknife.BindView;
 
 public abstract class BaseHomePageFragment extends PageFragment {

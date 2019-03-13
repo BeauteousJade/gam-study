@@ -1,7 +1,6 @@
 package com.example.pby.gam_study.page.editCard;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 
 import com.example.annation.Provides;
 import com.example.pby.gam_study.AccessIds;
@@ -17,6 +16,8 @@ import com.example.pby.gam_study.page.editCard.presenter.NewCardTitleBarPresente
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class EditCardFragment extends RecyclerViewFragment {
 

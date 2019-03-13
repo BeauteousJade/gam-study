@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide;
 import com.example.annation.Inject;
 import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
+import com.example.pby.gam_study.GlideApp;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Card;
@@ -24,6 +25,6 @@ public class DailyCardPresenter extends Presenter {
 
     @Override
     protected void onBind() {
-        Glide.with(getCurrentFragment()).asDrawable().load(mCard.getEditImageUrl()).into(mImageView);
+        GlideApp.with(getCurrentFragment()).asDrawable().load(mCard.getEditImageUrl()).into(mImageView);
     }
 }

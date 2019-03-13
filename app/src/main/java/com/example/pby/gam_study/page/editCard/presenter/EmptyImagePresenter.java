@@ -2,7 +2,6 @@ package com.example.pby.gam_study.page.editCard.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.example.annation.Inject;
@@ -22,6 +21,7 @@ import com.zhihu.matisse.MimeType;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import butterknife.OnClick;
 
 @Module(BaseRecyclerAdapter.Context.class)

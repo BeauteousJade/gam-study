@@ -1,29 +1,25 @@
 package com.example.pby.gam_study.page;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
-import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.fragment.BaseFragment;
-import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.page.home.HomeFragment;
 import com.example.pby.gam_study.page.login.LoginEvent;
 import com.example.pby.gam_study.page.login.LoginFragment;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.util.ToastUtil;
-import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class HomeActivity extends BaseActivity {
 

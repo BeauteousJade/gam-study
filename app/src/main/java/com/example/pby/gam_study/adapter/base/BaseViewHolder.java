@@ -1,10 +1,12 @@
 package com.example.pby.gam_study.adapter.base;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
 
 import com.example.pby.gam_study.mvp.Presenter;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class BaseViewHolder extends RecyclerView.ViewHolder {
 

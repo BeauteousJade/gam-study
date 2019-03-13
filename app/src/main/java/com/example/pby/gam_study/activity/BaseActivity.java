@@ -2,11 +2,7 @@ package com.example.pby.gam_study.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.BaseFragment;
@@ -15,6 +11,12 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 public abstract class BaseActivity extends AppCompatActivity {
 

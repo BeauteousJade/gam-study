@@ -4,10 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +17,10 @@ import com.example.pby.gam_study.util.ResourcesUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,7 +33,7 @@ public class PageIndicator extends RecyclerView {
     private View mAnchorView;
     private int mHorizontalPadding;
     private int mVerticalPadding;
-    private final OnScrollListener mAttachRecyclerViewOnScrollListener = new OnScrollListener() {
+    private final RecyclerView.OnScrollListener mAttachRecyclerViewOnScrollListener = new OnScrollListener() {
 
         private int mScrollX = 0;
 

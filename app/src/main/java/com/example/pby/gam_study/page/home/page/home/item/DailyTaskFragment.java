@@ -1,7 +1,5 @@
 package com.example.pby.gam_study.page.home.page.home.item;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.decoration.DailyTaskItemDecoration;
@@ -12,11 +10,12 @@ import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.home.page.home.adapter.DailyTaskAdapter;
 import com.example.pby.gam_study.page.home.page.home.request.DailyTaskRequest;
 import com.example.pby.gam_study.util.DisplayUtil;
-import com.example.pby.gam_study.util.ResourcesUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class DailyTaskFragment extends RefreshRecyclerViewFragment {
 

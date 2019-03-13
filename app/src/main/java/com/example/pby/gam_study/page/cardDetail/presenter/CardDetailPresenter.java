@@ -2,7 +2,6 @@ package com.example.pby.gam_study.page.cardDetail.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -20,6 +19,7 @@ import com.example.pby.gam_study.page.cardDetail.CardDetailFragment;
 import com.example.pby.gam_study.page.editCard.EditCardActivity;
 import com.example.pby.gam_study.util.DisplayUtil;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 

@@ -1,7 +1,5 @@
 package com.example.pby.gam_study.page.newKind;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.decoration.GridItemDecoration;
@@ -15,6 +13,8 @@ import com.example.pby.gam_study.page.newKind.request.KindCoverRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class NewKindFragment extends RefreshRecyclerViewFragment {
 

@@ -8,7 +8,7 @@ android {
         targetSdkVersion target_sdk_version
         versionCode version_code
         versionName version_name
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -26,11 +26,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // android
-    implementation "com.android.support:appcompat-v7:${v7}"
-    implementation "com.android.support:recyclerview-v7:${v7}"
-    implementation "com.android.support.constraint:constraint-layout:${constraint_layout}"
-    implementation "android.arch.lifecycle:extensions:${lifecycle}"
-    implementation "android.arch.paging:runtime:${paging}"
+    implementation "androidx.appcompat:appcompat:${appcompat}"
+    implementation "androidx.recyclerview:recyclerview:${recyclerview}"
+    implementation "androidx.constraintlayout:constraintlayout:${constraintlayout}"
+    annotationProcessor "androidx.annotation:annotation:${annotation}"
 
     // three party platform
     implementation "com.jakewharton:butterknife:${butterknife}"

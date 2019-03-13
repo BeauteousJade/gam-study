@@ -1,6 +1,7 @@
 package com.example.pby.gam_study.inter;
 
-import android.arch.lifecycle.ViewModel;
+
+import androidx.lifecycle.ViewModel;
 
 public interface ViewModelLifecycle<T extends ViewModel> {
     T onCreateViewModel();

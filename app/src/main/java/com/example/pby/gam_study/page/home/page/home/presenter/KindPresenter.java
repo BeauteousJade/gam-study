@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.example.annation.Inject;
 import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
+import com.example.pby.gam_study.GlideApp;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
@@ -36,7 +37,7 @@ public class KindPresenter extends Presenter {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBind() {
-        Glide.with(getCurrentFragment()).asBitmap().load(mKind.getCover()).placeholder(R.mipmap.placeholder).into(mCoverImageView);
+        GlideApp.with(getCurrentFragment()).asBitmap().load(mKind.getCover()).placeholder(R.mipmap.placeholder).into(mCoverImageView);
         mNameTextView.setText(mKind.getName());
         mCountTextView.setText(String.format(ResourcesUtil.getString(getCurrentActivity(), R.string.card_count_regex_text), mKind.getCount()));
     }

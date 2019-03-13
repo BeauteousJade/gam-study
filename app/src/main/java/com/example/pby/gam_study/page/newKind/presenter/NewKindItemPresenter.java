@@ -1,6 +1,5 @@
 package com.example.pby.gam_study.page.newKind.presenter;
 
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -25,6 +24,7 @@ import com.example.pby.gam_study.util.ResourcesUtil;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Optional;

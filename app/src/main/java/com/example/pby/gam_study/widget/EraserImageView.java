@@ -12,8 +12,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -28,6 +26,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Objects;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
@@ -220,8 +220,6 @@ public class EraserImageView extends View {
             Canvas canvas = new Canvas(bitmap);
             matrix.setScale(ratio, ratio);
             canvas.drawBitmap(mBufferBitmap, matrix, null);
-//            matrix.setScale(ratio, ratio);
-//            canvas.drawBitmap(mBufferBitmap, matrix, null);
             // ---
             final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);

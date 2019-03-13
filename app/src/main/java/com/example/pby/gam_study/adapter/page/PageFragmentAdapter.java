@@ -1,16 +1,16 @@
 package com.example.pby.gam_study.adapter.page;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.adapter.base.BaseViewHolder;
 import com.example.pby.gam_study.fragment.BaseFragment;
-import com.example.pby.gam_study.fragment.tabhost.PageFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public abstract class PageFragmentAdapter extends BaseRecyclerAdapter<BaseFragment> {
 

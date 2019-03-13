@@ -1,7 +1,6 @@
 package com.example.pby.gam_study.manager;
 
 import android.content.Context;
-import android.support.annotation.IntDef;
 
 import com.example.pby.gam_study.Constants;
 import com.example.pby.gam_study.network.bean.User;

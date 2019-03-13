@@ -2,7 +2,6 @@ package com.example.pby.gam_study.page.login.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -10,6 +9,8 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.other.TimeHandler;
 import com.example.pby.gam_study.util.ObjectUtil;
 import com.example.pby.gam_study.util.StringUtil;
+
+import androidx.annotation.Nullable;
 
 @SuppressLint("AppCompatCustomView")
 public class CountDownTextView extends TextView {

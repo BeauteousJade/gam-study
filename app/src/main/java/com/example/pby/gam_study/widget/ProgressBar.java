@@ -3,13 +3,15 @@ package com.example.pby.gam_study.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.util.ResourcesUtil;
 
-public class ProgressBar extends android.support.v7.widget.AppCompatTextView {
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
+
+public class ProgressBar extends AppCompatTextView {
 
     private GradientDrawable mSelectDrawable;
     private GradientDrawable mUnSelectDrawable;

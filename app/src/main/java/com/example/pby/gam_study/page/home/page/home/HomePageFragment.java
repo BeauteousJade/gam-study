@@ -1,11 +1,8 @@
 package com.example.pby.gam_study.page.home.page.home;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
-import com.example.pby.gam_study.fragment.BaseFragment;
 import com.example.pby.gam_study.fragment.RecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.home.page.HomePage;
@@ -20,8 +17,9 @@ import com.example.pby.gam_study.widget.PagerRecyclerView;
 import com.example.pby.gam_study.widget.TitleBar;
 
 import java.util.Arrays;
-import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class HomePageFragment extends RecyclerViewFragment implements HomePage {
