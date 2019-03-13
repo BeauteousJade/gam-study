@@ -2,8 +2,7 @@ package com.example.pby.gam_study.page.home.page.home;
 
 
 import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
-import com.example.pby.gam_study.fragment.RecyclerViewFragment;
+import com.example.pby.gam_study.fragment.ViewPager2Fragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.home.page.HomePage;
 import com.example.pby.gam_study.page.home.page.home.item.AllKindFragment;
@@ -13,33 +12,22 @@ import com.example.pby.gam_study.page.home.page.home.presenter.TitleBarPresenter
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
 import com.example.pby.gam_study.widget.PageIndicator;
-import com.example.pby.gam_study.widget.PagerRecyclerView;
 import com.example.pby.gam_study.widget.TitleBar;
 
 import java.util.Arrays;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import butterknife.BindView;
 
-public class HomePageFragment extends RecyclerViewFragment implements HomePage {
+public class HomePageFragment extends ViewPager2Fragment implements HomePage {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.title_list)
     PageIndicator mRecyclerViewTitle;
 
-    private final PageIndicator.OnItemClickListener mOnItemClickListener = position -> getRecyclerView().smoothScrollToPosition(position);
-    private final PagerRecyclerView.OnPageScrollListener mOnPageScrollListener = new PagerRecyclerView.OnPageScrollListener() {
+    private final PageIndicator.OnItemClickListener mOnItemClickListener = position -> mViewPager2.setCurrentItem(position, true);
 
-        @Override
-        public void onPageSelected(RecyclerView recyclerView, int position) {
-            PageIndicator.PageAdapter adapter = (PageIndicator.PageAdapter) mRecyclerViewTitle.getAdapter();
-            if (adapter != null) {
-                adapter.setSelect(true, position);
-            }
-        }
-    };
 
     public static HomePageFragment newInstance() {
         return new HomePageFragment();
@@ -52,14 +40,19 @@ public class HomePageFragment extends RecyclerViewFragment implements HomePage {
                 new PageIndicator.TitleBean(ResourcesUtil.getString(requireContext(), R.string.title_recent), true),
                 new PageIndicator.TitleBean(ResourcesUtil.getString(requireContext(), R.string.title_task)),
                 new PageIndicator.TitleBean(ResourcesUtil.getString(requireContext(), R.string.title_all))));
-        mRecyclerViewTitle.setRecyclerView(getRecyclerView());
+        mRecyclerViewTitle.setViewPager(mViewPager2);
         mRecyclerViewTitle.setSelectedDrawable(R.drawable.bg_title_item_selected);
         mRecyclerViewTitle.setAnchorViewId(R.id.title);
         mRecyclerViewTitle.setHorizontalPadding(DisplayUtil.dpToPx(requireActivity(), 8));
         mRecyclerViewTitle.setVerticalPadding(DisplayUtil.dpToPx(requireActivity(), 2));
         mRecyclerViewTitle.setOnItemClickListener(mOnItemClickListener);
 
-        ((PagerRecyclerView) getRecyclerView()).setOnPageScrollListener(mOnPageScrollListener);
+    }
+
+    @Override
+    protected FragmentStateAdapter onCreateAdapter() {
+        return new HomePageFragmentAdapter(getChildFragmentManager(), Arrays.asList(RecentBrowseFragment.newInstance(),
+                DailyTaskFragment.newInstance(), AllKindFragment.newInstance()));
     }
 
     @Override
@@ -72,17 +65,6 @@ public class HomePageFragment extends RecyclerViewFragment implements HomePage {
         Presenter presenter = new Presenter();
         presenter.add(new TitleBarPresenter());
         return presenter;
-    }
-
-    @Override
-    protected BaseRecyclerAdapter onCreateAdapter() {
-        return new HomePageFragmentAdapter(Arrays.asList(RecentBrowseFragment.newInstance(),
-                DailyTaskFragment.newInstance(), AllKindFragment.newInstance()));
-    }
-
-    @Override
-    protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return new LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false);
     }
 
     @Override

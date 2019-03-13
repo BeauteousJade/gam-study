@@ -13,6 +13,7 @@ ext {
     annotation = "1.0.2"
     recyclerview = "1.1.0-alpha02"
     constraintlayout = "2.0.0-alpha3"
+    viewpager2 = "1.0.0-alpha01"
 
     // three party platform
     butterknife = "10.0.0"

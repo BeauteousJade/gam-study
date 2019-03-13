@@ -13,12 +13,15 @@ import android.widget.TextView;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
+import com.example.pby.gam_study.widget.viewpager2.ViewPager2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Px;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -33,17 +36,33 @@ public class PageIndicator extends RecyclerView {
     private View mAnchorView;
     private int mHorizontalPadding;
     private int mVerticalPadding;
-    private final RecyclerView.OnScrollListener mAttachRecyclerViewOnScrollListener = new OnScrollListener() {
+    private ViewPager2 mViewPager2;
+    private List<? extends TitleBean> mTitleList;
 
-        private int mScrollX = 0;
+
+    private final ViewPager2.OnPageChangeCallback mOnPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+
+        public void onPageScrolled(int position, float positionOffset,
+                                   @Px int positionOffsetPixels) {
+            final int viewPagerWidth = mViewPager2.getMeasuredWidth();
+            final float percent = getChildAt(0).getMeasuredWidth() * 1.0f / viewPagerWidth;
+            addScrollX((int) ((position * viewPagerWidth + positionOffsetPixels) * percent));
+
+        }
 
         @Override
-        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-            mScrollX += dx;
-            final float percent = getChildAt(0).getMeasuredWidth() * 1.0f / recyclerView.getMeasuredWidth();
-            addScrollX((int) (mScrollX * percent));
+        public void onPageSelected(int position) {
+            final int viewPagerWidth = mViewPager2.getMeasuredWidth();
+            final float percent = getChildAt(0).getMeasuredWidth() * 1.0f / viewPagerWidth;
+            addScrollX((int) ((position * viewPagerWidth) * percent));
+            for (TitleBean titleBean : mTitleList) {
+                titleBean.setSelected(false);
+            }
+            mTitleList.get(position).setSelected(true);
+            Objects.requireNonNull(getAdapter()).notifyDataSetChanged();
         }
     };
+
 
     public PageIndicator(Context context) {
         super(context);
@@ -71,11 +90,13 @@ public class PageIndicator extends RecyclerView {
     }
 
 
-    public void setRecyclerView(RecyclerView recyclerView) {
-        recyclerView.addOnScrollListener(mAttachRecyclerViewOnScrollListener);
+    public void setViewPager(ViewPager2 viewPager2) {
+        mViewPager2 = viewPager2;
+        viewPager2.registerOnPageChangeCallback(mOnPageChangeCallback);
     }
 
     public void setTitleList(List<? extends TitleBean> titleList) {
+        mTitleList = titleList;
         if (getAdapter() instanceof PageAdapter) {
             ((PageAdapter) getAdapter()).getTitleList().addAll(titleList);
             getAdapter().notifyDataSetChanged();

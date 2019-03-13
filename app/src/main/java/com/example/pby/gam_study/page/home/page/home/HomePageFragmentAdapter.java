@@ -1,19 +1,31 @@
 package com.example.pby.gam_study.page.home.page.home;
 
 
-import com.example.pby.gam_study.adapter.page.PageFragmentAdapter;
 import com.example.pby.gam_study.fragment.BaseFragment;
 
 import java.util.List;
 
-public class HomePageFragmentAdapter extends PageFragmentAdapter {
-    public HomePageFragmentAdapter(List<BaseFragment> dataList) {
-        super(dataList);
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+public class HomePageFragmentAdapter extends FragmentStateAdapter {
+    private List<BaseFragment> mFragmentList;
+
+    public HomePageFragmentAdapter(FragmentManager fragmentManager, List<BaseFragment> fragmentsList) {
+        super(fragmentManager);
+        mFragmentList = fragmentsList;
     }
 
+    @NonNull
+    @Override
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
+    }
 
     @Override
-    protected int generateId(int old, int position) {
-        return old + position;
+    public int getItemCount() {
+        return mFragmentList.size();
     }
 }

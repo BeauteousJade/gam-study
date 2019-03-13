@@ -30,6 +30,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${recyclerview}"
     implementation "androidx.constraintlayout:constraintlayout:${constraintlayout}"
     annotationProcessor "androidx.annotation:annotation:${annotation}"
+    implementation "androidx.viewpager2:viewpager2:${viewpager2}"
 
     // three party platform
     implementation "com.jakewharton:butterknife:${butterknife}"
