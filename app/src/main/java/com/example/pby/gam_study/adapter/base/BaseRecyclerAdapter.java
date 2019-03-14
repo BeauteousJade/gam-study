@@ -18,6 +18,8 @@ import com.example.pby.gam_study.other.Diff;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.widget.layoutManager.ItemTouchStatus;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,10 +56,30 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
                 (mDataList.size() == getItemStablePosition() + 1 && ArrayUtil.isEmpty(newDataList))) {
             mDataList.clear();
             index = 0;
+            notifyItemRemoved(0);
         }
-        final int fromPosition = mDataList.size();
         mDataList.addAll(index, newDataList);
-        notifyItemRangeChanged(fromPosition, newDataList.size());
+        notifyItemRangeInserted(index, newDataList.size());
+    }
+
+    public void addItem(int index, U u) {
+        addItemList(index, Collections.singletonList(u));
+    }
+
+    public void addItem(U u) {
+        addItemList(Collections.singletonList(u));
+    }
+
+    public void remove(U u) {
+        final int position = mDataList.indexOf(u);
+        if (position != -1) {
+            remove(position);
+        }
+    }
+
+    public void remove(int index) {
+        mDataList.remove(index);
+        notifyItemRemoved(index);
     }
 
     public void setItemList(List<U> newDatList) {
@@ -132,17 +154,13 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder baseViewHolder, int position) {
-        if (!isShowEmpty()) {
-            baseViewHolder.mPresenter.unBind();
-            baseViewHolder.mPresenter.bind(onCreateContext(baseViewHolder, position, null), baseViewHolder.itemView);
-        }
+        baseViewHolder.mPresenter.unBind();
+        baseViewHolder.mPresenter.bind(onCreateContext(baseViewHolder, position, null), baseViewHolder.itemView);
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull BaseViewHolder holder) {
-        if (isShowEmpty()) {
-            holder.mPresenter.unBind();
-        }
+        holder.mPresenter.unBind();
     }
 
     public void onDestroy(RecyclerView recyclerView) {
@@ -166,6 +184,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         context.mAdapter = this;
         context.mPayLoad = payloads;
         context.mObservable = mObservable;
+        context.mViewHolder = baseViewHolder;
         return context;
     }
 
@@ -212,6 +231,8 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         public List<Object> mPayLoad;
         @Provides(AccessIds.OBSERVABLE)
         public Observable mObservable;
+        @Provides(AccessIds.VIEW_HOLDER)
+        public BaseViewHolder mViewHolder;
     }
 
     public final int getItemViewLayoutIfEmpty(int viewType) {

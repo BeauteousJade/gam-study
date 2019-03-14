@@ -101,8 +101,7 @@ public class RefreshPresenter extends Presenter {
         mRefreshLayout.setProgressBackgroundColorSchemeColor(ResourcesUtil.getColor(getCurrentActivity(), R.color.white));
         mRefreshLayout.setOnRefreshListener(mOnRefreshListener);
         mRefreshLayout.setRefreshing(true);
-        Log.i("pby123", (mAdapter == null) + "");
-        if (mAdapter.getItemCount() == mAdapter.getItemStablePosition() + 1) {
+        if (mRequest != null && mAdapter.getItemCount() == mAdapter.getItemStablePosition() + 1) {
             mRequest.cancel();
             mRequest.enqueue(mRequestCallback);
         }

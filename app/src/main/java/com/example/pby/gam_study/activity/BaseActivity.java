@@ -107,6 +107,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    @FunctionalInterface
     public interface OnActivityResultListener {
         boolean onResult(int requestCode, int resultCode, @Nullable Intent data);
     }

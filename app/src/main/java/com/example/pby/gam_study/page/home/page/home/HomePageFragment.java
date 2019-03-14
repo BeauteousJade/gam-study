@@ -2,6 +2,7 @@ package com.example.pby.gam_study.page.home.page.home;
 
 
 import com.example.pby.gam_study.R;
+import com.example.pby.gam_study.adapter.page.PageFragmentAdapter;
 import com.example.pby.gam_study.fragment.ViewPager2Fragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.home.page.HomePage;
@@ -51,7 +52,7 @@ public class HomePageFragment extends ViewPager2Fragment implements HomePage {
 
     @Override
     protected FragmentStateAdapter onCreateAdapter() {
-        return new HomePageFragmentAdapter(getChildFragmentManager(), Arrays.asList(RecentBrowseFragment.newInstance(),
+        return new PageFragmentAdapter(getChildFragmentManager(), Arrays.asList(RecentBrowseFragment.newInstance(),
                 DailyTaskFragment.newInstance(), AllKindFragment.newInstance()));
     }
 

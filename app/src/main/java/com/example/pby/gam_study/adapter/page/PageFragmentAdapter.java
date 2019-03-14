@@ -1,43 +1,31 @@
 package com.example.pby.gam_study.adapter.page;
 
-import android.view.View;
-
-import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
-import com.example.pby.gam_study.adapter.base.BaseViewHolder;
 import com.example.pby.gam_study.fragment.BaseFragment;
-import com.example.pby.gam_study.mvp.Presenter;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public abstract class PageFragmentAdapter extends BaseRecyclerAdapter<BaseFragment> {
+public class PageFragmentAdapter extends FragmentStateAdapter {
 
-    public PageFragmentAdapter(List<BaseFragment> dataList) {
-        super(dataList);
+    private List<BaseFragment> mFragmentList;
+
+    public PageFragmentAdapter(FragmentManager fragmentManager, List<BaseFragment> fragmentsList) {
+        super(fragmentManager);
+        mFragmentList = fragmentsList;
+    }
+
+    @NonNull
+    @Override
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BaseViewHolder baseViewHolder, int position) {
-        final View itemView = baseViewHolder.itemView;
-        itemView.setId(generateId(itemView.getId(), position));
-        super.onBindViewHolder(baseViewHolder, position);
-    }
-
-    protected int generateId(int old, int position) {
-        return old;
-    }
-
-    @Override
-    public int getItemViewLayoutNoEmpty(int viewType) {
-        return R.layout.item_fragment;
-    }
-
-    @Override
-    protected Presenter onCreatePresenter(int viewType) {
-        Presenter presenter = new Presenter();
-        presenter.add(new PageFragmentPresenter());
-        return presenter;
+    public int getItemCount() {
+        return mFragmentList.size();
     }
 }

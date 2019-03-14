@@ -30,6 +30,9 @@ public class LayoutManagerFactory {
         return new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
     }
 
+    public static RecyclerView.LayoutManager createHorizontalLayoutManager(Context context) {
+        return new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
+    }
 
     public interface SpanFull {
         boolean onFull(BaseRecyclerAdapter adapter, int position);
