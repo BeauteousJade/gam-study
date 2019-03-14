@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetWorkManager {
     private static final Retrofit RETROFIT = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.100:8080")
+            .baseUrl("http://192.168.1.185:8080")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build();

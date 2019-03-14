@@ -21,4 +21,5 @@ public final class AccessIds {
     public static final String TYPE = "type";
     public static final String LIST = "list";
     public static final String VIEW_HOLDER = "view_holder";
+    public static final String LISTENER = "listener";
 }

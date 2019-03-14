@@ -10,7 +10,7 @@
         layout="@layout/title_bar" />
 
 
-    <EditText
+    <com.example.pby.gam_study.widget.EmojiEditText
         android:id="@+id/post_content"
         android:layout_width="0dp"
         android:layout_height="150dp"

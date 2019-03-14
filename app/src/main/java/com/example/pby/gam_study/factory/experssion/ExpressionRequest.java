@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import com.example.pby.gam_study.network.request.BaseRequest;
+import com.example.pby.gam_study.util.ArrayUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +23,11 @@ public class ExpressionRequest extends BaseRequest<List<String>> {
     @Override
     public Observable<List<String>> createObservable() {
         return Observable.create(emitter -> {
-            List<String> expressionList = Arrays.asList(mAssetManager.list("expression"));
+            String[] expressions = mAssetManager.list("expression");
+            List<String> expressionList = new ArrayList<>();
+            if (!ArrayUtil.isEmpty(expressions)) {
+                expressionList.addAll(Arrays.asList(expressions));
+            }
             emitter.onNext(expressionList);
             emitter.onComplete();
         });

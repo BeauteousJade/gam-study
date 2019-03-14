@@ -41,6 +41,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     private BaseFragment mFragment;
     private BaseActivity mActivity;
     private Observable mObservable;
+    private RecyclerView mRecyclerView;
 
     public BaseRecyclerAdapter(List<U> dataList) {
         mDataList = dataList;
@@ -185,6 +186,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         context.mPayLoad = payloads;
         context.mObservable = mObservable;
         context.mViewHolder = baseViewHolder;
+        context.mRecyclerView = mRecyclerView;
         return context;
     }
 
@@ -218,6 +220,10 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         mObservable = observable;
     }
 
+    public void setRecyclerView(RecyclerView recyclerView) {
+        mRecyclerView = recyclerView;
+    }
+
     public static class Context {
         @Provides(AccessIds.ITEM_POSITION)
         public int mPosition;
@@ -233,6 +239,8 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         public Observable mObservable;
         @Provides(AccessIds.VIEW_HOLDER)
         public BaseViewHolder mViewHolder;
+        @Provides(AccessIds.RECYCLER_VIEW)
+        public RecyclerView mRecyclerView;
     }
 
     public final int getItemViewLayoutIfEmpty(int viewType) {

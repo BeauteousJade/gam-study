@@ -7,7 +7,6 @@ import com.example.pby.gam_study.factory.LayoutManagerFactory;
 import com.example.pby.gam_study.fragment.RecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.sendPost.presenter.ExpressionPresenter;
-import com.example.pby.gam_study.page.sendPost.presenter.PostContentPresenter;
 import com.example.pby.gam_study.page.sendPost.presenter.SendPostTitleBarPresenter;
 
 import java.util.ArrayList;
@@ -49,7 +48,6 @@ public class SendPostFragment extends RecyclerViewFragment {
     public Presenter onCreatePresenter() {
         Presenter presenter = new Presenter();
         presenter.add(new ExpressionPresenter());
-        presenter.add(new PostContentPresenter());
         presenter.add(new SendPostTitleBarPresenter());
         return presenter;
     }

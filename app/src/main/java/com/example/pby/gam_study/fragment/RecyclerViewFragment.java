@@ -47,6 +47,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mRecyclerAdapter.setCurrentActivity((BaseActivity) requireActivity());
         mRecyclerAdapter.setCurrentFragment(this);
         mRecyclerAdapter.setObservable(mObservable);
+        mRecyclerAdapter.setRecyclerView(mRecyclerView);
     }
 
     @Override

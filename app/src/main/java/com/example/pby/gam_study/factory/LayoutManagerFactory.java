@@ -17,7 +17,7 @@ public class LayoutManagerFactory {
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int i) {
-                if (spanFull.onFull(adapter, i)) {
+                if (spanFull != null && spanFull.onFull(adapter, i)) {
                     return spaCount;
                 }
                 return 1;
