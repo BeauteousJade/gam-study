@@ -35,7 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseViewHolder> implements Presence, ItemTouchStatus {
 
-    private static final int TYPE_EMPTY = -1;
+    public static final int TYPE_EMPTY = -1;
 
     protected List<U> mDataList;
     private BaseFragment mFragment;
@@ -90,7 +90,9 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         }
         final U item = newDatList.get(0);
         if (item instanceof Diff) {
-            final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtilCallback<>(mDataList, newDatList));
+            final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtilCallback<>(mDataList, newDatList), false);
+            mDataList.clear();
+            mDataList.addAll(newDatList);
             diffResult.dispatchUpdatesTo(this);
         } else {
             for (int i = mDataList.size() - 1; i >= getItemStablePosition() + 1; i--) {

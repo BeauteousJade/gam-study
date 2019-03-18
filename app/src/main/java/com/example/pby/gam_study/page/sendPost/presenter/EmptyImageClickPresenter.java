@@ -3,12 +3,10 @@ package com.example.pby.gam_study.page.sendPost.presenter;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.annation.Inject;
 import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
-import com.example.pby.gam_study.GlideApp;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.RequestCode;
 import com.example.pby.gam_study.activity.BaseActivity;
@@ -23,7 +21,6 @@ import com.zhihu.matisse.MimeType;
 import java.util.List;
 
 import androidx.annotation.Nullable;
-import butterknife.BindView;
 import butterknife.OnClick;
 
 @Module(ImageContainerAdapter.Context.class)
@@ -35,9 +32,6 @@ public class EmptyImageClickPresenter extends Presenter {
     BaseRecyclerAdapter<String> mAdapter;
     @Inject(AccessIds.ITEM_DATA)
     Object mUrl;
-
-    @BindView(R.id.image)
-    ImageView mImageView;
 
 
     private final BaseActivity.OnActivityResultListener mOnActivityResultListener = new BaseActivity.OnActivityResultListener() {
@@ -59,7 +53,6 @@ public class EmptyImageClickPresenter extends Presenter {
 
     @Override
     protected void onBind() {
-        GlideApp.with(getCurrentActivity()).asBitmap().load(mUrl).into(mImageView);
         getCurrentActivity().removeOnActivityResultListener(mOnActivityResultListener);
         getCurrentActivity().addOnActivityResultListener(mOnActivityResultListener);
     }

@@ -1,4 +1,4 @@
-package com.example.pby.gam_study.page.home.page.news;
+package com.example.pby.gam_study.page.post;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,18 +7,14 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.page.PageFragmentAdapter;
 import com.example.pby.gam_study.fragment.ViewPager2Fragment;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.home.page.BaseHomePageFragment;
-import com.example.pby.gam_study.page.home.page.HomePage;
-import com.example.pby.gam_study.page.home.page.news.item.FindFragment;
-import com.example.pby.gam_study.page.home.page.news.item.FollowFragment;
-import com.example.pby.gam_study.page.home.page.news.presenter.NewsTitleBarPresenter;
+import com.example.pby.gam_study.page.post.item.FindFragment;
+import com.example.pby.gam_study.page.post.item.FollowFragment;
+import com.example.pby.gam_study.page.post.presenter.PostTitleBarPresenter;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
 import com.example.pby.gam_study.widget.PageIndicator;
 import com.example.pby.gam_study.widget.TitleBar;
-import com.example.pby.gam_study.widget.viewpager2.ViewPager2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import androidx.annotation.NonNull;
@@ -26,9 +22,11 @@ import androidx.annotation.Nullable;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import butterknife.BindView;
 
-import static com.example.pby.gam_study.fragment.tabhost.PageFragment.KEY_LAYOUT_ID;
+public class NewsPageFragment extends ViewPager2Fragment {
 
-public class NewsPageFragment extends ViewPager2Fragment implements HomePage {
+    public static final String KEY_EXPRESSION_CLICK = "key_expression_click";
+    public static final String KEY_ADD_COMMENT = "key_add_comment";
+
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -40,7 +38,6 @@ public class NewsPageFragment extends ViewPager2Fragment implements HomePage {
     public static NewsPageFragment newInstance() {
         return new NewsPageFragment();
     }
-
 
     @Override
     public void onPrepareBaseContext() {
@@ -70,34 +67,12 @@ public class NewsPageFragment extends ViewPager2Fragment implements HomePage {
     @Override
     public Presenter onCreatePresenter() {
         Presenter presenter = super.onCreatePresenter();
-        presenter.add(new NewsTitleBarPresenter());
+        presenter.add(new PostTitleBarPresenter());
         return presenter;
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_news_page;
-    }
-
-    @Override
-    public String getTitle() {
-        return ResourcesUtil.getString(requireContext(), R.string.title_news);
-    }
-
-    @Override
-    public int getRightIcon() {
-        return R.drawable.bg_add;
-    }
-
-    @Override
-    public void onPageSelect() {
-        mTitleBar.setTitle(getTitle());
-        mTitleBar.setLeftIcon(getLeftIcon());
-        mTitleBar.setRightIcon(getRightIcon());
-    }
-
-    @Override
-    public void onPageUnSelect() {
-
     }
 }

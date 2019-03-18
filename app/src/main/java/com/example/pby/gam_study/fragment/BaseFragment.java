@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment implements Presence, BaseContextLifecycle {
 
     protected Presenter mPresenter;
+    protected Object mContext;
 
     @Nullable
     @Override
@@ -38,7 +39,8 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
         onPrepareBaseContext();
-        mPresenter.bind(onCreateBaseContext(), view);
+        mContext = onCreateBaseContext();
+        mPresenter.bind(mContext, view);
     }
 
     @Override
@@ -51,7 +53,7 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
 
     public final void refresh() {
         mPresenter.unBind();
-        mPresenter.bind(onCreateBaseContext(), getRootView());
+        mPresenter.bind(mContext, getRootView());
     }
 
 

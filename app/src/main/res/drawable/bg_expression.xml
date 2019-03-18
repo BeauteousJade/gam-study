@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="false">
-        <bitmap android:src="@drawable/expression" />
+    <item android:state_pressed="false" android:state_selected="false">
+        <bitmap android:src="@drawable/expression_unselected" />
     </item>
-    <item android:state_pressed="true">
-        <bitmap android:alpha="50" android:src="@drawable/expression" />
+
+    <item android:state_pressed="false" android:state_selected="true">
+        <bitmap android:src="@drawable/expression_select" />
+    </item>
+
+    <item android:state_pressed="true" android:state_selected="false">
+        <bitmap android:alpha="50" android:src="@drawable/expression_unselected" />
+    </item>
+
+    <item android:state_pressed="true" android:state_selected="true">
+        <bitmap android:alpha="50" android:src="@drawable/expression_select" />
     </item>
 </selector>

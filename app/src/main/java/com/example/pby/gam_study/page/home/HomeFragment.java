@@ -1,7 +1,6 @@
 package com.example.pby.gam_study.page.home;
 
 import android.os.Bundle;
-
 import android.view.View;
 
 import com.example.pby.gam_study.R;
@@ -10,7 +9,6 @@ import com.example.pby.gam_study.fragment.tabhost.TabHost;
 import com.example.pby.gam_study.page.home.page.home.HomePageFragment;
 import com.example.pby.gam_study.page.home.page.message.MessagePageFragment;
 import com.example.pby.gam_study.page.home.page.mine.MinePageFragment;
-import com.example.pby.gam_study.page.home.page.news.NewsPageFragment;
 import com.example.pby.gam_study.util.ResourcesUtil;
 import com.example.pby.gam_study.widget.item.ItemLayout;
 
@@ -27,8 +25,8 @@ import butterknife.BindView;
 
 public class HomeFragment extends BaseFragment implements ItemLayout.OnItemClickListener {
     private final List<BaseFragment> mPageFragments = Arrays.asList(
-            HomePageFragment.newInstance(), NewsPageFragment.newInstance(),
-            MessagePageFragment.newInstance(), MinePageFragment.newInstance());
+            HomePageFragment.newInstance(), MessagePageFragment.newInstance(),
+            MinePageFragment.newInstance());
 
     @BindView(R.id.tab)
     ItemLayout mTabLayout;
@@ -43,7 +41,7 @@ public class HomeFragment extends BaseFragment implements ItemLayout.OnItemClick
     private final FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycleCallbacks = new FragmentManager.FragmentLifecycleCallbacks() {
         @Override
         public void onFragmentViewCreated(@NonNull FragmentManager fm, @NonNull Fragment f, @NonNull View v, @Nullable Bundle savedInstanceState) {
-            if (f.getClass() == NewsPageFragment.class) {
+            if (f.getClass() == HomePageFragment.class) {
                 onItemClick(0);
                 fm.unregisterFragmentLifecycleCallbacks(mFragmentLifecycleCallbacks);
             }
@@ -64,14 +62,13 @@ public class HomeFragment extends BaseFragment implements ItemLayout.OnItemClick
     @Override
     public void onPrepareBaseContext() {
         mHomeTabs.add(new HomeTab(ResourcesUtil.getString(requireContext(), R.string.title_home), R.mipmap.icon_page_home_unselected, R.mipmap.icon_page_home_selected));
-        mHomeTabs.add(new HomeTab(ResourcesUtil.getString(requireContext(), R.string.title_news), R.mipmap.icon_page_news_unselected, R.mipmap.icon_page_news_selected));
         mHomeTabs.add(new HomeTab(ResourcesUtil.getString(requireContext(), R.string.title_message), R.mipmap.icon_page_message_unselected, R.mipmap.icon_page_message_selected));
         mHomeTabs.add(new HomeTab(ResourcesUtil.getString(requireContext(), R.string.title_mine), R.mipmap.icon_page_mine_unselected, R.mipmap.icon_page_mine_selected));
         mTabAdapter = new HomeTabAdapter(mHomeTabs);
 
 
         final int id = mFragmentContainer.getId();
-        final FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        final FragmentManager fragmentManager = getChildFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         for (BaseFragment pageFragment : mPageFragments) {
             transaction.add(id, pageFragment);

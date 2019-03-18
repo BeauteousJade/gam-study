@@ -68,6 +68,7 @@ public class ExpressionFragment extends RecyclerViewFragment {
     }
 
 
+    @FunctionalInterface
     public interface OnExpressionClickListener {
         void onExpressionClick(String fileName);
     }

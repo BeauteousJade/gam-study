@@ -1,8 +1,10 @@
 package com.example.pby.gam_study.network;
 
 import com.example.pby.gam_study.network.bean.Card;
+import com.example.pby.gam_study.network.bean.Comment;
 import com.example.pby.gam_study.network.bean.DailyTask;
 import com.example.pby.gam_study.network.bean.Kind;
+import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.page.login.bean.CodeBean;
 import com.example.pby.gam_study.page.newKind.NewKindItem;
@@ -64,4 +66,22 @@ public interface Service {
     @POST("/daily/updateDailyCard")
     @FormUrlEncoded
     Observable<Boolean> updateDailyCard(@Field("userId") String userId, @Field("cardId") String cardId);
+
+    @POST("/post/insertPost")
+    Observable<Post> insertPost(@Body RequestBody requestBody);
+
+    @POST("/post/findRecommendPost")
+    Observable<List<Post>> findRecommendPost();
+
+    @POST("/post/findFollowPost")
+    @FormUrlEncoded
+    Observable<List<Post>> findFollowPost(@Field("userId") String userId);
+
+    @POST("/like/like")
+    @FormUrlEncoded
+    Observable<Boolean> like(@Field("userId") String userId, @Field("postId") String postId, @Field("isLike") boolean isLike);
+
+    @POST("/comment/addComment")
+    @FormUrlEncoded
+    Observable<Comment> addComment(@Field("comment") Comment comment);
 }

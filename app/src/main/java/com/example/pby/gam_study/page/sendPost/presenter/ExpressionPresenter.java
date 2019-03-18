@@ -23,10 +23,20 @@ public class ExpressionPresenter extends Presenter {
     @BindView(R.id.post_content)
     EmojiEditText mEditText;
 
-    private final ExpressionFragment.OnExpressionClickListener mOnExpressionClickListener = fileName -> {
-        mEditText.appendExpression(fileName);
-    };
+    private final ExpressionFragment.OnExpressionClickListener mOnExpressionClickListener = fileName -> mEditText.appendExpression(fileName);
 
+    @Override
+    protected void onBind() {
+        final FragmentManager fragmentManager = getCurrentFragment().getChildFragmentManager();
+        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        if (fragment == null) {
+            fragment = ExpressionFactory.createExpressionFragment(mOnExpressionClickListener);
+            transaction.add(R.id.fragment_container, fragment);
+        }
+        transaction.hide(fragment);
+        transaction.commitAllowingStateLoss();
+    }
 
     @OnClick(R.id.expression)
     public void onExpressionClick(View view) {
@@ -34,10 +44,13 @@ public class ExpressionPresenter extends Presenter {
         final Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (fragment != null) {
-            transaction.remove(fragment);
-        } else {
-            transaction.add(R.id.fragment_container, ExpressionFactory.createExpressionFragment(mOnExpressionClickListener));
+            if (fragment.isHidden()) {
+                transaction.show(fragment);
+            } else {
+                transaction.hide(fragment);
+            }
         }
         transaction.commitAllowingStateLoss();
+        view.setSelected(!view.isSelected());
     }
 }

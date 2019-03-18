@@ -1,10 +1,12 @@
 package com.example.pby.gam_study.network.bean;
 
+import com.example.pby.gam_study.other.Diff;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Objects;
 
-public class Post {
+public class Post implements Diff {
 
     @SerializedName("id")
     private String mId;
@@ -75,5 +77,21 @@ public class Post {
 
     public void setTime(long time) {
         this.mTime = time;
+    }
+
+    @Override
+    public boolean areItemsTheSame(Diff diff) {
+        if (diff instanceof Post) {
+            return Objects.equals(mId, ((Post) diff).getId());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onContentTheme(Diff diff) {
+        if (diff instanceof Post) {
+            return Objects.equals(mId, ((Post) diff).getId());
+        }
+        return false;
     }
 }

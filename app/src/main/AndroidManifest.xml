@@ -48,6 +48,7 @@
         <activity android:name=".page.browseImage.BrowseImageActivity" />
         <activity android:name=".page.dailyCard.DailyCardActivity" />
         <activity android:name=".page.sendPost.SendPostActivity" />
+        <activity android:name=".page.post.PostActivity" />
     </application>
 
 </manifest>

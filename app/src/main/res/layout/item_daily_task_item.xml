@@ -29,7 +29,7 @@
         android:id="@+id/button"
         android:layout_width="70dp"
         android:layout_height="35dp"
-        android:background="@drawable/bg_buttom_select"
+        android:background="@drawable/bg_button_select"
         android:text="@string/sign"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_16"

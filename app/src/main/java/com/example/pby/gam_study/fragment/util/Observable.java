@@ -14,7 +14,7 @@ public class Observable {
         mObserverList.remove(observer);
     }
 
-    public void notifyChanged(String key, String value) {
+    public void notifyChanged(String key, Object value) {
         for (Observer observer : mObserverList) {
             observer.onChanged(key, value);
         }

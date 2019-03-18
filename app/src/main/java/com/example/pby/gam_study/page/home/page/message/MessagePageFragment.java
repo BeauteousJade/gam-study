@@ -1,35 +1,71 @@
 package com.example.pby.gam_study.page.home.page.message;
 
-import android.os.Bundle;
-import android.view.View;
-
 import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.page.home.page.BaseHomePageFragment;
+import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
+import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
+import com.example.pby.gam_study.mvp.Presenter;
+import com.example.pby.gam_study.network.request.Request;
+import com.example.pby.gam_study.page.home.page.HomePage;
+import com.example.pby.gam_study.page.home.page.message.presenter.NewsPresenter;
 import com.example.pby.gam_study.util.ResourcesUtil;
+import com.example.pby.gam_study.widget.TitleBar;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import java.util.ArrayList;
 
-public class MessagePageFragment extends BaseHomePageFragment {
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 
-    private static final int LAYOUT_ID = R.layout.page_fragment_message;
+public class MessagePageFragment extends RefreshRecyclerViewFragment implements HomePage {
+
+    @BindView(R.id.title_bar)
+    TitleBar mTitleBar;
 
     public static MessagePageFragment newInstance() {
-        MessagePageFragment pageFragment = new MessagePageFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(KEY_LAYOUT_ID, LAYOUT_ID);
-        pageFragment.setArguments(bundle);
-        return pageFragment;
+        return new MessagePageFragment();
+    }
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_page_message;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.setBackgroundColor(ResourcesUtil.getColor(requireActivity(), R.color.color_001));
+    public Request onCreateRequest() {
+        return null;
+    }
+
+    @Override
+    protected BaseRecyclerAdapter onCreateAdapter() {
+        return new MessageAdapter(new ArrayList<>());
+    }
+
+    @Override
+    public Presenter onCreatePresenter() {
+        Presenter presenter = super.onCreatePresenter();
+        presenter.add(new NewsPresenter());
+        return presenter;
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager onCreateLayoutManager() {
+        return null;
     }
 
     @Override
     public String getTitle() {
         return ResourcesUtil.getString(requireContext(), R.string.title_message);
+    }
+
+    @Override
+    public void onPageSelect() {
+        mTitleBar.setTitle(getTitle());
+        mTitleBar.setLeftIcon(getLeftIcon());
+        mTitleBar.setRightIcon(getRightIcon());
+    }
+
+    @Override
+    public void onPageUnSelect() {
+
     }
 }

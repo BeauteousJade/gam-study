@@ -156,25 +156,25 @@ public class ViewPager2 extends ViewGroup {
         }
     }
 
-    @Nullable
-    @Override
-    protected Parcelable onSaveInstanceState() {
-        Parcelable superState = super.onSaveInstanceState();
-        SavedState ss = new SavedState(superState);
-
-        ss.mRecyclerViewId = mRecyclerView.getId();
-        ss.mOrientation = getOrientation();
-        ss.mCurrentItem = mCurrentItem;
-        ss.mScrollInProgress =
-                mLayoutManager.findFirstCompletelyVisibleItemPosition() != mCurrentItem;
-
-        RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
-        if (adapter instanceof StatefulAdapter) {
-            ss.mAdapterState = ((StatefulAdapter) adapter).saveState();
-        }
-
-        return ss;
-    }
+//    @Nullable
+//    @Override
+//    protected Parcelable onSaveInstanceState() {
+//        Parcelable superState = super.onSaveInstanceState();
+//        SavedState ss = new SavedState(superState);
+//
+//        ss.mRecyclerViewId = mRecyclerView.getId();
+//        ss.mOrientation = getOrientation();
+//        ss.mCurrentItem = mCurrentItem;
+//        ss.mScrollInProgress =
+//                mLayoutManager.findFirstCompletelyVisibleItemPosition() != mCurrentItem;
+//
+//        RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
+//        if (adapter instanceof StatefulAdapter) {
+//            ss.mAdapterState = ((StatefulAdapter) adapter).saveState();
+//        }
+//
+//        return ss;
+//    }
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {

@@ -1,23 +1,19 @@
 package com.example.pby.gam_study.widget;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 
 import com.example.pby.gam_study.network.RxSchedulers;
-import com.example.pby.gam_study.other.CenterImageSpan;
 import com.example.pby.gam_study.util.ArrayUtil;
+import com.example.pby.gam_study.util.ExpressionUtil;
 import com.example.pby.gam_study.util.StringUtil;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
-import androidx.annotation.WorkerThread;
 import androidx.appcompat.widget.AppCompatEditText;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -41,44 +37,6 @@ public class EmojiEditText extends AppCompatEditText {
         super(context, attrs, defStyleAttr);
     }
 
-
-    public void appendExpression(String fileName) {
-        Observable.create((ObservableOnSubscribe<Drawable>) emitter -> {
-            if (!emitter.isDisposed()) {
-                Drawable drawable = generateDrawable(fileName);
-                if (drawable != null) {
-                    emitter.onNext(drawable);
-                } else {
-                    emitter.onError(new NullPointerException());
-                    return;
-                }
-                emitter.onComplete();
-            }
-        })
-                .compose(RxSchedulers.ioToMain())
-                .subscribe(new Observer<Drawable>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mAppendContentDisposableList.add(d);
-                    }
-
-                    @Override
-                    public void onNext(Drawable drawable) {
-                        append(generateImageSpannableString(drawable, fileName));
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -92,43 +50,24 @@ public class EmojiEditText extends AppCompatEditText {
         }
     }
 
-    private SpannableString generateImageSpannableString(Drawable drawable, String fileName) {
-        CenterImageSpan imageSpan = new CenterImageSpan(drawable, fileName);
-        SpannableString spannableString = new SpannableString(fileName);
-        spannableString.setSpan(imageSpan, 0, fileName.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spannableString;
-    }
-
-    @WorkerThread
-    private Drawable generateDrawable(String fileName) {
-        final AssetManager assetManager = getContext().getAssets();
-        InputStream inputStream = null;
-        try {
-            inputStream = assetManager.open("expression/" + fileName);
-            return Drawable.createFromStream(inputStream, "");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
     public void setContent(String content) {
+        setText("");
         if (StringUtil.isEmpty(content)) {
-            setText("");
             return;
         }
-        final List<String> contentList = contentToStringList(content);
+        final List<String> contentList = ExpressionUtil.contentToStringList(content);
         Observable.create(emitter -> {
             for (String string : contentList) {
-                if (mSetContentDisposable != null && mSetContentDisposable.isDisposed()) {
+                if (emitter.isDisposed()) {
                     emitter.onComplete();
                     return;
                 }
                 if (string.startsWith("#")) {
-                    Drawable drawable = generateDrawable(string.substring(1, string.length() - 1));
+                    final String fileName = string.substring(1, string.length() - 1);
+                    Drawable drawable = ExpressionUtil.generateDrawable(getContext(), fileName);
                     if (drawable != null) {
-                        emitter.onNext(drawable);
+                        emitter.onNext(ExpressionUtil.generateImageSpannableString(drawable, fileName));
                     } else {
                         emitter.onError(new NullPointerException());
                     }
@@ -165,47 +104,47 @@ public class EmojiEditText extends AppCompatEditText {
                 });
     }
 
-
-    /**
-     * 将正常String字符串分割为String数组。格式如下
-     * 假设：
-     * content为123#123#123，分割之后的数组为[123,#123#,123]
-     *
-     * @param content
-     * @return
-     */
-    private List<String> contentToStringList(String content) {
-        char[] chars = content.toCharArray();
-        List<String> list = new ArrayList<>();
-        // 普通字符
-        Stack<Character> stack1 = new Stack<>();
-        // #
-        Stack<Character> stack2 = new Stack<>();
-
-        for (int i = 0; i < chars.length; i++) {
-            final char c = chars[i];
-            if (c == '#' || i == chars.length - 1) {
-                if (c == '#') {
-                    stack2.push(c);
+    public void appendExpression(String fileName) {
+        Observable.create((ObservableOnSubscribe<Drawable>) emitter -> {
+            if (!emitter.isDisposed()) {
+                Drawable drawable = ExpressionUtil.generateDrawable(getContext(), fileName);
+                if (drawable != null) {
+                    emitter.onNext(drawable);
                 } else {
-                    stack1.push(c);
+                    emitter.onError(new NullPointerException());
+                    return;
                 }
-                if (!stack1.isEmpty()) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    while (!stack1.isEmpty()) {
-                        stringBuilder.insert(0, stack1.pop());
-                    }
-                    if (stack2.size() == 2) {
-                        stack2.clear();
-                        stringBuilder.insert(0, "#");
-                        stringBuilder.append("#");
-                    }
-                    list.add(stringBuilder.toString());
-                }
-            } else {
-                stack1.push(c);
+                emitter.onComplete();
             }
-        }
-        return list;
+        })
+                .compose(RxSchedulers.ioToMain())
+                .subscribe(new Observer<Drawable>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mAppendContentDisposableList.add(d);
+                    }
+
+                    @Override
+                    public void onNext(Drawable drawable) {
+                        append(ExpressionUtil.generateImageSpannableString(drawable, fileName));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+        return super.onKeyPreIme(keyCode, event);
     }
 }
+
+

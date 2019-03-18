@@ -1,27 +1,35 @@
-package com.example.pby.gam_study.page.home.page.news.presenter;
+package com.example.pby.gam_study.page.post.presenter;
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.annation.Module;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.home.page.news.NewsPageFragment;
+import com.example.pby.gam_study.page.post.NewsPageFragment;
 import com.example.pby.gam_study.page.sendPost.SendPostActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 @Module(NewsPageFragment.Context.class)
-public class NewsTitleBarPresenter extends Presenter implements View.OnClickListener {
+public class PostTitleBarPresenter extends Presenter implements View.OnClickListener {
 
     @BindView(R.id.right_icon)
-    View mRightView;
+    ImageView mRightView;
+    @BindView(R.id.left_icon)
+    ImageView mLeftView;
+    @BindView(R.id.title)
+    TextView mTitleView;
     private GamDialogFragment mDialog;
 
     @Override
     protected void onBind() {
-
+        mLeftView.setImageDrawable(getDrawable(R.drawable.bg_back));
+        mRightView.setImageDrawable(getDrawable(R.drawable.bg_add));
+        mTitleView.setText(getString(R.string.post));
     }
 
     @OnClick(R.id.right_icon)
@@ -35,6 +43,11 @@ public class NewsTitleBarPresenter extends Presenter implements View.OnClickList
         mDialog.show(getCurrentFragment().getChildFragmentManager(), "");
     }
 
+    @OnClick(R.id.left_icon)
+    public void onLeftClick(View view) {
+        getCurrentActivity().finish();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -44,4 +57,5 @@ public class NewsTitleBarPresenter extends Presenter implements View.OnClickList
         }
         mDialog.dismiss();
     }
+
 }
