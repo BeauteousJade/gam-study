@@ -37,7 +37,7 @@ public class ImageContainerAdapter extends BaseRecyclerAdapter<Object> {
     }
 
     @Override
-    protected Presenter onCreatePresenter(int viewType) {
+    protected Presenter onCreatePresenterIfNoEmpty(int viewType) {
         Presenter presenter = new Presenter();
         switch (viewType) {
             case TYPE_IMAGE:

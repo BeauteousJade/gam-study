@@ -18,7 +18,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
@@ -37,16 +36,6 @@ public class HomeFragment extends BaseFragment implements ItemLayout.OnItemClick
     private int mCurPosition;
     private ItemLayout.Adapter mTabAdapter;
     private List<HomeTab> mHomeTabs = new ArrayList<>();
-
-    private final FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycleCallbacks = new FragmentManager.FragmentLifecycleCallbacks() {
-        @Override
-        public void onFragmentViewCreated(@NonNull FragmentManager fm, @NonNull Fragment f, @NonNull View v, @Nullable Bundle savedInstanceState) {
-            if (f.getClass() == HomePageFragment.class) {
-                onItemClick(0);
-                fm.unregisterFragmentLifecycleCallbacks(mFragmentLifecycleCallbacks);
-            }
-        }
-    };
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -70,13 +59,17 @@ public class HomeFragment extends BaseFragment implements ItemLayout.OnItemClick
         final int id = mFragmentContainer.getId();
         final FragmentManager fragmentManager = getChildFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
-        for (BaseFragment pageFragment : mPageFragments) {
+        for (int i = 0; i < mPageFragments.size(); i++) {
+            BaseFragment pageFragment = mPageFragments.get(i);
             transaction.add(id, pageFragment);
-            transaction.hide(pageFragment);
+            if (!(pageFragment instanceof HomePageFragment)) {
+                transaction.hide(pageFragment);
+            } else {
+                mCurPageFragment = pageFragment;
+                mCurPosition = i;
+            }
         }
         transaction.commitAllowingStateLoss();
-        fragmentManager.unregisterFragmentLifecycleCallbacks(mFragmentLifecycleCallbacks);
-        fragmentManager.registerFragmentLifecycleCallbacks(mFragmentLifecycleCallbacks, false);
     }
 
 

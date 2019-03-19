@@ -21,7 +21,7 @@ public class KindAdapter extends BaseRecyclerAdapter<Kind> {
     }
 
     @Override
-    protected Presenter onCreatePresenter(int viewType) {
+    protected Presenter onCreatePresenterIfNoEmpty(int viewType) {
         Presenter presenter = new Presenter();
         if (viewType != TYPE_EMPTY) {
             presenter.add(new KindPresenter());

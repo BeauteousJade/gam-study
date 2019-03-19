@@ -44,6 +44,10 @@ public class EmojiTextView extends AppCompatTextView {
 
     public void setContent(String content) {
         setText("");
+        appendContent(content);
+    }
+
+    public void appendContent(String content) {
         if (StringUtil.isEmpty(content)) {
             return;
         }
@@ -94,4 +98,5 @@ public class EmojiTextView extends AppCompatTextView {
                     }
                 });
     }
+
 }

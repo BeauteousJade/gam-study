@@ -83,5 +83,5 @@ public interface Service {
 
     @POST("/comment/addComment")
     @FormUrlEncoded
-    Observable<Comment> addComment(@Field("comment") Comment comment);
+    Observable<Comment> addComment(@Field("comment") String json);
 }

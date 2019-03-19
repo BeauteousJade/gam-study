@@ -37,7 +37,7 @@ public class ExpressionAdapter extends BaseRecyclerAdapter<Expression> {
     }
 
     @Override
-    protected Presenter onCreatePresenter(int viewType) {
+    protected Presenter onCreatePresenterIfNoEmpty(int viewType) {
         Presenter presenter = new Presenter();
         presenter.add(new LoadExpressionPresenter());
         return presenter;

@@ -16,6 +16,6 @@ public class CommentRequest extends BaseRequest<Comment> {
 
     @Override
     public Observable<Comment> createObservable() {
-        return NetWorkManager.getService(Service.class).addComment(mComment);
+        return NetWorkManager.getService(Service.class).addComment(mComment.toString());
     }
 }

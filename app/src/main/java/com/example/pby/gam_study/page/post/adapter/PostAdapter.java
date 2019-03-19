@@ -16,6 +16,8 @@ import java.util.List;
 
 public class PostAdapter extends BaseRecyclerAdapter<Post> {
 
+    public static final String PAY_LOAD = "pay_load";
+
     public PostAdapter(List<Post> dataList) {
         super(dataList);
     }
@@ -26,7 +28,7 @@ public class PostAdapter extends BaseRecyclerAdapter<Post> {
     }
 
     @Override
-    protected Presenter onCreatePresenter(int viewType) {
+    protected Presenter onCreatePresenterIfNoEmpty(int viewType) {
         Presenter presenter = new Presenter();
         presenter.add(new PostUserPresenter());
         presenter.add(new PostContentPresenter());

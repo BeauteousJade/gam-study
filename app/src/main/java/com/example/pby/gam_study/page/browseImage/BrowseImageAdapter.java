@@ -18,7 +18,7 @@ public class BrowseImageAdapter extends BaseRecyclerAdapter<String> {
     }
 
     @Override
-    protected Presenter onCreatePresenter(int viewType) {
+    protected Presenter onCreatePresenterIfNoEmpty(int viewType) {
         Presenter presenter = new Presenter();
         presenter.add(new ImageLoadPresenter());
         return presenter;

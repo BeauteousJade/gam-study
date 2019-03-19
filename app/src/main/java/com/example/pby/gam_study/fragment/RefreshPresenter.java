@@ -1,8 +1,6 @@
 package com.example.pby.gam_study.fragment;
 
 
-import android.util.Log;
-
 import com.example.annation.Inject;
 import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
@@ -63,7 +61,9 @@ public class RefreshPresenter extends Presenter {
             } else {
                 mAdapter.setItemList(null);
             }
-            mRefreshLayout.setRefreshing(false);
+            if (mRefreshLayout != null) {
+                mRefreshLayout.setRefreshing(false);
+            }
         }
     };
 

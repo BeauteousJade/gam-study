@@ -90,7 +90,7 @@ public class Post implements Diff {
     @Override
     public boolean onContentTheme(Diff diff) {
         if (diff instanceof Post) {
-            return Objects.equals(mId, ((Post) diff).getId());
+            return Objects.equals(mId, ((Post) diff).getId()) && Objects.equals(mLikeUserList, ((Post) diff).getLikeUserList()) && Objects.equals(mCommentList, ((Post) diff).getCommentList());
         }
         return false;
     }

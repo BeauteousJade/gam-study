@@ -19,6 +19,8 @@ public class PostContentPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)
     Post mPost;
+    @Inject(AccessIds.PAYLOAD)
+    Object mPayload;
 
     @BindView(R.id.post_content)
     EmojiTextView mTextView;
@@ -29,8 +31,10 @@ public class PostContentPresenter extends Presenter {
         if (StringUtil.isEmpty(mPost.getContent())) {
             mTextView.setVisibility(View.GONE);
         } else {
-            mTextView.setVisibility(View.VISIBLE);
-            mTextView.setContent(mPost.getContent());
+            if (mPayload == null) {
+                mTextView.setVisibility(View.VISIBLE);
+                mTextView.setContent(mPost.getContent());
+            }
         }
     }
 }

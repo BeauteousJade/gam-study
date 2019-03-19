@@ -18,7 +18,6 @@ import com.example.pby.gam_study.other.Diff;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.widget.layoutManager.ItemTouchStatus;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -260,6 +259,13 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         return getItemViewTypeNoEmpty(position);
     }
 
+    public final Presenter onCreatePresenter(int viewType) {
+        if (isShowEmpty()) {
+            return new Presenter();
+        }
+        return onCreatePresenterIfNoEmpty(viewType);
+    }
+
     public int getItemViewTypeNoEmpty(int position) {
         return 0;
     }
@@ -267,7 +273,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     public abstract int getItemViewLayoutNoEmpty(int viewType);
 
 
-    protected abstract Presenter onCreatePresenter(int viewType);
+    protected abstract Presenter onCreatePresenterIfNoEmpty(int viewType);
 
 
     @Override

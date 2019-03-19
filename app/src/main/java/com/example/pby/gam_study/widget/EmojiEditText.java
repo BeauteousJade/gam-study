@@ -105,11 +105,12 @@ public class EmojiEditText extends AppCompatEditText {
     }
 
     public void appendExpression(String fileName) {
-        Observable.create((ObservableOnSubscribe<Drawable>) emitter -> {
+        Observable.create((ObservableOnSubscribe<SpannableString>) emitter -> {
             if (!emitter.isDisposed()) {
                 Drawable drawable = ExpressionUtil.generateDrawable(getContext(), fileName);
                 if (drawable != null) {
-                    emitter.onNext(drawable);
+                    SpannableString spannableString = ExpressionUtil.generateImageSpannableString(drawable, fileName);
+                    emitter.onNext(spannableString);
                 } else {
                     emitter.onError(new NullPointerException());
                     return;
@@ -118,15 +119,15 @@ public class EmojiEditText extends AppCompatEditText {
             }
         })
                 .compose(RxSchedulers.ioToMain())
-                .subscribe(new Observer<Drawable>() {
+                .subscribe(new Observer<SpannableString>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mAppendContentDisposableList.add(d);
                     }
 
                     @Override
-                    public void onNext(Drawable drawable) {
-                        append(ExpressionUtil.generateImageSpannableString(drawable, fileName));
+                    public void onNext(SpannableString spannableString) {
+                        postOnAnimation(() -> append(spannableString));
                     }
 
                     @Override

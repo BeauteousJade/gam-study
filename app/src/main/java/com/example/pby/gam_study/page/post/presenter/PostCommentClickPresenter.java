@@ -29,6 +29,6 @@ public class PostCommentClickPresenter extends Presenter {
 
     @OnClick(R.id.comment_operation)
     public void onCommentClick(View view) {
-        mObservable.notifyChanged(NewsPageFragment.KEY_EXPRESSION_CLICK, new CommentObject(mPost, mViewHolder.getAdapterPosition()));
+        mObservable.notifyChanged(NewsPageFragment.KEY_EXPRESSION_CLICK, new CommentObject(mPost, mViewHolder.getAdapterPosition(), mPost.getId()));
     }
 }

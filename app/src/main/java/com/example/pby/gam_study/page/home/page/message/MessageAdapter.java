@@ -16,7 +16,7 @@ public class MessageAdapter extends BaseRecyclerAdapter<String> {
     }
 
     @Override
-    protected Presenter onCreatePresenter(int viewType) {
+    protected Presenter onCreatePresenterIfNoEmpty(int viewType) {
         return null;
     }
 }

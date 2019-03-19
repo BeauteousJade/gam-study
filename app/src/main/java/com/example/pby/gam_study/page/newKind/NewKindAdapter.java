@@ -45,7 +45,7 @@ public class NewKindAdapter extends BaseRecyclerAdapter<NewKindItem> {
     }
 
     @Override
-    protected Presenter onCreatePresenter(int viewType) {
+    protected Presenter onCreatePresenterIfNoEmpty(int viewType) {
         Presenter presenter = new Presenter();
         presenter.add(new NewKindItemPresenter());
         return presenter;

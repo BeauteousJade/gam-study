@@ -24,6 +24,7 @@ import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.object.CommentObject;
 import com.example.pby.gam_study.other.KeyboardListener;
 import com.example.pby.gam_study.page.post.NewsPageFragment;
+import com.example.pby.gam_study.page.post.adapter.PostAdapter;
 import com.example.pby.gam_study.page.post.request.CommentRequest;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.SoftKeyboardUtils;
@@ -66,6 +67,7 @@ public class PostInputPresenter extends Presenter {
         switch (key) {
             case NewsPageFragment
                     .KEY_EXPRESSION_CLICK:
+            case NewsPageFragment.KEY_ADD_COMMENT:
                 SoftKeyboardUtils.showORhideSoftKeyboard(getCurrentActivity());
                 mCommentObject = (CommentObject) obj;
                 break;
@@ -92,7 +94,7 @@ public class PostInputPresenter extends Presenter {
     };
 
     private KeyboardListener mKeyboardListener;
-    private boolean isClickExpression;
+    private boolean mIsHideInput;
     private boolean isOnce;
     private float mTranslationY;
 
@@ -128,12 +130,12 @@ public class PostInputPresenter extends Presenter {
     }
 
     private void hideInput() {
-        if (!isClickExpression) {
+        if (!mIsHideInput) {
             mCommentContainer.setTranslationY(mCommentContainer.getHeight());
         } else {
             mCommentContainer.setTranslationY(0);
         }
-        isClickExpression = false;
+        mIsHideInput = false;
     }
 
     @Override
@@ -164,7 +166,7 @@ public class PostInputPresenter extends Presenter {
 
     @OnClick(R.id.expression)
     public void onExpressionCLick(View view) {
-        isClickExpression = true;
+        mIsHideInput = true;
         SoftKeyboardUtils.showORhideSoftKeyboard(getCurrentActivity());
     }
 
@@ -177,9 +179,10 @@ public class PostInputPresenter extends Presenter {
         Comment comment = new Comment();
         comment.setContent(commentContent);
         comment.setFromUser(LoginManager.getCurrentUser());
-        if (mCommentObject != null && mCommentObject.getData() instanceof Comment) {
+        if (mCommentObject.getData() instanceof Comment) {
             comment.setToUser(((Comment) mCommentObject.getData()).getFromUser());
         }
+        comment.setPostId(mCommentObject.getPostId());
         mEmojiEditText.setText("");
         if (mRequest != null) {
             mRequest.cancel();
@@ -187,9 +190,10 @@ public class PostInputPresenter extends Presenter {
         mRequest = new CommentRequest(comment);
         mRequest.enqueue();
         mAdapter.getItem(mCommentObject.getPostPosition()).getCommentList().add(comment);
-        mAdapter.notifyItemChanged(mCommentObject.getPostPosition());
+        mAdapter.notifyItemChanged(mCommentObject.getPostPosition(), PostAdapter.PAY_LOAD);
         mCommentObject = null;
         hideInput();
+        SoftKeyboardUtils.hideSoftKeyboard(getCurrentActivity());
     }
 
     @Override

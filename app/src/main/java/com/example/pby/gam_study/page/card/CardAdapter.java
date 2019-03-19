@@ -21,7 +21,7 @@ public class CardAdapter extends BaseRecyclerAdapter<Card> {
     }
 
     @Override
-    protected Presenter onCreatePresenter(int viewType) {
+    protected Presenter onCreatePresenterIfNoEmpty(int viewType) {
         Presenter presenter = new Presenter();
         presenter.add(new CardPresenter());
         presenter.add(new CardClickPresenter());
