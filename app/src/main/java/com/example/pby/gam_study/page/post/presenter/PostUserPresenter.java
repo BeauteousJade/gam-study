@@ -13,7 +13,7 @@ import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.page.post.adapter.PostAdapter;
-import com.example.pby.gam_study.util.StringUtil;
+import com.example.pby.gam_study.util.TimeUtil;
 
 import butterknife.BindView;
 
@@ -40,6 +40,25 @@ public class PostUserPresenter extends Presenter {
                 .load(user.getHead())
                 .into(mAvatarView);
         mUserNameView.setText(user.getNickName());
-        mTimeView.setText(StringUtil.formatTime(mPost.getTime()));
+        mTimeView.setText(getTime());
     }
+
+    private String getTime() {
+        final long time1 = mPost.getTime();
+        final long time2 = System.currentTimeMillis();
+        final int dDay = TimeUtil.differentDays(time1, time2);
+        final int dYear = TimeUtil.differentYears(time1, time2);
+        if (dDay == 0) {
+            return TimeUtil.formatTime(time1, "今天 HH:mm");
+        } else if (dDay == 1) {
+            return TimeUtil.formatTime(time1, "昨天 HH:mm");
+        } else if (dDay == 2) {
+            return TimeUtil.formatTime(time1, "前天 HH:mm");
+        } else if (dYear == 0) {
+            return TimeUtil.formatTime(time1, "MM:dd HH:mm");
+        } else {
+            return TimeUtil.formatTime(time1, "yyyy:MM:dd");
+        }
+    }
+
 }

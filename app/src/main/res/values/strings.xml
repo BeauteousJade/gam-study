@@ -69,6 +69,9 @@
     <string name="share_content_empty">分享内容为空哦！</string>
     <string name="regex_like_count">等%s人觉得很赞</string>
     <string name="reply">回复</string>
+    <string name="send_message">撩ta</string>
+    <string name="follow">关注</string>
+    <string name="regex_user_profile">%s 的个人主页</string>
     <plurals name="error_over_count">
         <item quantity="one">You can only select one media file</item>
         <item quantity="many">You can only select up to %1$d media files</item>

@@ -29,6 +29,7 @@ public class CardDetailActivity extends BaseActivity {
 
     @Override
     protected void onPrepare() {
+        super.onPrepare();
         mCard = getIntent().getParcelableExtra(KEY_CARD);
     }
 

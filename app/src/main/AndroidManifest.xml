@@ -3,11 +3,23 @@
     package="com.example.pby.gam_study">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+    <permission
+        android:name="com.example.pby.gam_study.permission.RECEIVE_MSG"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.example.pby.gam_study.permission.RECEIVE_MSG" />
+
+
     <application
+        android:name=".GamStudyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon_app"
         android:label="@string/app_name"
@@ -48,7 +60,46 @@
         <activity android:name=".page.browseImage.BrowseImageActivity" />
         <activity android:name=".page.dailyCard.DailyCardActivity" />
         <activity android:name=".page.sendPost.SendPostActivity" />
-        <activity android:name=".page.post.PostActivity" />
+        <activity
+            android:name=".page.post.PostActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".page.profile.UserProfileActivity" />
+
+        <meta-data
+            android:name="com.netease.nim.appKey"
+            android:value="62a6c7a3aa03c227d48a0c1e63b1073f" />
+
+        <service
+            android:name="com.netease.nimlib.service.NimService"
+            android:process=":core" />
+        <service
+            android:name="com.netease.nimlib.service.NimService$Aux"
+            android:process=":core" />
+
+        <service
+            android:name="com.netease.nimlib.job.NIMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":core" />
+
+        <receiver
+            android:name="com.netease.nimlib.service.NimReceiver"
+            android:exported="false"
+            android:process=":core">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.netease.nimlib.service.ResponseReceiver" />
+
+        <service android:name="com.netease.nimlib.service.ResponseService" />
+        <provider
+            android:name="com.netease.nimlib.ipc.NIMContentProvider"
+            android:authorities="com.example.pby.gam_study.ipc.provider"
+            android:exported="false"
+            android:process=":core" />
     </application>
 
 </manifest>

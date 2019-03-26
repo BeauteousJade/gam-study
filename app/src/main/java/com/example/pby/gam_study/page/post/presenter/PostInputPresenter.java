@@ -20,22 +20,25 @@ import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Comment;
 import com.example.pby.gam_study.network.bean.Post;
+import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.object.CommentObject;
-import com.example.pby.gam_study.other.KeyboardListener;
-import com.example.pby.gam_study.page.post.NewsPageFragment;
-import com.example.pby.gam_study.page.post.adapter.PostAdapter;
+import com.example.pby.gam_study.page.post.PostFragment;
+import com.example.pby.gam_study.page.post.PostLinearLayoutManager;
 import com.example.pby.gam_study.page.post.request.CommentRequest;
-import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.SoftKeyboardUtils;
 import com.example.pby.gam_study.util.StringUtil;
+import com.example.pby.gam_study.util.key.KeyboardHeightObserverImpl;
 import com.example.pby.gam_study.widget.EmojiEditText;
+import com.example.pby.gam_study.widget.viewpager2.ViewPager2;
 
 import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -51,25 +54,34 @@ public class PostInputPresenter extends Presenter {
     EmojiEditText mEmojiEditText;
     @BindView(R.id.sure)
     Button mSureButton;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
 
 
     @Inject(AccessIds.OBSERVABLE)
     Observable mObservable;
     @Inject(AccessIds.RECYCLER_ADAPTER)
     BaseRecyclerAdapter<Post> mAdapter;
+    @Inject(AccessIds.LAYOUT_MANAGER)
+    PostLinearLayoutManager mLayoutManager;
 
-    private CommentObject mCommentObject;
+    private CommentObject mCurrentCommentObject;
+    private CommentObject mPreCommentObject;
     private int mOldHeight;
     private Request<Comment> mRequest;
 
 
     private final Observer mObserver = (key, obj) -> {
         switch (key) {
-            case NewsPageFragment
+            case PostFragment
                     .KEY_EXPRESSION_CLICK:
-            case NewsPageFragment.KEY_ADD_COMMENT:
+            case PostFragment.KEY_ADD_COMMENT:
+                mPreCommentObject = mCurrentCommentObject;
+                mCurrentCommentObject = (CommentObject) obj;
                 SoftKeyboardUtils.showORhideSoftKeyboard(getCurrentActivity());
-                mCommentObject = (CommentObject) obj;
+
                 break;
         }
     };
@@ -93,26 +105,26 @@ public class PostInputPresenter extends Presenter {
         }
     };
 
-    private KeyboardListener mKeyboardListener;
+    private KeyboardHeightObserverImpl mKeyboardListener;
     private boolean mIsHideInput;
     private boolean isOnce;
-    private float mTranslationY;
+    private ViewPager2 mViewPager2;
 
     @Override
     protected void onCreate() {
-        mKeyboardListener = new KeyboardListener(getCurrentActivity()) {
+        mKeyboardListener = new KeyboardHeightObserverImpl() {
             @Override
-            public void onHide(int height) {
+            public void onHide() {
                 hideInput();
             }
 
             @Override
-            public void onShow(int height, int keyboardTop) {
+            public void onShow(int height) {
                 if (!isOnce) {
-                    mTranslationY = keyboardTop - mCommentContainer.getY() + mOldHeight - DisplayUtil.dpToPx(getCurrentActivity(), 3);
                     ViewGroup.LayoutParams lp = mFragmentContainer.getLayoutParams();
                     lp.height = height;
                     mFragmentContainer.setLayoutParams(lp);
+                    mFragmentContainer.requestLayout();
                     final FragmentManager fragmentManager = getCurrentFragment().getFragmentManager();
                     Fragment fragment = Objects.requireNonNull(fragmentManager).findFragmentById(mFragmentContainer.getId());
                     final FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -123,8 +135,10 @@ public class PostInputPresenter extends Presenter {
                     transaction.commitAllowingStateLoss();
                     isOnce = true;
                 }
-                mCommentContainer.setTranslationY(mTranslationY);
+                mCommentContainer.setTranslationY(0);
                 mEmojiEditText.requestFocus();
+                resetEditTextContentIfNeed();
+                enableScroll(false);
             }
         };
     }
@@ -132,22 +146,46 @@ public class PostInputPresenter extends Presenter {
     private void hideInput() {
         if (!mIsHideInput) {
             mCommentContainer.setTranslationY(mCommentContainer.getHeight());
+            enableScroll(true);
         } else {
             mCommentContainer.setTranslationY(0);
         }
         mIsHideInput = false;
     }
 
+    private void enableScroll(boolean isScroll) {
+        mViewPager2.setCanScrollHorizontally(isScroll);
+        mLayoutManager.setCanScrollVertically(isScroll);
+        mRefreshLayout.setEnabled(isScroll);
+    }
+
+
+    private void resetEditTextContentIfNeed() {
+        if (mPreCommentObject == null || mPreCommentObject.getData() != mCurrentCommentObject.getData()) {
+            mEmojiEditText.setText("");
+            User toUser = null;
+            if (mCurrentCommentObject.getData() instanceof Post) {
+                toUser = ((Post) mCurrentCommentObject.getData()).getUser();
+            } else if (mCurrentCommentObject.getData() instanceof Comment) {
+                toUser = ((Comment) mCurrentCommentObject.getData()).getToUser();
+            }
+            if (toUser != null) {
+                mEmojiEditText.setHint(getString(R.string.reply) + " " + toUser.getNickName());
+            }
+        }
+    }
+
     @Override
     protected void onBind() {
+        mViewPager2 = getCurrentActivity().findViewById(R.id.viewPager2);
         getRootView().post(() -> {
             mOldHeight = mCommentContainer.getHeight();
             mCommentContainer.setTranslationY(mOldHeight);
         });
         mObservable.removeObserver(mObserver);
         mObservable.addObserver(mObserver);
-        getCurrentActivity().getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(mKeyboardListener);
-        getCurrentActivity().getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(mKeyboardListener);
+        getCurrentActivity().removeKeyboardHeightObserver(mKeyboardListener);
+        getCurrentActivity().addKeyboardHeightObserver(mKeyboardListener);
         mEmojiEditText.removeTextChangedListener(mTextWatcher);
         mEmojiEditText.addTextChangedListener(mTextWatcher);
         reminderEditTextStatus();
@@ -172,40 +210,41 @@ public class PostInputPresenter extends Presenter {
 
     @OnClick(R.id.sure)
     public void onSureClick(View view) {
-        if (mCommentObject == null) {
+        if (mCurrentCommentObject == null) {
             return;
         }
         final String commentContent = Objects.requireNonNull(mEmojiEditText.getText()).toString();
         Comment comment = new Comment();
+        comment.setId(StringUtil.generateId());
         comment.setContent(commentContent);
         comment.setFromUser(LoginManager.getCurrentUser());
-        if (mCommentObject.getData() instanceof Comment) {
-            comment.setToUser(((Comment) mCommentObject.getData()).getFromUser());
+        if (mCurrentCommentObject.getData() instanceof Comment) {
+            comment.setToUser(((Comment) mCurrentCommentObject.getData()).getFromUser());
         }
-        comment.setPostId(mCommentObject.getPostId());
+        comment.setPostId(mCurrentCommentObject.getPostId());
         mEmojiEditText.setText("");
         if (mRequest != null) {
             mRequest.cancel();
         }
         mRequest = new CommentRequest(comment);
         mRequest.enqueue();
-        mAdapter.getItem(mCommentObject.getPostPosition()).getCommentList().add(comment);
-        mAdapter.notifyItemChanged(mCommentObject.getPostPosition(), PostAdapter.PAY_LOAD);
-        mCommentObject = null;
+        mAdapter.getItem(mCurrentCommentObject.getPostPosition()).getCommentList().add(comment);
+        mAdapter.notifyItemChanged(mCurrentCommentObject.getPostPosition(), Post.COMMENT_PAY_LOAD);
+        mCurrentCommentObject = null;
         hideInput();
         SoftKeyboardUtils.hideSoftKeyboard(getCurrentActivity());
     }
 
     @Override
     protected void onUnBind() {
-        getCurrentActivity().getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(mKeyboardListener);
+        getCurrentActivity().removeKeyboardHeightObserver(mKeyboardListener);
         mEmojiEditText.removeTextChangedListener(mTextWatcher);
         mObservable.removeObserver(mObserver);
     }
 
     @Override
     protected void onDestroy() {
-        getCurrentActivity().getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(mKeyboardListener);
+        getCurrentActivity().removeKeyboardHeightObserver(mKeyboardListener);
         mEmojiEditText.removeTextChangedListener(mTextWatcher);
         mObservable.removeObserver(mObserver);
     }

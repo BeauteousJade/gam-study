@@ -1,5 +1,10 @@
 package com.example.pby.gam_study.page.post.presenter;
 
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,14 +17,18 @@ import com.example.pby.gam_study.fragment.util.Observable;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Comment;
 import com.example.pby.gam_study.network.bean.Post;
+import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.object.CommentObject;
-import com.example.pby.gam_study.page.post.NewsPageFragment;
+import com.example.pby.gam_study.other.MyLinkedMovementMethod;
+import com.example.pby.gam_study.page.post.PostFragment;
 import com.example.pby.gam_study.page.post.adapter.PostAdapter;
+import com.example.pby.gam_study.page.profile.UserProfileActivity;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.widget.EmojiTextView;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
@@ -33,7 +42,7 @@ public class PostCommentPresenter extends Presenter {
     @Inject(AccessIds.VIEW_HOLDER)
     RecyclerView.ViewHolder mViewHolder;
     @Inject(AccessIds.PAYLOAD)
-    Object mPayload;
+    List<String> mPayload;
 
     @BindView(R.id.comment_container)
     LinearLayout mCommentContainer;
@@ -46,12 +55,12 @@ public class PostCommentPresenter extends Presenter {
             mCommentContainer.setVisibility(View.GONE);
         } else {
             mCommentContainer.setVisibility(View.VISIBLE);
-            if (mPayload == null) {
+            if (ArrayUtil.isEmpty(mPayload)) {
                 mCommentContainer.removeAllViews();
                 for (Comment comment : commentList) {
                     mCommentContainer.addView(generateCommentTextView(comment));
                 }
-            } else {
+            } else if (mPayload.get(0).contains(Post.COMMENT_PAY_LOAD)) {
                 mCommentContainer.addView(generateCommentTextView(commentList.get(commentList.size() - 1)));
             }
         }
@@ -61,14 +70,35 @@ public class PostCommentPresenter extends Presenter {
         EmojiTextView commentTextView = new EmojiTextView(getCurrentActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
         commentTextView.setLayoutParams(lp);
-        commentTextView.append(comment.getFromUser().getNickName());
+        commentTextView.setTextColor(getColor(R.color.black));
+        commentTextView.append(generateNickName(comment.getFromUser()));
         if (comment.getToUser() != null) {
             commentTextView.append(" " + getString(R.string.reply) + " ");
-            commentTextView.append(comment.getToUser().getNickName());
+            commentTextView.append(generateNickName(comment.getToUser()));
         }
         commentTextView.appendContent(": " + comment.getContent());
         commentTextView.setBackground(getDrawable(R.drawable.bg_item));
-        commentTextView.setOnClickListener(v -> mObservable.notifyChanged(NewsPageFragment.KEY_ADD_COMMENT, new CommentObject(comment, mViewHolder.getAdapterPosition(), mPost.getId())));
+        commentTextView.setMovementMethod(MyLinkedMovementMethod.getInstance());
+        commentTextView.setOnClickListener(v -> mObservable.notifyChanged(PostFragment.KEY_ADD_COMMENT, new CommentObject(comment, mViewHolder.getAdapterPosition(), mPost.getId())));
         return commentTextView;
+    }
+
+    private SpannableString generateNickName(User user) {
+        final SpannableString spannableString = new SpannableString(user.getNickName());
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getColor(R.color.color_main_blue));
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                UserProfileActivity.startActivity(getCurrentActivity(), user);
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                ds.setUnderlineText(false);
+            }
+        };
+        spannableString.setSpan(foregroundColorSpan, 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(clickableSpan, 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
     }
 }

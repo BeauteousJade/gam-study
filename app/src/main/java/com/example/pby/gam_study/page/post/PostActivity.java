@@ -14,6 +14,6 @@ public class PostActivity extends BaseActivity {
 
     @Override
     public BaseFragment buildCurrentFragment() {
-        return NewsPageFragment.newInstance();
+        return PostFragment.newInstance();
     }
 }

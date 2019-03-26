@@ -1,7 +1,6 @@
 package com.example.pby.gam_study.adapter.base;
 
 import android.content.res.Resources;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +22,14 @@ import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * 如果{@link BaseRecyclerAdapter#mDataList} size = 1，并且相应位置的值为null，表示当前RecyclerView为空数据
- * 此时有特殊含义。但是，如果size = 0的位置为null，size大于1，此时没有特殊含义，让每个子类自我实现。
+ * 如果{@link BaseRecyclerAdapter#mDataList} size = 1，相应位置的值为null,并且{@link BaseRecyclerAdapter#supportEmpty()}方法
+ * 返回值为true，表示当前RecyclerView为空数据此时有特殊含义。但是，如果size = 0的位置为null，size大于1，此时没有特殊含义，让每个
+ * 子类自我实现。
  *
  * @param <U>
  */
@@ -52,8 +53,8 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
 
     public void addItemList(int index, List<U> newDataList) {
         // 空数据显示
-        if ((mDataList.size() == 1 && mDataList.get(0) == null) ||
-                (mDataList.size() == getItemStablePosition() + 1 && ArrayUtil.isEmpty(newDataList))) {
+        if (supportEmpty() && ((mDataList.size() == 1 && mDataList.get(0) == null) ||
+                (mDataList.size() == getItemStablePosition() + 1 && ArrayUtil.isEmpty(newDataList)))) {
             mDataList.clear();
             index = 0;
             notifyItemRemoved(0);
@@ -83,7 +84,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     }
 
     public void setItemList(List<U> newDatList) {
-        if (ArrayUtil.isEmpty(newDatList)) {
+        if (supportEmpty() && ArrayUtil.isEmpty(newDatList)) {
             setEmptyItemList();
             return;
         }
@@ -200,6 +201,10 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     }
 
 
+    protected boolean supportEmpty() {
+        return true;
+    }
+
     public boolean isShowEmpty() {
         return mDataList.size() == 1 && mDataList.get(0) == null;
     }
@@ -235,7 +240,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         @Provides(AccessIds.RECYCLER_ADAPTER)
         public RecyclerView.Adapter mAdapter;
         @Provides(AccessIds.PAYLOAD)
-        public List<Object> mPayLoad;
+        public List<?> mPayLoad;
         @Provides(AccessIds.OBSERVABLE)
         public Observable mObservable;
         @Provides(AccessIds.VIEW_HOLDER)
@@ -245,7 +250,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     }
 
     public final int getItemViewLayoutIfEmpty(int viewType) {
-        if (isShowEmpty()) {
+        if (isShowEmpty() && supportEmpty()) {
             return getEmptyLayoutId();
         }
         return getItemViewLayoutNoEmpty(viewType);
@@ -253,14 +258,14 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
 
     @Override
     public final int getItemViewType(int position) {
-        if (isShowEmpty()) {
+        if (isShowEmpty() && supportEmpty()) {
             return TYPE_EMPTY;
         }
         return getItemViewTypeNoEmpty(position);
     }
 
     public final Presenter onCreatePresenter(int viewType) {
-        if (isShowEmpty()) {
+        if (isShowEmpty() && supportEmpty()) {
             return new Presenter();
         }
         return onCreatePresenterIfNoEmpty(viewType);
@@ -340,6 +345,16 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
                 return ((Diff) oldItem).onContentTheme((Diff) mNewList.get(newItemPosition));
             }
             return Objects.equals(mOldList.get(oldItemPosition), mNewList.get(newItemPosition));
+        }
+
+        @Nullable
+        @Override
+        public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+            final T oldItem = mOldList.get(oldItemPosition);
+            if (oldItem instanceof Diff) {
+                return ((Diff) oldItem).getChangePayload((Diff) mNewList.get(newItemPosition));
+            }
+            return super.getChangePayload(oldItemPosition, newItemPosition);
         }
     }
 

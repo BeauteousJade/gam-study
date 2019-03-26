@@ -39,6 +39,7 @@ public class EditCardActivity extends BaseActivity {
 
     @Override
     protected void onPrepare() {
+        super.onPrepare();
         mType = getIntent().getIntExtra(KEY_TYPE, TYPE_NEW_CARD);
         switch (mType) {
             case TYPE_NEW_CARD:

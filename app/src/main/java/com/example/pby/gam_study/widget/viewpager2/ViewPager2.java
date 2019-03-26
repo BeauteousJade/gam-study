@@ -11,11 +11,9 @@ import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityEvent;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.widget.PagerRecyclerView;
-
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -57,6 +55,7 @@ public class ViewPager2 extends ViewGroup {
     private ScrollEventAdapter mScrollEventAdapter;
     private PageTransformerAdapter mPageTransformerAdapter;
     private CompositeOnPageChangeCallback mPageChangeEventDispatcher;
+    private boolean mCanScrollHorizontally = true;
 
     public ViewPager2(@NonNull Context context) {
         super(context);
@@ -84,7 +83,12 @@ public class ViewPager2 extends ViewGroup {
         mRecyclerView = new PagerRecyclerView(context);
         mRecyclerView.setId(ViewCompat.generateViewId());
 
-        mLayoutManager = new LinearLayoutManager(context);
+        mLayoutManager = new LinearLayoutManager(context) {
+            @Override
+            public boolean canScrollHorizontally() {
+                return mCanScrollHorizontally;
+            }
+        };
         mRecyclerView.setLayoutManager(mLayoutManager);
         setOrientation(context, attrs);
 
@@ -154,6 +158,10 @@ public class ViewPager2 extends ViewGroup {
         } finally {
             a.recycle();
         }
+    }
+
+    public void setCanScrollHorizontally(boolean canScrollHorizontally) {
+        mCanScrollHorizontally = canScrollHorizontally;
     }
 
 //    @Nullable

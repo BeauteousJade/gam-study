@@ -8,13 +8,13 @@ import com.example.annation.Module;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.post.NewsPageFragment;
+import com.example.pby.gam_study.page.post.PostFragment;
 import com.example.pby.gam_study.page.sendPost.SendPostActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(NewsPageFragment.Context.class)
+@Module(PostFragment.Context.class)
 public class PostTitleBarPresenter extends Presenter implements View.OnClickListener {
 
     @BindView(R.id.right_icon)

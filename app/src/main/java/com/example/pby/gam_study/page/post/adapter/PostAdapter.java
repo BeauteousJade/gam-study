@@ -4,27 +4,25 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Post;
-import com.example.pby.gam_study.page.post.presenter.PostCommentClickPresenter;
+import com.example.pby.gam_study.page.post.presenter.PostCommentOperationPresenter;
 import com.example.pby.gam_study.page.post.presenter.PostCommentPresenter;
 import com.example.pby.gam_study.page.post.presenter.PostContentPresenter;
 import com.example.pby.gam_study.page.post.presenter.PostImagePresenter;
 import com.example.pby.gam_study.page.post.presenter.PostLikePresenter;
 import com.example.pby.gam_study.page.post.presenter.PostLikeShowPresenter;
+import com.example.pby.gam_study.page.post.presenter.PostLinePresenter;
 import com.example.pby.gam_study.page.post.presenter.PostUserPresenter;
 
 import java.util.List;
 
 public class PostAdapter extends BaseRecyclerAdapter<Post> {
-
-    public static final String PAY_LOAD = "pay_load";
-
     public PostAdapter(List<Post> dataList) {
         super(dataList);
     }
 
     @Override
     public int getItemViewLayoutNoEmpty(int viewType) {
-        return R.layout.item_news;
+        return R.layout.item_post;
     }
 
     @Override
@@ -36,7 +34,8 @@ public class PostAdapter extends BaseRecyclerAdapter<Post> {
         presenter.add(new PostLikeShowPresenter());
         presenter.add(new PostCommentPresenter());
         presenter.add(new PostLikePresenter());
-        presenter.add(new PostCommentClickPresenter());
+        presenter.add(new PostCommentOperationPresenter());
+        presenter.add(new PostLinePresenter());
         return presenter;
     }
 }

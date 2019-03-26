@@ -4,4 +4,6 @@ public interface Diff {
     boolean areItemsTheSame(Diff diff);
 
     boolean onContentTheme(Diff diff);
+
+    Object getChangePayload(Diff diff);
 }

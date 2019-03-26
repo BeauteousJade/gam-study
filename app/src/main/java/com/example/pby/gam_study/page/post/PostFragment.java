@@ -22,7 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import butterknife.BindView;
 
-public class NewsPageFragment extends ViewPager2Fragment {
+public class PostFragment extends ViewPager2Fragment {
 
     public static final String KEY_EXPRESSION_CLICK = "key_expression_click";
     public static final String KEY_ADD_COMMENT = "key_add_comment";
@@ -35,8 +35,8 @@ public class NewsPageFragment extends ViewPager2Fragment {
 
     private final PageIndicator.OnItemClickListener mOnItemClickListener = position -> mViewPager2.setCurrentItem(position, true);
 
-    public static NewsPageFragment newInstance() {
-        return new NewsPageFragment();
+    public static PostFragment newInstance() {
+        return new PostFragment();
     }
 
     @Override

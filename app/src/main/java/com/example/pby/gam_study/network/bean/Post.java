@@ -8,6 +8,10 @@ import java.util.Objects;
 
 public class Post implements Diff {
 
+    public static final String COMMENT_PAY_LOAD = "comment_pay_load";
+    public static final String LIKE_PAY_LOAD = "like_pay_load";
+
+
     @SerializedName("id")
     private String mId;
     @SerializedName("user")
@@ -20,7 +24,7 @@ public class Post implements Diff {
     private List<User> mLikeUserList;
     @SerializedName("commentList")
     private List<Comment> mCommentList;
-    @SerializedName("mTime")
+    @SerializedName("time")
     private long mTime;
 
     public String getId() {
@@ -93,5 +97,20 @@ public class Post implements Diff {
             return Objects.equals(mId, ((Post) diff).getId()) && Objects.equals(mLikeUserList, ((Post) diff).getLikeUserList()) && Objects.equals(mCommentList, ((Post) diff).getCommentList());
         }
         return false;
+    }
+
+    @Override
+    public Object getChangePayload(Diff diff) {
+        if (!Objects.equals(mId, ((Post) diff).getId())) {
+            return false;
+        }
+        String payload = "";
+        if (!Objects.equals(mLikeUserList, ((Post) diff).getLikeUserList())) {
+            payload += LIKE_PAY_LOAD;
+        }
+        if (Objects.equals(mCommentList, ((Post) diff).getCommentList())) {
+            payload += COMMENT_PAY_LOAD;
+        }
+        return payload;
     }
 }

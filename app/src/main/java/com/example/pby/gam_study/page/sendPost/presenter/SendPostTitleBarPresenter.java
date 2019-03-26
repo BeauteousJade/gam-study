@@ -18,6 +18,7 @@ import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.network.request.RequestCallback;
 import com.example.pby.gam_study.page.sendPost.SendPostFragment;
 import com.example.pby.gam_study.page.sendPost.request.PostRequest;
+import com.example.pby.gam_study.util.SoftKeyboardUtils;
 import com.example.pby.gam_study.util.StringUtil;
 import com.example.pby.gam_study.util.ToastUtil;
 import com.example.pby.gam_study.widget.EmojiEditText;
@@ -72,6 +73,7 @@ public class SendPostTitleBarPresenter extends Presenter {
 
     @OnClick(R.id.left_icon)
     public void onLeftClick(View view) {
+        SoftKeyboardUtils.hideSoftKeyboard(getCurrentActivity());
         getCurrentActivity().finish();
     }
 

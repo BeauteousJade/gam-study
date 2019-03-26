@@ -12,4 +12,9 @@ public class RxSchedulers {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public static <T> ObservableTransformer<T, T> newThreadToMain() {
+        return upstream -> upstream
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

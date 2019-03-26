@@ -33,6 +33,9 @@
     <color name="color_004">#8e8e8e</color>
     <color name="color_005">#0cd8fb</color>
     <color name="color_006">#ff72a5</color>
+    <color name="color_006_50">#85ff72a5</color>
     <color name="color_007">#9a9a9a</color>
     <color name="color_008">@color/windowBackgroundColor</color>
+    <color name="color_009">#fba0c1</color>
+    <color name="color_009_50">#85fba0c1</color>
 </resources>

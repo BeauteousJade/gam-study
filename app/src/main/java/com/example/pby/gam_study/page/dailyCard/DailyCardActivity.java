@@ -23,6 +23,7 @@ public class DailyCardActivity extends BaseActivity {
 
     @Override
     protected void onPrepare() {
+        super.onPrepare();
         mCardList = getIntent().getParcelableArrayListExtra(KEY_CARD_LIST);
     }
 

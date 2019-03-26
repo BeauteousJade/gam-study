@@ -46,6 +46,8 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:${glide}"
     implementation "com.github.LuckSiege.PictureSelector:picture_library:${picture_library}"
     implementation "com.zhihu.android:matisse:${matisse}"
+    implementation "com.netease.nimlib:basesdk:${basesdk}"
+
 
     // myself
     implementation "com.github.BeauteousJade.blade:inject:${injector}"

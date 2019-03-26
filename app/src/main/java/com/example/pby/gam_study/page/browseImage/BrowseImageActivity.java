@@ -24,6 +24,7 @@ public class BrowseImageActivity extends BaseActivity {
 
     @Override
     protected void onPrepare() {
+        super.onPrepare();
         mImageUrlList = getIntent().getStringArrayListExtra(IMAGE_URL_LIST);
         findViewById(android.R.id.content).setBackgroundColor(ResourcesUtil.getColor(this, R.color.black));
     }

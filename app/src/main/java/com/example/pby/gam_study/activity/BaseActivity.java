@@ -3,15 +3,17 @@ package com.example.pby.gam_study.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.BaseFragment;
+import com.example.pby.gam_study.util.key.KeyboardHeightObserver;
+import com.example.pby.gam_study.util.key.KeyboardHeightProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -22,6 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private BaseFragment mCurrentFragment;
     private List<OnActivityResultListener> mListenerList;
+    private KeyboardHeightProvider mKeyboardHeightProvider;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (canRegisterEvent()) {
             EventBus.getDefault().unregister(this);
         }
+        mKeyboardHeightProvider.close();
         super.onDestroy();
     }
 
@@ -68,8 +72,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract BaseFragment buildCurrentFragment();
 
+    @CallSuper
     protected void onPrepare() {
-
+        mKeyboardHeightProvider = new KeyboardHeightProvider(this);
+        findViewById(android.R.id.content).post(() -> mKeyboardHeightProvider.start());
     }
 
     @IdRes
@@ -105,6 +111,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mListenerList != null) {
             mListenerList.remove(listener);
         }
+    }
+
+    public void addKeyboardHeightObserver(KeyboardHeightObserver observer) {
+        mKeyboardHeightProvider.addKeyboardHeightObserver(observer);
+    }
+
+    public void removeKeyboardHeightObserver(KeyboardHeightObserver observer) {
+        mKeyboardHeightProvider.removeKeyboardHeightObserver(observer);
     }
 
     @FunctionalInterface
