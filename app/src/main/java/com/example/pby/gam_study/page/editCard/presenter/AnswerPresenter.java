@@ -5,7 +5,6 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
@@ -15,7 +14,6 @@ import com.example.pby.gam_study.page.editCard.EditCardFragment;
 
 import butterknife.BindView;
 
-@Module(BaseRecyclerAdapter.Context.class)
 public class AnswerPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_POSITION)

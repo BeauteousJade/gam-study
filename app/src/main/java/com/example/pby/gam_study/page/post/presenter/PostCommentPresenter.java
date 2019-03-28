@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.util.Observable;
@@ -21,7 +20,6 @@ import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.object.CommentObject;
 import com.example.pby.gam_study.other.MyLinkedMovementMethod;
 import com.example.pby.gam_study.page.post.PostFragment;
-import com.example.pby.gam_study.page.post.adapter.PostAdapter;
 import com.example.pby.gam_study.page.profile.UserProfileActivity;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.widget.EmojiTextView;
@@ -32,7 +30,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
-@Module(PostAdapter.Context.class)
 public class PostCommentPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)
@@ -43,6 +40,8 @@ public class PostCommentPresenter extends Presenter {
     RecyclerView.ViewHolder mViewHolder;
     @Inject(AccessIds.PAYLOAD)
     List<String> mPayload;
+    @Inject(AccessIds.CLICKABLE)
+    boolean isClickable;
 
     @BindView(R.id.comment_container)
     LinearLayout mCommentContainer;
@@ -86,19 +85,21 @@ public class PostCommentPresenter extends Presenter {
     private SpannableString generateNickName(User user) {
         final SpannableString spannableString = new SpannableString(user.getNickName());
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getColor(R.color.color_main_blue));
-        ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                UserProfileActivity.startActivity(getCurrentActivity(), user);
-            }
+        if (isClickable) {
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(@NonNull View widget) {
+                    UserProfileActivity.startActivity(getCurrentActivity(), user);
+                }
 
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                ds.setUnderlineText(false);
-            }
-        };
+                @Override
+                public void updateDrawState(@NonNull TextPaint ds) {
+                    ds.setUnderlineText(false);
+                }
+            };
+            spannableString.setSpan(clickableSpan, 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         spannableString.setSpan(foregroundColorSpan, 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(clickableSpan, 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
 }

@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.RequestCode;
@@ -15,7 +14,6 @@ import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Card;
 import com.example.pby.gam_study.page.cardDetail.CardDetailActivity;
-import com.example.pby.gam_study.page.cardDetail.CardDetailFragment;
 import com.example.pby.gam_study.page.editCard.EditCardActivity;
 import com.example.pby.gam_study.util.DisplayUtil;
 
@@ -23,7 +21,6 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(CardDetailFragment.Context.class)
 public class CardDetailPresenter extends Presenter implements View.OnClickListener {
 
     @BindView(R.id.title_bar)

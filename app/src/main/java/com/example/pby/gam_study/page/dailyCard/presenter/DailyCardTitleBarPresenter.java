@@ -4,15 +4,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.annation.Module;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.dailyCard.DailyCardFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(DailyCardFragment.Context.class)
 public class DailyCardTitleBarPresenter extends Presenter {
 
     @BindView(R.id.title)

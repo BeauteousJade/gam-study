@@ -4,17 +4,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.DailyTask;
 import com.example.pby.gam_study.widget.ProgressBar;
 
 import butterknife.BindView;
 
-@Module(BaseRecyclerAdapter.Context.class)
 public class DailyTaskPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

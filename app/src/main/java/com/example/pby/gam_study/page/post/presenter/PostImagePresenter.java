@@ -6,12 +6,10 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Post;
-import com.example.pby.gam_study.page.post.adapter.PostAdapter;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.widget.ForegroundImageView;
@@ -20,7 +18,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-@Module(PostAdapter.Context.class)
 public class PostImagePresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

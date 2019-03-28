@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
@@ -14,14 +13,12 @@ import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.request.Request;
-import com.example.pby.gam_study.page.post.adapter.PostAdapter;
 import com.example.pby.gam_study.page.post.request.LikeRequest;
 
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(PostAdapter.Context.class)
 public class PostLikePresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

@@ -5,19 +5,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.factory.GlideFactory;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
-import com.example.pby.gam_study.page.post.adapter.PostAdapter;
 import com.example.pby.gam_study.util.TimeUtil;
 
 import butterknife.BindView;
 
-@Module(PostAdapter.Context.class)
 public class PostUserPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

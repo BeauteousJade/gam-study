@@ -77,6 +77,10 @@ public interface Service {
     @FormUrlEncoded
     Observable<List<Post>> findFollowPost(@Field("userId") String userId);
 
+    @POST("/post/findPost")
+    @FormUrlEncoded
+    Observable<List<Post>> findPost(@Field("userId") String userId);
+
     @POST("/like/like")
     @FormUrlEncoded
     Observable<Boolean> like(@Field("userId") String userId, @Field("postId") String postId, @Field("isLike") boolean isLike);
@@ -84,4 +88,13 @@ public interface Service {
     @POST("/comment/addComment")
     @FormUrlEncoded
     Observable<Comment> addComment(@Field("comment") String json);
+
+
+    @POST("/follow/followUser")
+    @FormUrlEncoded
+    Observable<Boolean> followUser(@Field("fromUserId") String fromUserId, @Field("toUserId") String toUserId);
+
+    @POST("/follow/unFollowUser")
+    @FormUrlEncoded
+    Observable<Boolean> unFollowUser(@Field("fromUserId") String fromUserId, @Field("toUserId") String toUserId);
 }

@@ -1,13 +1,10 @@
 package com.example.pby.gam_study.page.card.presenter;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.card.CardFragment;
 import com.example.pby.gam_study.page.card.request.UpdateTimeRequest;
 
-@Module(CardFragment.Context.class)
 public class CardUpdateTimePresenter extends Presenter {
 
     @Inject(AccessIds.KIND_ID)

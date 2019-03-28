@@ -8,12 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.GlideApp;
 import com.example.pby.gam_study.R;
@@ -27,20 +25,19 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(EditImageFragment.Context.class)
 public class EditImagePresenter extends Presenter {
 
     @BindView(R.id.left_icon)
-    ImageView mLeftView;
+    public ImageView mLeftView;
     @BindView(R.id.right_icon)
-    ImageView mRightView;
+    public ImageView mRightView;
     @BindView(R.id.title)
     TextView mTextView;
     @BindView(R.id.edit_image)
     EraserImageView mEraserImageView;
 
     @Inject(AccessIds.URL)
-    String mUrl;
+    public String mUrl;
 
     private GamDialogFragment mLoadDialog;
 

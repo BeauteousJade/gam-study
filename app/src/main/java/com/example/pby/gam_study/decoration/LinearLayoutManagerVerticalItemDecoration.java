@@ -13,6 +13,7 @@ public class LinearLayoutManagerVerticalItemDecoration extends RecyclerView.Item
 
     private final GradientDrawable mDrawable;
     private final int mHeight;
+    private int mStartIndex;
 
     public LinearLayoutManagerVerticalItemDecoration(@ColorInt int color, int height) {
         mDrawable = new GradientDrawable();
@@ -20,10 +21,15 @@ public class LinearLayoutManagerVerticalItemDecoration extends RecyclerView.Item
         mHeight = height;
     }
 
+    public LinearLayoutManagerVerticalItemDecoration(int startIndex, @ColorInt int color, int height) {
+        this(color, height);
+        mStartIndex = startIndex;
+    }
+
     @Override
     public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         final int childCount = parent.getChildCount();
-        for (int i = 1; i < childCount; i++) {
+        for (int i = mStartIndex; i < childCount; i++) {
             final View child = parent.getChildAt(i);
             int top = child.getTop() - mHeight;
             int bottom = child.getTop();
@@ -37,7 +43,7 @@ public class LinearLayoutManagerVerticalItemDecoration extends RecyclerView.Item
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         final int position = parent.getChildViewHolder(view).getAdapterPosition();
-        if (position != 0) {
+        if (position >= mStartIndex) {
             outRect.set(0, mHeight, 0, 0);
         }
     }

@@ -2,7 +2,6 @@ package com.example.pby.gam_study.fragment;
 
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
-@Module(RefreshRecyclerViewFragment.Context.class)
 public class RefreshPresenter extends Presenter {
 
     @BindView(R.id.refresh_layout)

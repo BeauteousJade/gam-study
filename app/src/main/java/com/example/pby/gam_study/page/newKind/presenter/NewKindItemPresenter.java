@@ -9,10 +9,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.factory.GlideFactory;
 import com.example.pby.gam_study.fragment.util.Observable;
 import com.example.pby.gam_study.mvp.Presenter;
@@ -29,7 +27,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Optional;
 
-@Module(BaseRecyclerAdapter.Context.class)
 public class NewKindItemPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

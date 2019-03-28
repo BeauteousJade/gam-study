@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.activity.BaseActivity;
@@ -14,7 +13,6 @@ import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Card;
 import com.example.pby.gam_study.page.browseImage.BrowseImageActivity;
-import com.example.pby.gam_study.page.card.CardAdapter;
 import com.example.pby.gam_study.page.cardDetail.CardDetailActivity;
 
 import java.util.ArrayList;
@@ -25,7 +23,6 @@ import butterknife.OnClick;
 
 import static com.example.pby.gam_study.RequestCode.REQUEST_UPDATE_CARD;
 
-@Module(CardAdapter.Context.class)
 public class CardClickPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

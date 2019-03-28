@@ -2,6 +2,7 @@ package com.example.pby.gam_study.page.home.page.home.presenter;
 
 import android.view.View;
 
+import com.example.annation.Inject;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
@@ -11,6 +12,9 @@ import com.example.pby.gam_study.util.ToastUtil;
 import butterknife.OnClick;
 
 public class TitleBarPresenter extends Presenter implements View.OnClickListener {
+
+    @Inject
+    String mEmpty = null;
 
     private GamDialogFragment mGamDialogFragment;
 

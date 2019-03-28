@@ -5,7 +5,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
@@ -16,7 +15,6 @@ import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.network.request.RequestCallback;
-import com.example.pby.gam_study.page.sendPost.SendPostFragment;
 import com.example.pby.gam_study.page.sendPost.request.PostRequest;
 import com.example.pby.gam_study.util.SoftKeyboardUtils;
 import com.example.pby.gam_study.util.StringUtil;
@@ -30,7 +28,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(SendPostFragment.Context.class)
 public class SendPostTitleBarPresenter extends Presenter {
 
     @BindView(R.id.title)

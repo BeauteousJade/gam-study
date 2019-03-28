@@ -5,19 +5,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.User;
-import com.example.pby.gam_study.page.profile.UserProfileFragment;
+import com.example.pby.gam_study.util.DisplayUtil;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(UserProfileFragment.Context.class)
 public class UserProfilePresenter extends Presenter {
 
     @BindView(R.id.recyclerView)
@@ -34,9 +32,12 @@ public class UserProfilePresenter extends Presenter {
 
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
 
+        private int mScrollY = 0;
+
         @Override
         public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-            mTitleBar.setAlpha(Math.min(dy / 100.f, 1));
+            mScrollY += dy;
+            mTitleBar.setAlpha(Math.min(mScrollY * 1.0f / DisplayUtil.dpToPx(getCurrentActivity(), 200), 1));
         }
     };
 

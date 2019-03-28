@@ -1,5 +1,6 @@
 package com.example.pby.gam_study.page.post.adapter;
 
+import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
@@ -18,6 +19,7 @@ import java.util.List;
 public class PostAdapter extends BaseRecyclerAdapter<Post> {
     public PostAdapter(List<Post> dataList) {
         super(dataList);
+        putExtra(AccessIds.CLICKABLE, true);
     }
 
     @Override

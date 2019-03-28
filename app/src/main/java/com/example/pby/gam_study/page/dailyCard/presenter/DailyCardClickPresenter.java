@@ -4,20 +4,17 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Card;
 import com.example.pby.gam_study.page.browseImage.BrowseImageActivity;
-import com.example.pby.gam_study.page.dailyCard.DailyCardAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(DailyCardAdapter.Context.class)
 public class DailyCardClickPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

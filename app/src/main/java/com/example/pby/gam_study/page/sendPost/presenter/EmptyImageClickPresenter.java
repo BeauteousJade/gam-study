@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.View;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.RequestCode;
@@ -13,7 +12,6 @@ import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.other.GlideImageEngine;
-import com.example.pby.gam_study.page.sendPost.ImageContainerAdapter;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -23,7 +21,6 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import butterknife.OnClick;
 
-@Module(ImageContainerAdapter.Context.class)
 public class EmptyImageClickPresenter extends Presenter {
 
     private static final int MAX_COUNT = 6;

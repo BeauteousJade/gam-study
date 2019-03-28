@@ -6,13 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.dailyCard.DailyCardAdapter;
-import com.example.pby.gam_study.page.dailyCard.DailyCardFragment;
 import com.example.pby.gam_study.page.dailyCard.UpdateDailyCardRequest;
 import com.example.pby.gam_study.widget.layoutManager.SlideItemTouchCallback;
 
@@ -21,7 +19,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-@Module(DailyCardFragment.Context.class)
 public class DailyCardSlidePresenter extends Presenter {
 
     @Inject(AccessIds.CALLBACK)

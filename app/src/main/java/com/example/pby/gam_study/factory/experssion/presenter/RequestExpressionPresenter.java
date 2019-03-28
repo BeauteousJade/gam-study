@@ -1,10 +1,8 @@
 package com.example.pby.gam_study.factory.experssion.presenter;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
-import com.example.pby.gam_study.factory.experssion.ExpressionFragment;
 import com.example.pby.gam_study.factory.experssion.ExpressionRequest;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.Request;
@@ -13,7 +11,6 @@ import com.example.pby.gam_study.network.response.Response;
 
 import java.util.List;
 
-@Module(ExpressionFragment.Context.class)
 public class RequestExpressionPresenter extends Presenter {
 
     @Inject(AccessIds.RECYCLER_ADAPTER)

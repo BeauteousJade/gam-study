@@ -3,7 +3,6 @@ package com.example.pby.gam_study.page.home.page.home.presenter;
 import android.view.View;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 
 import butterknife.OnClick;
 
-@Module(BaseRecyclerAdapter.Context.class)
 public class DailyTaskClickPresenter extends Presenter implements View.OnClickListener {
 
     @Inject(AccessIds.ITEM_POSITION)

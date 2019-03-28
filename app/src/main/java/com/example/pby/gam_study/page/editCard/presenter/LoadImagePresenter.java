@@ -4,25 +4,21 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.GlideApp;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.RequestCode;
 import com.example.pby.gam_study.activity.BaseActivity;
-import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.fragment.util.Observable;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.editImage.EditImageActivity;
 import com.example.pby.gam_study.page.editCard.EditCardFragment;
+import com.example.pby.gam_study.page.editImage.EditImageActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(BaseRecyclerAdapter.Context.class)
 public class LoadImagePresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

@@ -1,12 +1,10 @@
 package com.example.pby.gam_study.page.home.page.message.presenter;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Message;
-import com.example.pby.gam_study.page.home.page.message.MessagePageFragment;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
@@ -15,7 +13,6 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 import java.util.List;
 import java.util.Objects;
 
-@Module(MessagePageFragment.Context.class)
 public class MessageObserverPresenter extends Presenter {
 
 

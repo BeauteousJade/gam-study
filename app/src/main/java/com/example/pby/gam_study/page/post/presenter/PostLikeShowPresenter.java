@@ -1,16 +1,13 @@
 package com.example.pby.gam_study.page.post.presenter;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
-import com.example.pby.gam_study.page.post.adapter.PostAdapter;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.widget.LikeTextView;
 
@@ -18,7 +15,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-@Module(PostAdapter.Context.class)
 public class PostLikeShowPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

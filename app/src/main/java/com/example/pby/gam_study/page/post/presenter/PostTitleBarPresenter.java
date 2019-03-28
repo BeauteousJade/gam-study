@@ -4,18 +4,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.annation.Module;
+import com.example.annation.Inject;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.post.PostFragment;
 import com.example.pby.gam_study.page.sendPost.SendPostActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(PostFragment.Context.class)
 public class PostTitleBarPresenter extends Presenter implements View.OnClickListener {
+
+    @Inject
+    String mEmpty = null;
+
 
     @BindView(R.id.right_icon)
     ImageView mRightView;

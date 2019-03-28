@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.View;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.RequestCode;
@@ -24,7 +23,6 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import butterknife.OnClick;
 
-@Module(BaseRecyclerAdapter.Context.class)
 public class EmptyImagePresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_POSITION)

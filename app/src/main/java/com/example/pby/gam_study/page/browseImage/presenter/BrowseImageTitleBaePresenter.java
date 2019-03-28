@@ -3,15 +3,12 @@ package com.example.pby.gam_study.page.browseImage.presenter;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.annation.Module;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.browseImage.BrowseImageFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(BrowseImageFragment.Context.class)
 public class BrowseImageTitleBaePresenter extends Presenter {
 
     @BindView(R.id.left_icon)

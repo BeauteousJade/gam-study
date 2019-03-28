@@ -6,16 +6,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.card.CardFragment;
 import com.example.pby.gam_study.widget.layoutManager.SlideItemTouchCallback;
 
 import butterknife.BindView;
 
-@Module(CardFragment.Context.class)
 public class SlideCardPresenter extends Presenter {
 
     @Inject(AccessIds.CALLBACK)

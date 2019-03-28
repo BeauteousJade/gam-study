@@ -5,17 +5,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.factory.GlideFactory;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.User;
-import com.example.pby.gam_study.page.profile.UserProfileAdapter;
 
 import butterknife.BindView;
 
-@Module(UserProfileAdapter.Context.class)
 public class UserHeadPresenter extends Presenter {
 
     @Inject(AccessIds.USER)

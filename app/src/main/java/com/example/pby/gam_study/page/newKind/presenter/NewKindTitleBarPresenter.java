@@ -5,11 +5,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.factory.DialogFactory;
-import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.fragment.util.Observable;
 import com.example.pby.gam_study.fragment.util.Observer;
@@ -26,7 +24,6 @@ import com.example.pby.gam_study.util.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(RefreshRecyclerViewFragment.Context.class)
 public class NewKindTitleBarPresenter extends Presenter {
 
     @BindView(R.id.left_icon)

@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.factory.DialogFactory;
@@ -26,7 +25,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(EditCardFragment.Context.class)
 public class EditCardTitleBarPresenter extends Presenter {
     @BindView(R.id.left_icon)
     ImageView mLeftView;

@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.annation.Provides;
-import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.inter.ViewModelLifecycle;
 
 import androidx.annotation.NonNull;
@@ -36,13 +34,4 @@ public abstract class BaseViewModelFragment<T extends ViewModel> extends BaseFra
     @Override
     public abstract void onViewModelCreated(T t);
 
-
-    public T getViewMdel() {
-        return mViewModel;
-    }
-
-    public static class Context<T extends ViewModel> {
-        @Provides(AccessIds.VIEW_MODEL)
-        public T mViewModel;
-    }
 }

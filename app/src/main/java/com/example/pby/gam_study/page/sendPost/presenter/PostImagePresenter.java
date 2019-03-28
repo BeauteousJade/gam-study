@@ -4,30 +4,27 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.GlideApp;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.adapter.base.BaseViewHolder;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.page.sendPost.ImageContainerAdapter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(ImageContainerAdapter.Context.class)
 public class PostImagePresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)
-    Object url;
+    public Object url;
     @Inject(AccessIds.RECYCLER_ADAPTER)
-    BaseRecyclerAdapter<Object> mAdapter;
+    public BaseRecyclerAdapter<Object> mAdapter;
     @Inject(AccessIds.VIEW_HOLDER)
-    BaseViewHolder mViewHolder;
+    public BaseViewHolder mViewHolder;
 
     @BindView(R.id.image)
-    ImageView mImageView;
+    public ImageView mImageView;
 
     @Override
     protected void onBind() {

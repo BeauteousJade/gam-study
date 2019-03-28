@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import com.example.annation.Inject;
 import com.example.inject.Blade;
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.fragment.BaseFragment;
@@ -11,6 +12,7 @@ import com.example.pby.gam_study.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.DimenRes;
@@ -25,6 +27,9 @@ public class Presenter {
     private Presence mPresence;
     private Unbinder mUnBinder;
 
+    @Inject
+    String mEmpty = null;
+
     public final void create(Presence presence) {
         mPresence = presence;
         onCreate();
@@ -38,15 +43,15 @@ public class Presenter {
     protected void onCreate() {
     }
 
-    public final void bind(Object source, View view) {
+    public final void bind(Object source, Map<String, Object> map, View view) {
         if (mUnBinder == null) {
             mUnBinder = ButterKnife.bind(this, view);
         }
-        Blade.inject(this, source);
+        Blade.inject(this, source, map);
         onBind();
         if (!ArrayUtil.isEmpty(mPresenterList)) {
             for (Presenter presenter : mPresenterList) {
-                presenter.bind(source, view);
+                presenter.bind(source, map, view);
             }
         }
     }

@@ -23,4 +23,5 @@ public final class AccessIds {
     public static final String VIEW_HOLDER = "view_holder";
     public static final String LISTENER = "listener";
     public static final String USER = "user_id";
+    public static final String CLICKABLE = "clickable";
 }

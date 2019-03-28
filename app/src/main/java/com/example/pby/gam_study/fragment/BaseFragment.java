@@ -2,7 +2,6 @@ package com.example.pby.gam_study.fragment;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,9 @@ import com.example.pby.gam_study.inter.BaseContextLifecycle;
 import com.example.pby.gam_study.mvp.Presence;
 import com.example.pby.gam_study.mvp.Presenter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +26,7 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
 
     protected Presenter mPresenter;
     protected Object mContext;
+    private Map<String, Object> mExtraMap = new HashMap<>();
 
     @Nullable
     @Override
@@ -40,7 +43,7 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
         ButterKnife.bind(this, view);
         onPrepareBaseContext();
         mContext = onCreateBaseContext();
-        mPresenter.bind(mContext, view);
+        mPresenter.bind(mContext, mExtraMap, view);
     }
 
     @Override
@@ -53,7 +56,7 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
 
     public final void refresh() {
         mPresenter.unBind();
-        mPresenter.bind(mContext, getRootView());
+        mPresenter.bind(mContext, mExtraMap, getRootView());
     }
 
 
@@ -77,6 +80,10 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
         Context context = new Context();
         context.mFragment = this;
         return (T) context;
+    }
+
+    public void putExtra(String id, Object object) {
+        mExtraMap.put(id, object);
     }
 
     @SuppressWarnings("unchecked")

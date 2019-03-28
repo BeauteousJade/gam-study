@@ -18,7 +18,9 @@ import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.widget.layoutManager.ItemTouchStatus;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -42,6 +44,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     private BaseActivity mActivity;
     private Observable mObservable;
     private RecyclerView mRecyclerView;
+    private Map<String, Object> mExtraMap = new HashMap<>();
 
     public BaseRecyclerAdapter(List<U> dataList) {
         mDataList = dataList;
@@ -84,12 +87,18 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     }
 
     public void setItemList(List<U> newDatList) {
-        if (supportEmpty() && ArrayUtil.isEmpty(newDatList)) {
-            setEmptyItemList();
+        if (ArrayUtil.isEmpty(newDatList)) {
+            if (supportEmpty()) {
+                setEmptyItemList();
+            }
             return;
         }
         final U item = newDatList.get(0);
         if (item instanceof Diff) {
+            for (int i = 0; i <= getItemStablePosition(); i++) {
+                newDatList.add(i, mDataList.get(i));
+            }
+            mDataList.subList(getItemStablePosition() + 1, mDataList.size());
             final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtilCallback<>(mDataList, newDatList), false);
             mDataList.clear();
             mDataList.addAll(newDatList);
@@ -152,13 +161,17 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
 
     protected void onPayloadsNotEmpty(BaseViewHolder holder, int position, List<Object> payloads) {
         holder.mPresenter.unBind();
-        holder.mPresenter.bind(onCreateContext(holder, position, payloads), holder.itemView);
+        holder.mPresenter.bind(onCreateContext(holder, position, payloads), mExtraMap, holder.itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder baseViewHolder, int position) {
         baseViewHolder.mPresenter.unBind();
-        baseViewHolder.mPresenter.bind(onCreateContext(baseViewHolder, position, null), baseViewHolder.itemView);
+        baseViewHolder.mPresenter.bind(onCreateContext(baseViewHolder, position, null), mExtraMap, baseViewHolder.itemView);
+    }
+
+    public void putExtra(String id, Object object) {
+        mExtraMap.put(id, object);
     }
 
     @Override

@@ -5,10 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.factory.experssion.ExpressionAdapter;
 import com.example.pby.gam_study.factory.experssion.ExpressionConvertRequest;
 import com.example.pby.gam_study.factory.experssion.ExpressionFragment;
 import com.example.pby.gam_study.mvp.Presenter;
@@ -20,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(ExpressionAdapter.Context.class)
 public class LoadExpressionPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)

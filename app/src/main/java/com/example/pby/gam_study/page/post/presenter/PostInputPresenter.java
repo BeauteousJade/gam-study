@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.annation.Inject;
-import com.example.annation.Module;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.factory.experssion.ExpressionFactory;
 import com.example.pby.gam_study.factory.experssion.ExpressionFragment;
-import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.fragment.util.Observable;
 import com.example.pby.gam_study.fragment.util.Observer;
 import com.example.pby.gam_study.manager.LoginManager;
@@ -42,7 +40,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-@Module(RefreshRecyclerViewFragment.Context.class)
 public class PostInputPresenter extends Presenter {
 
 
@@ -73,16 +70,19 @@ public class PostInputPresenter extends Presenter {
     private Request<Comment> mRequest;
 
 
-    private final Observer mObserver = (key, obj) -> {
-        switch (key) {
-            case PostFragment
-                    .KEY_EXPRESSION_CLICK:
-            case PostFragment.KEY_ADD_COMMENT:
-                mPreCommentObject = mCurrentCommentObject;
-                mCurrentCommentObject = (CommentObject) obj;
-                SoftKeyboardUtils.showORhideSoftKeyboard(getCurrentActivity());
+    private final Observer mObserver = new Observer() {
+        @Override
+        public void onChanged(String key, Object obj) {
+            switch (key) {
+                case PostFragment
+                        .KEY_EXPRESSION_CLICK:
+                case PostFragment.KEY_ADD_COMMENT:
+                    mPreCommentObject = mCurrentCommentObject;
+                    mCurrentCommentObject = (CommentObject) obj;
+                    SoftKeyboardUtils.showORhideSoftKeyboard(getCurrentActivity());
 
-                break;
+                    break;
+            }
         }
     };
 
@@ -154,14 +154,16 @@ public class PostInputPresenter extends Presenter {
     }
 
     private void enableScroll(boolean isScroll) {
-        mViewPager2.setCanScrollHorizontally(isScroll);
+        if (mViewPager2 != null) {
+            mViewPager2.setCanScrollHorizontally(isScroll);
+        }
         mLayoutManager.setCanScrollVertically(isScroll);
         mRefreshLayout.setEnabled(isScroll);
     }
 
 
     private void resetEditTextContentIfNeed() {
-        if (mPreCommentObject == null || mPreCommentObject.getData() != mCurrentCommentObject.getData()) {
+        if (mPreCommentObject == null || mCurrentCommentObject != null && mPreCommentObject.getData() != mCurrentCommentObject.getData()) {
             mEmojiEditText.setText("");
             User toUser = null;
             if (mCurrentCommentObject.getData() instanceof Post) {
