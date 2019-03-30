@@ -52,7 +52,7 @@ public class UserProfilePresenter extends Presenter {
 
     @OnClick(R.id.left_icon)
     public void onLeftClick(View view) {
-        if (view.getAlpha() > 0) {
+        if (mTitleBar.getAlpha() > 0) {
             getCurrentActivity().finish();
         }
     }

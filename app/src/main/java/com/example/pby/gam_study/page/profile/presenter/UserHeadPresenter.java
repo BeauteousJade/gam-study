@@ -15,17 +15,33 @@ import butterknife.BindView;
 
 public class UserHeadPresenter extends Presenter {
 
-    @Inject(AccessIds.USER)
+    @Inject(AccessIds.ITEM_DATA)
     User mUser;
 
     @BindView(R.id.avatar)
     ImageView mAvatar;
     @BindView(R.id.nick_name)
     TextView mNickName;
+    @BindView(R.id.fans_count)
+    TextView mFansCount;
+    @BindView(R.id.follow_count)
+    TextView mFollowCount;
 
     @Override
     protected void onBind() {
         Glide.with(getCurrentFragment()).asBitmap().apply(GlideFactory.createCircleOption()).load(mUser.getHead()).into(mAvatar);
         mNickName.setText(mUser.getNickName());
+        mFansCount.setText(String.format(getString(R.string.regex_fans_count), formatCount(mUser.getFansUserList().size())));
+        mFollowCount.setText(String.format(getString(R.string.regex_follow_count), formatCount(mUser.getFollowUserList().size())));
+    }
+
+    private String formatCount(int size) {
+        if (size < 1000) {
+            return String.valueOf(size);
+        } else if (size < 10000) {
+            return String.valueOf(size / 1000 + "k");
+        } else {
+            return String.valueOf(size / 10000 + "w");
+        }
     }
 }

@@ -55,11 +55,38 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginStart="10dp"
-        android:background="@drawable/bg_button_01"
+        android:background="@drawable/bg_button_select_01"
         android:text="@string/follow"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/send_message"
         app:layout_constraintLeft_toRightOf="@id/send_message"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/send_message" />
+
+    <TextView
+        android:id="@+id/fans_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="1232131"
+        android:textColor="@color/color_item_dark"
+        android:textSize="@dimen/text_size_14"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/follow_count"
+        app:layout_constraintTop_toBottomOf="@id/send_message" />
+
+    <TextView
+        android:id="@+id/follow_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="1232131"
+        android:textColor="@color/color_item_dark"
+        android:textSize="@dimen/text_size_14"
+        app:layout_constraintBottom_toBottomOf="@id/fans_count"
+        app:layout_constraintLeft_toRightOf="@id/fans_count"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fans_count" />
 </androidx.constraintlayout.widget.ConstraintLayout>

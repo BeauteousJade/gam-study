@@ -3,22 +3,32 @@ package com.example.pby.gam_study.network.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.pby.gam_study.other.Diff;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.Nullable;
 
-public class User implements Parcelable {
+public class User implements Parcelable, Diff {
 
     private String id;
     private String head;
     private String token;
     private String nickName;
+    private List<Follow> followUserList;
+    private List<Follow> fansUserList;
 
     protected User(Parcel in) {
         id = in.readString();
         head = in.readString();
         token = in.readString();
         nickName = in.readString();
+        followUserList = new ArrayList<>();
+        fansUserList = new ArrayList<>();
+        in.readList(followUserList, getClass().getClassLoader());
+        in.readList(fansUserList, getClass().getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -65,6 +75,22 @@ public class User implements Parcelable {
         this.token = token;
     }
 
+    public List<Follow> getFollowUserList() {
+        return followUserList;
+    }
+
+    public void setFollowUserList(List<Follow> followUserList) {
+        this.followUserList = followUserList;
+    }
+
+    public List<Follow> getFansUserList() {
+        return fansUserList;
+    }
+
+    public void setFansUserList(List<Follow> fansUserList) {
+        this.fansUserList = fansUserList;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj instanceof User) {
@@ -89,5 +115,27 @@ public class User implements Parcelable {
         dest.writeString(head);
         dest.writeString(token);
         dest.writeString(nickName);
+        dest.writeList(followUserList);
+        dest.writeList(fansUserList);
+    }
+
+
+    @Override
+    public boolean areItemsTheSame(Diff diff) {
+        return equals(diff);
+    }
+
+    @Override
+    public boolean onContentTheme(Diff diff) {
+        if (diff instanceof User) {
+            final User user = (User) diff;
+            return Objects.equals(head, user.getHead()) && Objects.equals(nickName, user.getNickName()) && Objects.equals(followUserList, user.getFollowUserList()) && Objects.equals(fansUserList, user.getFansUserList());
+        }
+        return false;
+    }
+
+    @Override
+    public Object getChangePayload(Diff diff) {
+        return null;
     }
 }

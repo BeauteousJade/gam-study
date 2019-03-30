@@ -27,6 +27,7 @@
     <color name="black_20">#33000000</color>
 
     <color name="color_000">#9c9c9c</color>
+    <color name="color_000_50">#859c9c9c</color>
     <color name="color_001">#fefdfd</color>
     <color name="color_002">#ffa475</color>
     <color name="color_003">#26c1fe</color>

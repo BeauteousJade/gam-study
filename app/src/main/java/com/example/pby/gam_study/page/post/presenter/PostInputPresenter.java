@@ -106,7 +106,7 @@ public class PostInputPresenter extends Presenter {
     };
 
     private KeyboardHeightObserverImpl mKeyboardListener;
-    private boolean mIsHideInput;
+    private boolean mIsHideExpression;
     private boolean isOnce;
     private ViewPager2 mViewPager2;
 
@@ -135,6 +135,7 @@ public class PostInputPresenter extends Presenter {
                     transaction.commitAllowingStateLoss();
                     isOnce = true;
                 }
+                mIsHideExpression = true;
                 mCommentContainer.setTranslationY(0);
                 mEmojiEditText.requestFocus();
                 resetEditTextContentIfNeed();
@@ -144,13 +145,13 @@ public class PostInputPresenter extends Presenter {
     }
 
     private void hideInput() {
-        if (!mIsHideInput) {
+        if (mIsHideExpression) {
             mCommentContainer.setTranslationY(mCommentContainer.getHeight());
             enableScroll(true);
         } else {
             mCommentContainer.setTranslationY(0);
         }
-        mIsHideInput = false;
+        mIsHideExpression = true;
     }
 
     private void enableScroll(boolean isScroll) {
@@ -163,7 +164,7 @@ public class PostInputPresenter extends Presenter {
 
 
     private void resetEditTextContentIfNeed() {
-        if (mPreCommentObject == null || mCurrentCommentObject != null && mPreCommentObject.getData() != mCurrentCommentObject.getData()) {
+        if (mCurrentCommentObject != null && (mPreCommentObject == null || mPreCommentObject.getData() != mCurrentCommentObject.getData())) {
             mEmojiEditText.setText("");
             User toUser = null;
             if (mCurrentCommentObject.getData() instanceof Post) {
@@ -180,10 +181,6 @@ public class PostInputPresenter extends Presenter {
     @Override
     protected void onBind() {
         mViewPager2 = getCurrentActivity().findViewById(R.id.viewPager2);
-        getRootView().post(() -> {
-            mOldHeight = mCommentContainer.getHeight();
-            mCommentContainer.setTranslationY(mOldHeight);
-        });
         mObservable.removeObserver(mObserver);
         mObservable.addObserver(mObserver);
         getCurrentActivity().removeKeyboardHeightObserver(mKeyboardListener);
@@ -206,7 +203,7 @@ public class PostInputPresenter extends Presenter {
 
     @OnClick(R.id.expression)
     public void onExpressionCLick(View view) {
-        mIsHideInput = true;
+        mIsHideExpression = false;
         SoftKeyboardUtils.showORhideSoftKeyboard(getCurrentActivity());
     }
 

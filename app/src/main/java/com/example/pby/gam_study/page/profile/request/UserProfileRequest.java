@@ -2,25 +2,23 @@ package com.example.pby.gam_study.page.profile.request;
 
 import com.example.pby.gam_study.network.NetWorkManager;
 import com.example.pby.gam_study.network.Service;
-import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.request.BaseRequest;
-
-import java.util.List;
+import com.example.pby.gam_study.network.response.body.UserProfileResponseBody;
 
 import io.reactivex.Observable;
 
-public class UserPostRequest extends BaseRequest<List<Post>> {
+public class UserProfileRequest extends BaseRequest<UserProfileResponseBody> {
 
     private String mUserId;
 
-    public UserPostRequest(String userId) {
+    public UserProfileRequest(String userId) {
         mUserId = userId;
     }
 
     @Override
-    public Observable<List<Post>> createObservable() {
+    public Observable<UserProfileResponseBody> createObservable() {
         return NetWorkManager
                 .getService(Service.class)
-                .findPost(mUserId);
+                .getUserProfile(mUserId);
     }
 }

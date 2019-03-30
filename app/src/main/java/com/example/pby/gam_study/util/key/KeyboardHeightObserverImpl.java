@@ -1,11 +1,16 @@
 package com.example.pby.gam_study.util.key;
 
 public class KeyboardHeightObserverImpl implements KeyboardHeightObserver {
+
+    private boolean isShow = false;
+
     @Override
     public void onKeyboardHeightChanged(int height, int orientation) {
-        if (height == 0) {
+        if (height == 0 && isShow) {
+            isShow = false;
             onHide();
-        } else {
+        } else if (height > 0) {
+            isShow = true;
             onShow(height);
         }
     }

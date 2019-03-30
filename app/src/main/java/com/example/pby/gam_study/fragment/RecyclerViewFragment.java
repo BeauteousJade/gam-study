@@ -1,10 +1,8 @@
 package com.example.pby.gam_study.fragment;
 
 import android.os.Bundle;
-
 import android.view.View;
 
-import com.example.annation.Provides;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.activity.BaseActivity;
@@ -14,7 +12,6 @@ import com.example.pby.gam_study.util.ArrayUtil;
 
 import java.util.List;
 
-import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -48,6 +45,12 @@ public abstract class RecyclerViewFragment extends BaseFragment {
         mRecyclerAdapter.setCurrentFragment(this);
         mRecyclerAdapter.setObservable(mObservable);
         mRecyclerAdapter.setRecyclerView(mRecyclerView);
+
+        putExtra(AccessIds.RECYCLER_VIEW, mRecyclerView);
+        putExtra(AccessIds.RECYCLER_ADAPTER, mRecyclerAdapter);
+        putExtra(AccessIds.LAYOUT_MANAGER, mLayoutManager);
+        putExtra(AccessIds.OBSERVABLE, mObservable);
+        putExtra(AccessIds.CALLBACK, mCallback);
     }
 
     @Override
@@ -121,35 +124,6 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_recyclerview;
-    }
-
-    @SuppressWarnings("unchecked")
-    @CallSuper
-    @Override
-    public <T> T onCreateBaseContext() {
-        Context context = new Context();
-        context.mContext = super.onCreateBaseContext();
-        context.mRecyclerView = mRecyclerView;
-        context.mRecyclerAdapter = mRecyclerAdapter;
-        context.mLayoutManager = mLayoutManager;
-        context.mObservable = mObservable;
-        context.mCallback = mCallback;
-        return (T) context;
-    }
-
-    public static class Context {
-        @Provides(deepProvides = true)
-        public BaseFragment.Context mContext;
-        @Provides(value = AccessIds.RECYCLER_VIEW)
-        public RecyclerView mRecyclerView;
-        @Provides(value = AccessIds.RECYCLER_ADAPTER)
-        public RecyclerView.Adapter mRecyclerAdapter;
-        @Provides(value = AccessIds.LAYOUT_MANAGER)
-        public RecyclerView.LayoutManager mLayoutManager;
-        @Provides(value = AccessIds.OBSERVABLE)
-        public Observable mObservable;
-        @Provides(value = AccessIds.CALLBACK)
-        public ItemTouchHelper.Callback mCallback;
     }
 
 }

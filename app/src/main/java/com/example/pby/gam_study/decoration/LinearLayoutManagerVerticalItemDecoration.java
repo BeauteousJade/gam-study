@@ -29,14 +29,16 @@ public class LinearLayoutManagerVerticalItemDecoration extends RecyclerView.Item
     @Override
     public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         final int childCount = parent.getChildCount();
-        for (int i = mStartIndex; i < childCount; i++) {
+        for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
-            int top = child.getTop() - mHeight;
-            int bottom = child.getTop();
-            int left = child.getLeft();
-            int right = child.getRight();
-            mDrawable.setBounds(left, top, right, bottom);
-            mDrawable.draw(c);
+            if (parent.getChildViewHolder(child).getAdapterPosition() >= mStartIndex) {
+                int top = child.getTop() - mHeight;
+                int bottom = child.getTop();
+                int left = child.getLeft();
+                int right = child.getRight();
+                mDrawable.setBounds(left, top, right, bottom);
+                mDrawable.draw(c);
+            }
         }
     }
 

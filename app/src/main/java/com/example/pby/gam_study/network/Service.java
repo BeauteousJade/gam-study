@@ -6,6 +6,7 @@ import com.example.pby.gam_study.network.bean.DailyTask;
 import com.example.pby.gam_study.network.bean.Kind;
 import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
+import com.example.pby.gam_study.network.response.body.UserProfileResponseBody;
 import com.example.pby.gam_study.page.login.bean.CodeBean;
 import com.example.pby.gam_study.page.newKind.NewKindItem;
 
@@ -25,6 +26,10 @@ public interface Service {
     @POST("/user/findUser")
     @FormUrlEncoded
     Observable<User> findUser(@Field("id") String id);
+
+    @POST("/user/profile")
+    @FormUrlEncoded
+    Observable<UserProfileResponseBody> getUserProfile(@Field("userId") String userId);
 
     @POST("/kind/findAllKind")
     @FormUrlEncoded

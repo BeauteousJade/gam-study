@@ -2,20 +2,19 @@ package com.example.pby.gam_study.page.profile;
 
 import android.os.Bundle;
 
-import com.example.annation.Provides;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.decoration.LinearLayoutManagerVerticalItemDecoration;
 import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.post.PostLinearLayoutManager;
 import com.example.pby.gam_study.page.post.presenter.PostInputPresenter;
 import com.example.pby.gam_study.page.profile.presenter.UserProfilePresenter;
-import com.example.pby.gam_study.page.profile.request.UserPostRequest;
+import com.example.pby.gam_study.page.profile.presenter.UserProfileRefreshPresenter;
+import com.example.pby.gam_study.page.profile.request.UserProfileRequest;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
 
@@ -41,6 +40,7 @@ public class UserProfileFragment extends RefreshRecyclerViewFragment {
     @Override
     protected void onPrepare() {
         mUser = Objects.requireNonNull(getArguments()).getParcelable(UserProfileActivity.USER);
+        putExtra(AccessIds.USER, mUser);
     }
 
     @Override
@@ -54,18 +54,10 @@ public class UserProfileFragment extends RefreshRecyclerViewFragment {
         return R.layout.fragment_user_profile;
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T onCreateBaseContext() {
-        Context context = new Context();
-        context.mUser = mUser;
-        context.mContext = super.onCreateBaseContext();
-        return (T) context;
-    }
-
     @Override
     public Presenter onCreatePresenter() {
-        Presenter presenter = super.onCreatePresenter();
+        Presenter presenter = new Presenter();
+        presenter.add(new UserProfileRefreshPresenter());
         presenter.add(new UserProfilePresenter());
         presenter.add(new PostInputPresenter());
         return presenter;
@@ -73,28 +65,16 @@ public class UserProfileFragment extends RefreshRecyclerViewFragment {
 
     @Override
     public Request onCreateRequest() {
-        return new UserPostRequest(mUser.getId());
+        return new UserProfileRequest(mUser.getId());
     }
 
     @Override
     protected BaseRecyclerAdapter onCreateAdapter() {
-        List<Post> postList = new ArrayList<>();
-        postList.add(null);
-        UserProfileAdapter profileAdapter = new UserProfileAdapter(postList);
-        profileAdapter.setUser(mUser);
-        return profileAdapter;
+        return new UserProfileAdapter(new ArrayList<>(), mUser);
     }
 
     @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
         return new PostLinearLayoutManager(requireContext());
-    }
-
-
-    public static class Context {
-        @Provides(AccessIds.USER)
-        public User mUser;
-        @Provides(deepProvides = true)
-        public RefreshRecyclerViewFragment.Context mContext;
     }
 }

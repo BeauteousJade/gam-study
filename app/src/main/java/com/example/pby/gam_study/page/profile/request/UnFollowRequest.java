@@ -7,16 +7,16 @@ import com.example.pby.gam_study.network.request.BaseRequest;
 
 import io.reactivex.Observable;
 
-public class FollowRequest extends BaseRequest<Boolean> {
+public class UnFollowRequest extends BaseRequest<Boolean> {
 
     private String mToUserId;
 
-    public FollowRequest(String toUserId) {
+    public UnFollowRequest(String toUserId) {
         mToUserId = toUserId;
     }
 
     @Override
     public Observable<Boolean> createObservable() {
-        return NetWorkManager.getService(Service.class).followUser(LoginManager.getCurrentUser().getId(), mToUserId);
+        return NetWorkManager.getService(Service.class).unFollowUser(LoginManager.getCurrentUser().getId(), mToUserId);
     }
 }

@@ -1,12 +1,9 @@
 package com.example.pby.gam_study.page.profile;
 
-import com.example.annation.Provides;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
-import com.example.pby.gam_study.adapter.base.BaseViewHolder;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.page.post.presenter.PostCommentOperationPresenter;
 import com.example.pby.gam_study.page.post.presenter.PostCommentPresenter;
@@ -16,40 +13,21 @@ import com.example.pby.gam_study.page.post.presenter.PostLikePresenter;
 import com.example.pby.gam_study.page.post.presenter.PostLikeShowPresenter;
 import com.example.pby.gam_study.page.post.presenter.PostLinePresenter;
 import com.example.pby.gam_study.page.post.presenter.PostUserPresenter;
+import com.example.pby.gam_study.page.profile.presenter.ChatPresenter;
+import com.example.pby.gam_study.page.profile.presenter.FollowPresenter;
 import com.example.pby.gam_study.page.profile.presenter.UserHeadPresenter;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
-public class UserProfileAdapter extends BaseRecyclerAdapter<Post> {
+public class UserProfileAdapter extends BaseRecyclerAdapter<Object> {
 
     private static final int TYPE_HEAD = 1;
     private static final int TYPE_ITEM = 2;
 
-    private User mUser;
-
-    public UserProfileAdapter(List<Post> dataList) {
+    public UserProfileAdapter(List<Object> dataList, User user) {
         super(dataList);
         putExtra(AccessIds.CLICKABLE, false);
-    }
-
-
-    public void setUser(User user) {
-        mUser = user;
-    }
-
-    @Override
-    public Object onCreateContext(@NonNull BaseViewHolder baseViewHolder, int position, List<Object> payloads) {
-        Context context = new Context();
-        context.mContext = (BaseRecyclerAdapter.Context) super.onCreateContext(baseViewHolder, position, payloads);
-        context.mUser = mUser;
-        return context;
-    }
-
-    @Override
-    public int getItemStablePosition() {
-        return 0;
+        putExtra(AccessIds.USER, user);
     }
 
     @Override
@@ -58,11 +36,6 @@ public class UserProfileAdapter extends BaseRecyclerAdapter<Post> {
             return TYPE_HEAD;
         }
         return TYPE_ITEM;
-    }
-
-    @Override
-    protected boolean supportEmpty() {
-        return false;
     }
 
     @Override
@@ -82,6 +55,8 @@ public class UserProfileAdapter extends BaseRecyclerAdapter<Post> {
         switch (viewType) {
             case TYPE_HEAD:
                 presenter.add(new UserHeadPresenter());
+                presenter.add(new FollowPresenter());
+                presenter.add(new ChatPresenter());
                 break;
             case TYPE_ITEM:
                 presenter.add(new PostUserPresenter());
@@ -95,13 +70,5 @@ public class UserProfileAdapter extends BaseRecyclerAdapter<Post> {
                 break;
         }
         return presenter;
-    }
-
-
-    public static class Context {
-        @Provides(AccessIds.USER)
-        public User mUser;
-        @Provides(deepProvides = true)
-        public BaseRecyclerAdapter.Context mContext;
     }
 }
