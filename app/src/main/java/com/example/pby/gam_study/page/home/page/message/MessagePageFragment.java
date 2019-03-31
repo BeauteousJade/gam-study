@@ -34,7 +34,7 @@ public class MessagePageFragment extends RefreshRecyclerViewFragment implements 
 
     @Override
     public Request onCreateRequest() {
-        return null;
+        return new MessageItemRequest();
     }
 
     @Override

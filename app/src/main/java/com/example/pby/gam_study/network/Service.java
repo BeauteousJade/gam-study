@@ -4,6 +4,7 @@ import com.example.pby.gam_study.network.bean.Card;
 import com.example.pby.gam_study.network.bean.Comment;
 import com.example.pby.gam_study.network.bean.DailyTask;
 import com.example.pby.gam_study.network.bean.Kind;
+import com.example.pby.gam_study.network.bean.MessageItem;
 import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.network.response.body.UserProfileResponseBody;
@@ -102,4 +103,8 @@ public interface Service {
     @POST("/follow/unFollowUser")
     @FormUrlEncoded
     Observable<Boolean> unFollowUser(@Field("fromUserId") String fromUserId, @Field("toUserId") String toUserId);
+
+    @POST("/im/findMessageItem")
+    @FormUrlEncoded
+    Observable<List<MessageItem>> findMessageItem(@Field("userId") String userId);
 }
