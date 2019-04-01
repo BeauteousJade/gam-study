@@ -1,6 +1,8 @@
 package com.example.pby.gam_study.fragment;
 
 
+import android.util.Log;
+
 import com.example.annation.Inject;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
@@ -103,11 +105,10 @@ public class RefreshPresenter extends Presenter {
             mRequest.cancel();
             mRequest.enqueue(mRequestCallback);
         }
+        Log.i("pby123", "fragment = " + getCurrentFragment().getClass() + " fragment = " + mFragment);
         if (mFragment.canLoadMore()) {
             mFragment.getRecyclerView().removeOnScrollListener(mOnScrollListener);
             mFragment.getRecyclerView().addOnScrollListener(mOnScrollListener);
         }
     }
-
-
 }

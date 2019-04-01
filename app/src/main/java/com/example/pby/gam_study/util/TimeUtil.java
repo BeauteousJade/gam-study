@@ -53,4 +53,22 @@ public class TimeUtil {
         return simpleDateFormat.format(time);
     }
 
+
+    public static String formatTime(long time) {
+        final long time1 = time;
+        final long time2 = System.currentTimeMillis();
+        final int dDay = TimeUtil.differentDays(time1, time2);
+        final int dYear = TimeUtil.differentYears(time1, time2);
+        if (dDay == 0) {
+            return formatTime(time1, "今天 HH:mm");
+        } else if (dDay == 1) {
+            return formatTime(time1, "昨天 HH:mm");
+        } else if (dDay == 2) {
+            return formatTime(time1, "前天 HH:mm");
+        } else if (dYear == 0) {
+            return formatTime(time1, "MM:dd HH:mm");
+        } else {
+            return formatTime(time1, "yyyy:MM:dd");
+        }
+    }
 }

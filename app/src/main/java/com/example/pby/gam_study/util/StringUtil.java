@@ -1,5 +1,6 @@
 package com.example.pby.gam_study.util;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class StringUtil {
@@ -13,6 +14,13 @@ public class StringUtil {
             return "";
         }
         return string;
+    }
+
+    public static CharSequence emptyIfEmpty(CharSequence charSequence) {
+        if (charSequence != null && Objects.equals(charSequence, "")) {
+            return null;
+        }
+        return charSequence;
     }
 
     public static String generateId() {

@@ -4,6 +4,7 @@ import com.example.pby.gam_study.network.bean.Card;
 import com.example.pby.gam_study.network.bean.Comment;
 import com.example.pby.gam_study.network.bean.DailyTask;
 import com.example.pby.gam_study.network.bean.Kind;
+import com.example.pby.gam_study.network.bean.Message;
 import com.example.pby.gam_study.network.bean.MessageItem;
 import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
@@ -107,4 +108,11 @@ public interface Service {
     @POST("/im/findMessageItem")
     @FormUrlEncoded
     Observable<List<MessageItem>> findMessageItem(@Field("userId") String userId);
+
+    @POST("/im/findHistoryMessage")
+    @FormUrlEncoded
+    Observable<List<Message>> findHistoryMessage(@Field("fromUserId") String fromUserId, @Field("toUserId") String toUserId);
+
+    @POST("/im/sendMessage")
+    Observable<Boolean> sendMessage(@Body RequestBody requestBody);
 }

@@ -9,8 +9,11 @@
         layout="@layout/title_bar" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_bar">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -23,12 +26,11 @@
         android:id="@+id/comment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:translationY="300dp"
+        android:translationY="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <include layout="@layout/layout_comment" />
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

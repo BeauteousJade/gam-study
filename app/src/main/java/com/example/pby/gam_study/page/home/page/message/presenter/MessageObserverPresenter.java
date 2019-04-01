@@ -2,9 +2,9 @@ package com.example.pby.gam_study.page.home.page.message.presenter;
 
 import com.example.annation.Inject;
 import com.example.pby.gam_study.AccessIds;
-import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.network.bean.Message;
+import com.example.pby.gam_study.network.bean.MessageItem;
+import com.example.pby.gam_study.page.home.page.message.MessageAdapter;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
@@ -17,27 +17,26 @@ public class MessageObserverPresenter extends Presenter {
 
 
     @Inject(AccessIds.RECYCLER_ADAPTER)
-    BaseRecyclerAdapter<Message> mAdapter;
+    MessageAdapter mAdapter;
 
     private final Observer<List<IMMessage>> mIncomingMessageObserver =
             new Observer<List<IMMessage>>() {
                 @Override
                 public void onEvent(List<IMMessage> messages) {
                     final IMMessage imMessage = messages.get(messages.size() - 1);
-                    int index = -1;
+                    int index;
                     if ((index = isContainUser(imMessage.getFromAccount())) != -1) {
-                        final Message message = mAdapter.getItem(index);
-                        message.setTime(imMessage.getTime());
-                        message.setNewestContent(imMessage.getContent());
-                        message.setUnReadCount(message.getUnReadCount() + messages.size());
+                        MessageItem messageItem = mAdapter.getItem(index);
+                        if (Objects.equals(messageItem.getFromUser().getId().toLowerCase(), imMessage.getFromAccount())) {
+                            messageItem.setToUserUnReadCount(messageItem.getToUserUnReadCount() + messages.size());
+                        } else {
+                            messageItem.setFromUserUnReadCount(messageItem.getFromUserUnReadCount() + messages.size());
+                            mAdapter.notifyItemChanged(index);
+                        }
+                        messageItem.setRecentContent(imMessage.getContent());
                         mAdapter.notifyItemChanged(index);
                     } else {
-                        final Message message = new Message();
-                        message.setFromUserId(imMessage.getFromAccount());
-                        message.setUnReadCount(messages.size());
-                        message.setNewestContent(imMessage.getContent());
-                        message.setTime(imMessage.getTime());
-                        mAdapter.addItem(0, message);
+
                     }
                 }
             };
@@ -57,9 +56,10 @@ public class MessageObserverPresenter extends Presenter {
     }
 
     private int isContainUser(String userId) {
-        final List<Message> messageList = mAdapter.getDataList();
+        final List<MessageItem> messageList = mAdapter.getDataList();
         for (int i = 0; i < messageList.size(); i++) {
-            if (Objects.equals(messageList.get(i).getFromUserId(), userId)) {
+            if (Objects.equals(messageList.get(i).getFromUser().getId().toLowerCase(), userId) ||
+                    Objects.equals(messageList.get(i).getToUser().getId().toLowerCase(), userId)) {
                 return i;
             }
         }

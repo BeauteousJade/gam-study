@@ -9,6 +9,7 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.User;
+import com.example.pby.gam_study.page.chat.ChatActivity;
 
 import java.util.Objects;
 
@@ -32,6 +33,6 @@ public class ChatPresenter extends Presenter {
 
     @OnClick(R.id.send_message)
     public void onSendMessageClick(View view) {
-
+        ChatActivity.startActivity(getCurrentActivity(), mUser);
     }
 }

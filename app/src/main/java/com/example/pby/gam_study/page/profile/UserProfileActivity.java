@@ -28,4 +28,9 @@ public class UserProfileActivity extends BaseActivity {
     public BaseFragment buildCurrentFragment() {
         return UserProfileFragment.newInstance(mUser);
     }
+
+    @Override
+    protected boolean supportKeyboardHeightProvider() {
+        return true;
+    }
 }

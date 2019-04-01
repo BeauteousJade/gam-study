@@ -10,10 +10,26 @@ android {
         versionName version_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    //配置keystore签名
+    signingConfigs {
+        release {
+            storeFile file("gam-study.jks")
+            storePassword "pby123"
+            keyAlias "pby"
+            keyPassword "pby123"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -47,7 +63,6 @@ dependencies {
     implementation "com.github.LuckSiege.PictureSelector:picture_library:${picture_library}"
     implementation "com.zhihu.android:matisse:${matisse}"
     implementation "com.netease.nimlib:basesdk:${basesdk}"
-
 
     // myself
     implementation "com.github.BeauteousJade.blade:inject:${injector}"

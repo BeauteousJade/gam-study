@@ -1,4 +1,4 @@
-package com.example.pby.gam_study.page.post.presenter;
+package com.example.pby.gam_study.presenter;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,12 +35,11 @@ import java.util.Objects;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PostInputPresenter extends Presenter {
+public class InputPresenter extends Presenter {
 
 
     @BindView(R.id.comment_container)
@@ -53,8 +52,6 @@ public class PostInputPresenter extends Presenter {
     Button mSureButton;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
 
 
     @Inject(AccessIds.OBSERVABLE)
@@ -66,7 +63,6 @@ public class PostInputPresenter extends Presenter {
 
     private CommentObject mCurrentCommentObject;
     private CommentObject mPreCommentObject;
-    private int mOldHeight;
     private Request<Comment> mRequest;
 
 

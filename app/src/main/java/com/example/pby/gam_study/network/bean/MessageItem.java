@@ -1,8 +1,15 @@
 package com.example.pby.gam_study.network.bean;
 
+import com.example.pby.gam_study.other.Diff;
+import com.example.pby.gam_study.util.StringUtil;
 import com.google.gson.annotations.SerializedName;
 
-public class MessageItem {
+import java.util.Objects;
+
+public class MessageItem implements Diff {
+
+    public static final String CONTENT = "content";
+    public static final String TIME = "time";
 
     @SerializedName("id")
     private String mId;
@@ -12,6 +19,10 @@ public class MessageItem {
     private User mToUser;
     @SerializedName("recentContent")
     private String mRecentContent;
+    @SerializedName("fromUserUnReadCount")
+    private int mFromUserUnReadCount;
+    @SerializedName("toUserUnReadCount")
+    private int mToUserUnReadCount;
     @SerializedName("recentTime")
     private long mRecentTime;
     @SerializedName("time")
@@ -34,7 +45,7 @@ public class MessageItem {
         this.mFromUser = fromUser;
     }
 
-    public User getmoUser() {
+    public User getToUser() {
         return mToUser;
     }
 
@@ -64,5 +75,52 @@ public class MessageItem {
 
     public void setTime(long time) {
         this.mTime = time;
+    }
+
+    public int getFromUserUnReadCount() {
+        return mFromUserUnReadCount;
+    }
+
+    public void setFromUserUnReadCount(int fromUserUnReadCount) {
+        this.mFromUserUnReadCount = fromUserUnReadCount;
+    }
+
+    public int getToUserUnReadCount() {
+        return mToUserUnReadCount;
+    }
+
+    public void setToUserUnReadCount(int toUserUnReadCount) {
+        this.mToUserUnReadCount = toUserUnReadCount;
+    }
+
+    @Override
+    public boolean areItemsTheSame(Diff diff) {
+        if (diff instanceof MessageItem) {
+            return Objects.equals(mId, ((MessageItem) diff).mId);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onContentTheme(Diff diff) {
+        if (diff instanceof MessageItem) {
+            return Objects.equals(mRecentContent, ((MessageItem) diff).mRecentContent);
+        }
+        return false;
+    }
+
+    @Override
+    public Object getChangePayload(Diff diff) {
+        if (diff instanceof MessageItem) {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (!Objects.equals(mRecentContent, ((MessageItem) diff).mRecentContent)) {
+                stringBuilder.append(CONTENT);
+            }
+            if (!Objects.equals(mTime, ((MessageItem) diff).mTime)) {
+                stringBuilder.append(TIME);
+            }
+            return StringUtil.emptyIfEmpty(stringBuilder.toString());
+        }
+        return null;
     }
 }

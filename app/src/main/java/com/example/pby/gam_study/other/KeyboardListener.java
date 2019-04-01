@@ -1,21 +1,21 @@
 package com.example.pby.gam_study.other;
 
-import android.app.Activity;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.SoftKeyboardUtils;
 
 public class KeyboardListener implements ViewTreeObserver.OnGlobalLayoutListener {
 
     private View mDecorView;
-    private Activity mActivity;
+    private BaseActivity mActivity;
     private boolean isVisible;
     private int mKeyBoardHeight;
 
-    public KeyboardListener(Activity activity) {
+    public KeyboardListener(BaseActivity activity) {
         mActivity = activity;
         mDecorView = activity.getWindow().getDecorView();
     }

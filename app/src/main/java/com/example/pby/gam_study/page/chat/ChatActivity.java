@@ -4,15 +4,16 @@ import android.content.Intent;
 
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.fragment.BaseFragment;
+import com.example.pby.gam_study.network.bean.User;
 
 public class ChatActivity extends BaseActivity {
 
-    public static final String TO_USER_ID = "to_user_id";
-    private String mToUserId;
+    public static final String TO_USER = "to_user";
+    private User mToUser;
 
-    public static void startActivity(BaseActivity activity, String toUserId) {
+    public static void startActivity(BaseActivity activity, User toUser) {
         Intent intent = new Intent(activity, ChatActivity.class);
-        intent.putExtra(TO_USER_ID, toUserId);
+        intent.putExtra(TO_USER, toUser);
         activity.startActivity(intent);
     }
 
@@ -20,11 +21,16 @@ public class ChatActivity extends BaseActivity {
     @Override
     protected void onPrepare() {
         super.onPrepare();
-        mToUserId = getIntent().getStringExtra(TO_USER_ID);
+        mToUser = getIntent().getParcelableExtra(TO_USER);
+    }
+
+    @Override
+    protected boolean supportKeyboardHeightProvider() {
+        return true;
     }
 
     @Override
     public BaseFragment buildCurrentFragment() {
-        return ChatFragment.newInstance(mToUserId);
+        return ChatFragment.newInstance(mToUser);
     }
 }

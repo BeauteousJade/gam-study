@@ -2,16 +2,19 @@ package com.example.pby.gam_study.fragment;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.annation.Provides;
 import com.example.pby.gam_study.AccessIds;
+import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.inter.BaseContextLifecycle;
 import com.example.pby.gam_study.mvp.Presence;
 import com.example.pby.gam_study.mvp.Presenter;
+import com.example.pby.gam_study.util.ImmerseModeUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +37,12 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
         onPrepare();
         mPresenter = onCreatePresenter();
         mPresenter.create(this);
-        return inflater.inflate(getLayoutId(), container, false);
+        View view = inflater.inflate(getLayoutId(), container, false);
+        View titleBar = view.findViewById(R.id.title_bar);
+        if (titleBar != null && supportImmerseMode()) {
+            ImmerseModeUtil.setImmerseMode(titleBar, requireContext());
+        }
+        return view;
     }
 
 
@@ -43,6 +51,9 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
         ButterKnife.bind(this, view);
         onPrepareBaseContext();
         mContext = onCreateBaseContext();
+        if (mContext instanceof Context) {
+            Log.i("pb123", "mFragment = " + this.getClass().getCanonicalName() + " context = " + ((Context) mContext).mFragment);
+        }
         mPresenter.bind(mContext, mExtraMap, view);
     }
 
@@ -69,6 +80,10 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
 
     protected void onPrepare() {
 
+    }
+
+    public boolean supportImmerseMode() {
+        return true;
     }
 
     @Override

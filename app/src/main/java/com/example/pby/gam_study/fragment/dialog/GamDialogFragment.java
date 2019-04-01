@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.pby.gam_study.R;
+import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
@@ -147,7 +148,10 @@ public class GamDialogFragment extends DialogFragment {
             final int[] anchorLocation = new int[2];
             mAnchorView.getLocationInWindow(anchorLocation);
             mTranslationX = anchorLocation[0];
-            mTranslationY = anchorLocation[1] - DisplayUtil.getStatusBarHeight(requireContext());
+            mTranslationY = anchorLocation[1];
+            if (!(getActivity() instanceof BaseActivity) || !((BaseActivity) getActivity()).getCurrentFragment().supportImmerseMode()) {
+                mTranslationY -= DisplayUtil.getStatusBarHeight(requireContext());
+            }
             switch (mLocationStyle) {
                 case LocationStyle.STYLE_LEFT_TOP:
                     mTranslationY -= contentHeight;

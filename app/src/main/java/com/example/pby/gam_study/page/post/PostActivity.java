@@ -16,4 +16,9 @@ public class PostActivity extends BaseActivity {
     public BaseFragment buildCurrentFragment() {
         return PostFragment.newInstance();
     }
+
+    @Override
+    protected boolean supportKeyboardHeightProvider() {
+        return true;
+    }
 }

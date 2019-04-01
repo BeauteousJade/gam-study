@@ -1,38 +1,53 @@
 package com.example.pby.gam_study.network.bean;
 
-import java.util.Objects;
-
-import androidx.annotation.Nullable;
+import com.google.gson.annotations.SerializedName;
 
 public class Message {
-    private String mFromUserId;
-    private String mNewestContent;
-    private int mUnReadCount;
+
+    @SerializedName("id")
+    private String mId;
+    @SerializedName("toUser")
+    private User mToUser;
+    @SerializedName("fromUser")
+    private User mFromUser;
+    @SerializedName("content")
+    private String mContent;
+    @SerializedName("sendUserId")
+    private String mSendUserId;
+    @SerializedName("time")
     private long mTime;
 
 
-    public String getFromUserId() {
-        return mFromUserId;
+    public String getId() {
+        return mId;
     }
 
-    public void setFromUserId(String fromUserId) {
-        this.mFromUserId = fromUserId;
+    public void setId(String id) {
+        this.mId = id;
     }
 
-    public String getNewestContent() {
-        return mNewestContent;
+    public User getToUser() {
+        return mToUser;
     }
 
-    public void setNewestContent(String newestContent) {
-        this.mNewestContent = newestContent;
+    public void setToUser(User toUser) {
+        this.mToUser = toUser;
     }
 
-    public int getUnReadCount() {
-        return mUnReadCount;
+    public User getFromUser() {
+        return mFromUser;
     }
 
-    public void setUnReadCount(int unReadCount) {
-        this.mUnReadCount = unReadCount;
+    public void setFromUser(User fromUser) {
+        this.mFromUser = fromUser;
+    }
+
+    public String getContent() {
+        return mContent;
+    }
+
+    public void setContent(String content) {
+        this.mContent = content;
     }
 
     public long getTime() {
@@ -43,16 +58,11 @@ public class Message {
         this.mTime = time;
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (obj instanceof Message) {
-            return Objects.equals(mFromUserId, ((Message) obj).mFromUserId);
-        }
-        return false;
+    public String getSendUserId() {
+        return mSendUserId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(mFromUserId);
+    public void setSendUserId(String sendUserId) {
+        this.mSendUserId = sendUserId;
     }
 }

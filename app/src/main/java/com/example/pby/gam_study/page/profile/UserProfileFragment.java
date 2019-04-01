@@ -11,7 +11,7 @@ import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.post.PostLinearLayoutManager;
-import com.example.pby.gam_study.page.post.presenter.PostInputPresenter;
+import com.example.pby.gam_study.presenter.InputPresenter;
 import com.example.pby.gam_study.page.profile.presenter.UserProfilePresenter;
 import com.example.pby.gam_study.page.profile.presenter.UserProfileRefreshPresenter;
 import com.example.pby.gam_study.page.profile.request.UserProfileRequest;
@@ -59,7 +59,7 @@ public class UserProfileFragment extends RefreshRecyclerViewFragment {
         Presenter presenter = new Presenter();
         presenter.add(new UserProfileRefreshPresenter());
         presenter.add(new UserProfilePresenter());
-        presenter.add(new PostInputPresenter());
+        presenter.add(new InputPresenter());
         return presenter;
     }
 

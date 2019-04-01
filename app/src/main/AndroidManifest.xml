@@ -66,7 +66,9 @@
         <activity
             android:name=".page.profile.UserProfileActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".page.chat.ChatActivity" />
+        <activity
+            android:name=".page.chat.ChatActivity"
+            android:windowSoftInputMode="adjustNothing" />
 
         <meta-data
             android:name="com.netease.nim.appKey"

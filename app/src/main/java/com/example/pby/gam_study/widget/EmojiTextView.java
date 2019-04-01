@@ -20,9 +20,6 @@ import io.reactivex.disposables.Disposable;
 
 public class EmojiTextView extends AppCompatTextView {
 
-    private Disposable mDisposable;
-
-
     public EmojiTextView(Context context) {
         super(context);
     }
@@ -33,14 +30,6 @@ public class EmojiTextView extends AppCompatTextView {
 
     public EmojiTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (mDisposable != null) {
-            mDisposable.dispose();
-        }
     }
 
     public void setContent(String content) {
@@ -78,13 +67,12 @@ public class EmojiTextView extends AppCompatTextView {
                 .subscribe(new Observer<SpannableStringBuilder>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        mDisposable = d;
                     }
 
                     @Override
                     public void onNext(SpannableStringBuilder spannableStringBuilder) {
                         // 调用setText方法
-                        setText(spannableStringBuilder);
+                        postOnAnimation(() -> setText(spannableStringBuilder));
                     }
 
                     @Override

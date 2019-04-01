@@ -2,9 +2,11 @@ package com.example.pby.gam_study.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.BaseFragment;
+import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.key.KeyboardHeightObserver;
 import com.example.pby.gam_study.util.key.KeyboardHeightProvider;
 
@@ -35,6 +37,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (canRegisterEvent()) {
             EventBus.getDefault().register(this);
         }
+        View fragmentContent = findViewById(R.id.fragment_content);
+        int navigationBarHeight = DisplayUtil.getNavigationBarHeight(this);
+        if (DisplayUtil.getNavigationBarHeight(this) != 0 && fragmentContent != null) {
+            fragmentContent.setPadding(fragmentContent.getPaddingLeft(),
+                    fragmentContent.getPaddingTop(),
+                    fragmentContent.getPaddingRight(),
+                    fragmentContent.getPaddingBottom() + navigationBarHeight);
+        }
     }
 
     @Override
@@ -42,7 +52,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (canRegisterEvent()) {
             EventBus.getDefault().unregister(this);
         }
-        mKeyboardHeightProvider.close();
+        if (mKeyboardHeightProvider != null) {
+            mKeyboardHeightProvider.close();
+        }
         super.onDestroy();
     }
 
@@ -74,8 +86,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @CallSuper
     protected void onPrepare() {
-        mKeyboardHeightProvider = new KeyboardHeightProvider(this);
-        findViewById(android.R.id.content).post(() -> mKeyboardHeightProvider.start());
+        if (supportKeyboardHeightProvider()) {
+            mKeyboardHeightProvider = new KeyboardHeightProvider(this);
+            findViewById(android.R.id.content).post(() -> mKeyboardHeightProvider.start());
+        }
+    }
+
+    protected boolean supportKeyboardHeightProvider() {
+        return false;
     }
 
     @IdRes
@@ -114,11 +132,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void addKeyboardHeightObserver(KeyboardHeightObserver observer) {
-        mKeyboardHeightProvider.addKeyboardHeightObserver(observer);
+        if (mKeyboardHeightProvider != null) {
+            mKeyboardHeightProvider.addKeyboardHeightObserver(observer);
+        }
     }
 
     public void removeKeyboardHeightObserver(KeyboardHeightObserver observer) {
-        mKeyboardHeightProvider.removeKeyboardHeightObserver(observer);
+        if (mKeyboardHeightProvider != null) {
+            mKeyboardHeightProvider.removeKeyboardHeightObserver(observer);
+        }
+    }
+
+    public boolean isKeyboardShow() {
+        if (mKeyboardHeightProvider != null) {
+            return mKeyboardHeightProvider.isShow();
+        }
+        return false;
     }
 
     @FunctionalInterface
