@@ -8,6 +8,7 @@ import com.example.pby.gam_study.network.bean.Message;
 import com.example.pby.gam_study.network.bean.MessageItem;
 import com.example.pby.gam_study.network.bean.Post;
 import com.example.pby.gam_study.network.bean.User;
+import com.example.pby.gam_study.network.response.body.MineResponseBody;
 import com.example.pby.gam_study.network.response.body.UserProfileResponseBody;
 import com.example.pby.gam_study.page.login.bean.CodeBean;
 import com.example.pby.gam_study.page.newKind.NewKindItem;
@@ -32,6 +33,10 @@ public interface Service {
     @POST("/user/profile")
     @FormUrlEncoded
     Observable<UserProfileResponseBody> getUserProfile(@Field("userId") String userId);
+
+    @POST("/user/mine")
+    @FormUrlEncoded
+    Observable<MineResponseBody> findUserInfo(@Field("id") String id);
 
     @POST("/kind/findAllKind")
     @FormUrlEncoded
