@@ -7,9 +7,11 @@ import com.example.pby.gam_study.factory.LayoutManagerFactory;
 import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.Request;
+import com.example.pby.gam_study.other.GamItemTouchCallback;
 import com.example.pby.gam_study.page.home.page.HomePage;
 import com.example.pby.gam_study.page.home.page.message.presenter.MessageObserverPresenter;
 import com.example.pby.gam_study.page.home.page.message.presenter.NewsPresenter;
+import com.example.pby.gam_study.page.home.page.message.request.MessageItemRequest;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
 import com.example.pby.gam_study.widget.TitleBar;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
@@ -61,13 +64,18 @@ public class MessagePageFragment extends RefreshRecyclerViewFragment implements 
 
     @Override
     protected List<? extends RecyclerView.ItemDecoration> onCreateItemDecoration() {
-        return Collections.singletonList(new LinearLayoutManagerVerticalItemDecoration(ResourcesUtil.getColor(requireContext(), R.color.bg_color)
+        return Collections.singletonList(new LinearLayoutManagerVerticalItemDecoration(1, ResourcesUtil.getColor(requireContext(), R.color.bg_color)
                 , DisplayUtil.dpToPx(requireContext(), 5)));
     }
 
     @Override
     public String getTitle() {
         return ResourcesUtil.getString(requireContext(), R.string.title_message);
+    }
+
+    @Override
+    public ItemTouchHelper.Callback onCreateCallback() {
+        return new GamItemTouchCallback(getRecyclerAdapter(), DisplayUtil.dpToPx(requireContext(), 100));
     }
 
     @Override

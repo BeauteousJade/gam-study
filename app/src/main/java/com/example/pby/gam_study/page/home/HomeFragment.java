@@ -18,6 +18,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
@@ -37,6 +38,16 @@ public class HomeFragment extends BaseFragment implements ItemLayout.OnItemClick
     private ItemLayout.Adapter mTabAdapter;
     private List<HomeTab> mHomeTabs = new ArrayList<>();
 
+    private final FragmentManager.FragmentLifecycleCallbacks mFragmentLifecycleCallbacks = new FragmentManager.FragmentLifecycleCallbacks() {
+        @Override
+        public void onFragmentViewCreated(@NonNull FragmentManager fm, @NonNull Fragment f, @NonNull View v, @Nullable Bundle savedInstanceState) {
+            if (f instanceof HomePageFragment) {
+                ((HomePageFragment) f).onPageSelect();
+                fm.unregisterFragmentLifecycleCallbacks(this);
+            }
+        }
+    };
+
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -50,7 +61,7 @@ public class HomeFragment extends BaseFragment implements ItemLayout.OnItemClick
 
     @Override
     public void onPrepareBaseContext() {
-        mHomeTabs.add(new HomeTab(ResourcesUtil.getString(requireContext(), R.string.title_home), R.mipmap.icon_page_home_unselected, R.mipmap.icon_page_home_selected));
+        mHomeTabs.add(new HomeTab(ResourcesUtil.getString(requireContext(), R.string.title_home), R.mipmap.icon_page_home_unselected, R.mipmap.icon_page_home_selected, true));
         mHomeTabs.add(new HomeTab(ResourcesUtil.getString(requireContext(), R.string.title_message), R.mipmap.icon_page_message_unselected, R.mipmap.icon_page_message_selected));
         mHomeTabs.add(new HomeTab(ResourcesUtil.getString(requireContext(), R.string.title_mine), R.mipmap.icon_page_mine_unselected, R.mipmap.icon_page_mine_selected));
         mTabAdapter = new HomeTabAdapter(mHomeTabs);
@@ -70,6 +81,7 @@ public class HomeFragment extends BaseFragment implements ItemLayout.OnItemClick
             }
         }
         transaction.commitAllowingStateLoss();
+        fragmentManager.registerFragmentLifecycleCallbacks(mFragmentLifecycleCallbacks, false);
     }
 
 

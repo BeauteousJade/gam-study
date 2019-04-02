@@ -63,7 +63,10 @@ public abstract class RecyclerViewFragment extends BaseFragment {
                 mRecyclerView.addItemDecoration(itemDecoration);
             }
         }
-        if (mItemTouchHelper != null) {
+        if (mCallback != null) {
+            if (mItemTouchHelper == null) {
+                mItemTouchHelper = new ItemTouchHelper(mCallback);
+            }
             mItemTouchHelper.attachToRecyclerView(mRecyclerView);
         }
         if (mSnapHelper != null) {

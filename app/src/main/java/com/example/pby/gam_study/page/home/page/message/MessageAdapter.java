@@ -9,6 +9,8 @@ import com.example.pby.gam_study.page.home.page.message.presenter.MessageItemPre
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 public class MessageAdapter extends BaseRecyclerAdapter<MessageItem> {
 
     public MessageAdapter(List<MessageItem> dataList) {
@@ -26,5 +28,11 @@ public class MessageAdapter extends BaseRecyclerAdapter<MessageItem> {
         presenter.add(new MessageItemPresenter());
         presenter.add(new MessageItemClickPresenter());
         return presenter;
+    }
+
+    @Override
+    public void onSaveItemStatus(RecyclerView.ViewHolder viewHolder) {
+        final int position = viewHolder.getAdapterPosition();
+        mDataList.get(position).setScrollX(viewHolder.itemView.getScrollX());
     }
 }

@@ -1,7 +1,7 @@
 package com.example.pby.gam_study.network.bean;
 
+import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.other.Diff;
-import com.example.pby.gam_study.util.StringUtil;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
@@ -10,6 +10,8 @@ public class MessageItem implements Diff {
 
     public static final String CONTENT = "content";
     public static final String TIME = "time";
+    public static final String COUNT = "count";
+    public static final String HEAD = "head";
 
     @SerializedName("id")
     private String mId;
@@ -28,6 +30,7 @@ public class MessageItem implements Diff {
     @SerializedName("time")
     private long mTime;
 
+    private int mScrollX;
 
     public String getId() {
         return mId;
@@ -93,6 +96,14 @@ public class MessageItem implements Diff {
         this.mToUserUnReadCount = toUserUnReadCount;
     }
 
+    public int getScrollX() {
+        return mScrollX;
+    }
+
+    public void setScrollX(int scrollX) {
+        this.mScrollX = scrollX;
+    }
+
     @Override
     public boolean areItemsTheSame(Diff diff) {
         if (diff instanceof MessageItem) {
@@ -119,7 +130,15 @@ public class MessageItem implements Diff {
             if (!Objects.equals(mTime, ((MessageItem) diff).mTime)) {
                 stringBuilder.append(TIME);
             }
-            return StringUtil.emptyIfEmpty(stringBuilder.toString());
+            if (mFromUserUnReadCount != ((MessageItem) diff).mFromUserUnReadCount || mToUserUnReadCount != ((MessageItem) diff).mToUserUnReadCount) {
+                stringBuilder.append(COUNT);
+            }
+            boolean isFromUser = Objects.equals(mFromUser.getId(), LoginManager.getCurrentUser().getId());
+            if (!Objects.equals(isFromUser ? mToUser.getHead() :
+                    mFromUser.getHead(), isFromUser ? mToUser.getHead() : mFromUser.getHead())) {
+                stringBuilder.append(HEAD);
+            }
+            return stringBuilder.toString();
         }
         return null;
     }

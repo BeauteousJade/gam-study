@@ -75,6 +75,7 @@
     <string name="regex_user_profile">%s 的个人主页</string>
     <string name="regex_fans_count">粉丝：%s</string>
     <string name="regex_follow_count">关注：%s</string>
+    <string name="delete">删除</string>
 
     <plurals name="error_over_count">
         <item quantity="one">You can only select one media file</item>

@@ -7,10 +7,15 @@ public class HomeTab {
     private int mSelectedTabIcon;
     private boolean mSelected;
 
-    public HomeTab(String tabText, int unSelectedTabIcon, int selectedTabIcon) {
+    public HomeTab(String tabText, int unSelectedTabIcon, int selectedTabIcon, boolean selected) {
         this.mTabText = tabText;
         this.mUnSelectedTabIcon = unSelectedTabIcon;
         mSelectedTabIcon = selectedTabIcon;
+        mSelected = selected;
+    }
+
+    public HomeTab(String tabText, int unSelectedTabIcon, int selectedTabIcon) {
+        this(tabText, unSelectedTabIcon, selectedTabIcon, false);
     }
 
     public String getTabText() {

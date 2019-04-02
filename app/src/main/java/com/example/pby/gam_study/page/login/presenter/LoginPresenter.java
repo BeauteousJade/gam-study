@@ -82,7 +82,7 @@ public class LoginPresenter extends Presenter {
             @Override
             public void onComplete(Object o) {
                 try {
-                    final String openId = ((JSONObject) o).getString("openid");
+                    final String openId = ((JSONObject) o).getString("openid").toLowerCase();
                     mId = openId;
                     mUserRequest.cancel();
                     mUserRequest.setId(openId);

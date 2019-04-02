@@ -96,7 +96,6 @@ public interface Service {
     @FormUrlEncoded
     Observable<Comment> addComment(@Field("comment") String json);
 
-
     @POST("/follow/followUser")
     @FormUrlEncoded
     Observable<Boolean> followUser(@Field("fromUserId") String fromUserId, @Field("toUserId") String toUserId);
@@ -109,10 +108,32 @@ public interface Service {
     @FormUrlEncoded
     Observable<List<MessageItem>> findMessageItem(@Field("userId") String userId);
 
+    @POST("/im/findSingleMessageItem")
+    @FormUrlEncoded
+    Observable<MessageItem> findSingleMessageItem(@Field("fromUserId") String fromUserId, @Field("toUserId") String toUserId);
+
     @POST("/im/findHistoryMessage")
     @FormUrlEncoded
-    Observable<List<Message>> findHistoryMessage(@Field("fromUserId") String fromUserId, @Field("toUserId") String toUserId);
+    Observable<List<Message>> findHistoryMessage(@Field("fromUserId") String fromUserId, @Field("toUserId") String toUserId,
+                                                 @Field("startTime") long startTime, @Field("endTime") long endTime);
 
     @POST("/im/sendMessage")
     Observable<Boolean> sendMessage(@Body RequestBody requestBody);
+
+    @POST("/im/resetFromUserUnReadCount")
+    @FormUrlEncoded
+    Observable<Boolean> resetFromUserUnReadCount(@Field("id") String id);
+
+    @POST("/im/resetToUserUnReadCount")
+    @FormUrlEncoded
+    Observable<Boolean> resetToUserUnReadCount(@Field("id") String id);
+
+    @POST("/im/deleteMessageItemForFromUser")
+    @FormUrlEncoded
+    Observable<Boolean> deleteMessageItemForFromUser(@Field("id") String id);
+
+    @POST("/im/deleteMessageItemForToUser")
+    @FormUrlEncoded
+    Observable<Boolean> deleteMessageItemForToUser(@Field("id") String id);
+
 }

@@ -213,6 +213,10 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
         return true;
     }
 
+    @Override
+    public void onSaveItemStatus(RecyclerView.ViewHolder viewHolder) {
+
+    }
 
     protected boolean supportEmpty() {
         return true;
@@ -223,7 +227,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
     }
 
     protected int getEmptyLayoutId() {
-        return R.layout.view_empty;
+        return R.layout.layout_view_empty;
     }
 
 

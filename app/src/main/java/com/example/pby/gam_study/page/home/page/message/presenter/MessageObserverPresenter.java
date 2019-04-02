@@ -2,9 +2,14 @@ package com.example.pby.gam_study.page.home.page.message.presenter;
 
 import com.example.annation.Inject;
 import com.example.pby.gam_study.AccessIds;
+import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.MessageItem;
+import com.example.pby.gam_study.network.request.Request;
+import com.example.pby.gam_study.network.request.RequestCallback;
+import com.example.pby.gam_study.network.response.Response;
 import com.example.pby.gam_study.page.home.page.message.MessageAdapter;
+import com.example.pby.gam_study.page.home.page.message.request.SingleMessageItemRequest;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
@@ -31,16 +36,26 @@ public class MessageObserverPresenter extends Presenter {
                             messageItem.setToUserUnReadCount(messageItem.getToUserUnReadCount() + messages.size());
                         } else {
                             messageItem.setFromUserUnReadCount(messageItem.getFromUserUnReadCount() + messages.size());
-                            mAdapter.notifyItemChanged(index);
                         }
                         messageItem.setRecentContent(imMessage.getContent());
-                        mAdapter.notifyItemChanged(index);
+                        messageItem.setRecentTime(imMessage.getTime());
+                        mAdapter.notifyItemChanged(index, MessageItem.COUNT + MessageItem.CONTENT + MessageItem.TIME);
                     } else {
-
+                        mRequest = new SingleMessageItemRequest(imMessage.getFromAccount(), LoginManager.getCurrentUser().getId());
+                        mRequest.enqueue(mRequestCallback);
                     }
                 }
             };
 
+    private final RequestCallback<MessageItem> mRequestCallback = new RequestCallback<MessageItem>() {
+        @Override
+        public void onResult(Response<MessageItem> response) {
+            if (response.getError() == null && response.getData() != null) {
+                mAdapter.addItem(0, response.getData());
+            }
+        }
+    };
+    private Request<MessageItem> mRequest;
 
     @Override
     protected void onCreate() {
@@ -58,6 +73,9 @@ public class MessageObserverPresenter extends Presenter {
     private int isContainUser(String userId) {
         final List<MessageItem> messageList = mAdapter.getDataList();
         for (int i = 0; i < messageList.size(); i++) {
+            if (messageList.get(i) == null) {
+                continue;
+            }
             if (Objects.equals(messageList.get(i).getFromUser().getId().toLowerCase(), userId) ||
                     Objects.equals(messageList.get(i).getToUser().getId().toLowerCase(), userId)) {
                 return i;

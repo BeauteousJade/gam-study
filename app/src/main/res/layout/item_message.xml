@@ -64,4 +64,25 @@
         app:layout_constraintBottom_toBottomOf="@id/content"
         app:layout_constraintRight_toRightOf="@id/time"
         app:layout_constraintTop_toTopOf="@id/content" />
+
+    <View
+        android:id="@+id/baseline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/delete"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_delete"
+        android:gravity="center"
+        android:text="@string/delete"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/baseline"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

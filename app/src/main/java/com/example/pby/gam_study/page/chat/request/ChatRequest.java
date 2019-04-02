@@ -13,15 +13,22 @@ import io.reactivex.Observable;
 public class ChatRequest extends BaseRequest<List<Message>> {
 
     private String mFromUserId;
+    private long mStartTime;
+    private long mEndTime;
 
-    public ChatRequest(String fromUserId) {
+    public ChatRequest(String fromUserId, long startTime, long endTime) {
         mFromUserId = fromUserId;
+        mStartTime = startTime;
+        mEndTime = endTime;
+    }
+
+    public long getStartTime() {
+        return mStartTime;
     }
 
     @Override
     public Observable<List<Message>> createObservable() {
-        return NetWorkManager
-                .getService(Service.class)
-                .findHistoryMessage(mFromUserId, LoginManager.getCurrentUser().getId());
+        return NetWorkManager.getService(Service.class).findHistoryMessage(mFromUserId,
+                LoginManager.getCurrentUser().getId(), mStartTime, mEndTime);
     }
 }

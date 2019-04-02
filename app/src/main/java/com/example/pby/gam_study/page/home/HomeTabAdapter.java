@@ -32,7 +32,7 @@ public class HomeTabAdapter extends ItemLayout.Adapter<HomeTabAdapter.HomeTabVie
 
     @Override
     public HomeTabViewHolder onCreateViewHolder(ViewGroup parent) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.tab_home, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tab_home, parent, false);
         return new HomeTabViewHolder(itemView);
     }
 

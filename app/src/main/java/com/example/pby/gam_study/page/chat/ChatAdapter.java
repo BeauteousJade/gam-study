@@ -37,9 +37,9 @@ public class ChatAdapter extends BaseRecyclerAdapter<Message> {
     public int getItemViewLayoutNoEmpty(int viewType) {
         switch (viewType) {
             case MINE_TYPE:
-                return R.layout.message_mine;
+                return R.layout.item_message_mine;
             case OTHER_USER_TYPE:
-                return R.layout.message_other_user;
+                return R.layout.item_message_other_user;
         }
         return 0;
     }

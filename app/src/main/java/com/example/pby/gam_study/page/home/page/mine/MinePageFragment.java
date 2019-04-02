@@ -1,36 +1,32 @@
 package com.example.pby.gam_study.page.home.page.mine;
 
-import android.os.Bundle;
-import android.view.View;
+import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
+import com.example.pby.gam_study.factory.LayoutManagerFactory;
+import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
+import com.example.pby.gam_study.network.request.Request;
 
-import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.page.home.page.BaseHomePageFragment;
-import com.example.pby.gam_study.util.ResourcesUtil;
+import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class MinePageFragment extends BaseHomePageFragment {
-
-    private static final int LAYOUT_ID = R.layout.page_fragment_mine;
+public class MinePageFragment extends RefreshRecyclerViewFragment {
 
     public static MinePageFragment newInstance() {
-        MinePageFragment pageFragment = new MinePageFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(KEY_LAYOUT_ID, LAYOUT_ID);
-        pageFragment.setArguments(bundle);
-        return pageFragment;
-    }
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.setBackgroundColor(ResourcesUtil.getColor(requireContext(), R.color.color_002));
+        return new MinePageFragment();
     }
 
     @Override
-    public String getTitle() {
-        return ResourcesUtil.getString(requireContext(), R.string.title_mine);
+    public Request onCreateRequest() {
+        return null;
+    }
+
+    @Override
+    protected BaseRecyclerAdapter onCreateAdapter() {
+        return new MineAdapter(new ArrayList<>());
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager onCreateLayoutManager() {
+        return LayoutManagerFactory.createVerticalLayoutManager(requireContext());
     }
 }

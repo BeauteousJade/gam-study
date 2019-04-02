@@ -13,11 +13,14 @@ import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.MessageItem;
 import com.example.pby.gam_study.network.bean.User;
+import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.util.TimeUtil;
 import com.example.pby.gam_study.widget.EmojiTextView;
 
+import java.util.List;
 import java.util.Objects;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class MessageItemPresenter extends Presenter {
@@ -25,7 +28,9 @@ public class MessageItemPresenter extends Presenter {
     @Inject(AccessIds.ITEM_DATA)
     MessageItem mMessageItem;
     @Inject(AccessIds.PAYLOAD)
-    String mPayload;
+    List<String> mPayloads;
+    @Inject(AccessIds.VIEW_HOLDER)
+    RecyclerView.ViewHolder mViewHolder;
 
     @BindView(R.id.avatar)
     ImageView mAvatarView;
@@ -41,12 +46,15 @@ public class MessageItemPresenter extends Presenter {
     @Override
     protected void onBind() {
         boolean isFromUser = Objects.equals(LoginManager.getCurrentUser().getId(), mMessageItem.getFromUser().getId());
+        String payload = ArrayUtil.isEmpty(mPayloads) ? null : mPayloads.get(0);
         final User otherUser = isFromUser ? mMessageItem.getToUser() : mMessageItem.getFromUser();
-        GlideApp.with(getCurrentFragment()).asBitmap().apply(GlideFactory.createCircleOption()).load(otherUser.getHead()).into(mAvatarView);
-        if (mPayload == null || mPayload.contains(MessageItem.CONTENT)) {
+        if (payload == null || payload.contains(MessageItem.HEAD)) {
+            GlideApp.with(getCurrentFragment()).asBitmap().apply(GlideFactory.createCircleOption()).load(otherUser.getHead()).into(mAvatarView);
+        }
+        if (payload == null || payload.contains(MessageItem.CONTENT)) {
             mContentView.setContent(mMessageItem.getRecentContent());
         }
-        if (mPayload == null || mPayload.contains(MessageItem.TIME)) {
+        if (payload == null || payload.contains(MessageItem.TIME)) {
             mTimeView.setText(TimeUtil.formatTime(mMessageItem.getRecentTime()));
         }
         if (isFromUser) {
@@ -65,5 +73,6 @@ public class MessageItemPresenter extends Presenter {
             }
         }
         mNameView.setText(otherUser.getNickName());
+        mViewHolder.itemView.scrollTo(mMessageItem.getScrollX(), 0);
     }
 }
