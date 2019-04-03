@@ -5,11 +5,14 @@ import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.network.request.RequestCallback;
 import com.example.pby.gam_study.network.response.Response;
 import com.example.pby.gam_study.network.response.body.MineResponseBody;
+import com.example.pby.gam_study.page.home.page.mine.MineRequest;
 import com.example.pby.gam_study.util.ResourcesUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
@@ -17,7 +20,7 @@ import butterknife.BindView;
 public class MineRefreshPresenter extends Presenter {
 
     @Inject(AccessIds.REQUEST)
-    Request mRequest;
+    MineRequest mRequest;
     @Inject(AccessIds.RECYCLER_ADAPTER)
     BaseRecyclerAdapter mAdapter;
 
@@ -30,7 +33,7 @@ public class MineRefreshPresenter extends Presenter {
         @Override
         public void onRefresh() {
             mRequest.cancel();
-            mRequest.enqueue();
+            mRequest.enqueue(mRequestCallback);
         }
     };
 
@@ -41,9 +44,12 @@ public class MineRefreshPresenter extends Presenter {
         public void onResult(Response<MineResponseBody> response) {
             if (response.getError() == null && response.getData() != null) {
                 MineResponseBody responseData = response.getData();
-                mAdapter.addItem(responseData.getUser());
-                mAdapter.addItemList(responseData.getDataList());
+                List list = new ArrayList();
+                list.add(responseData.getUser());
+                list.addAll(responseData.getDataList());
+                mAdapter.setItemList(list);
             }
+            mRefreshLayout.setRefreshing(false);
         }
     };
 
@@ -51,7 +57,12 @@ public class MineRefreshPresenter extends Presenter {
     protected void onBind() {
         mRefreshLayout.setColorSchemeColors(ResourcesUtil.getColor(getCurrentActivity(), R.color.color_main_blue));
         mRefreshLayout.setProgressBackgroundColorSchemeColor(ResourcesUtil.getColor(getCurrentActivity(), R.color.white));
-        mRefreshLayout.setOnRefreshListener(mOnRefreshListener);
+        if (mRequest != null) {
+            mRequest.cancel();
+        }
+        mRequest = new MineRequest();
+        mRequest.enqueue(mRequestCallback);
         mRefreshLayout.setRefreshing(true);
+        mRefreshLayout.setOnRefreshListener(mOnRefreshListener);
     }
 }

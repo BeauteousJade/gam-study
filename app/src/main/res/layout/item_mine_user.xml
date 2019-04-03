@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="100dp"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/avatar"
@@ -29,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color_item_dark"
-        android:textSize="@dimen/text_size_16"
+        android:textSize="@dimen/text_size_14"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintLeft_toLeftOf="@id/nick_name" />
 
@@ -38,6 +39,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:textColor="@color/color_item_dark"
+        android:textSize="@dimen/text_size_14"
         app:layout_constraintBottom_toBottomOf="@id/fans_count"
         app:layout_constraintLeft_toRightOf="@id/fans_count" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/color_item_dark"
+        android:textSize="@dimen/text_size_14"
+        app:layout_constraintBottom_toBottomOf="@id/follow_count"
+        app:layout_constraintLeft_toRightOf="@id/follow_count" />
 </androidx.constraintlayout.widget.ConstraintLayout>

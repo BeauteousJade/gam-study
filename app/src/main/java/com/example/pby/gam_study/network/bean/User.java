@@ -13,18 +13,26 @@ import androidx.annotation.Nullable;
 
 public class User implements Parcelable, Diff {
 
+    public static final String HEAD = "head";
+    public static final String NICK_NAME = "nickName";
+    public static final String FOLLOW = "follow";
+    public static final String FANS = "fans";
+    public static final String SCORE = "score";
+
     private String id;
     private String head;
     private String token;
     private String nickName;
     private List<Follow> followUserList;
     private List<Follow> fansUserList;
+    private int score;
 
     protected User(Parcel in) {
         id = in.readString();
         head = in.readString();
         token = in.readString();
         nickName = in.readString();
+        score = in.readInt();
         followUserList = new ArrayList<>();
         fansUserList = new ArrayList<>();
         in.readList(followUserList, getClass().getClassLoader());
@@ -91,6 +99,14 @@ public class User implements Parcelable, Diff {
         this.fansUserList = fansUserList;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj instanceof User) {
@@ -115,6 +131,7 @@ public class User implements Parcelable, Diff {
         dest.writeString(head);
         dest.writeString(token);
         dest.writeString(nickName);
+        dest.writeInt(score);
         dest.writeList(followUserList);
         dest.writeList(fansUserList);
     }
@@ -136,6 +153,26 @@ public class User implements Parcelable, Diff {
 
     @Override
     public Object getChangePayload(Diff diff) {
+        if (diff instanceof User) {
+            StringBuilder stringBuilder = new StringBuilder();
+            User user = (User) diff;
+            if (!Objects.equals(head, user.getHead())) {
+                stringBuilder.append(HEAD);
+            }
+            if (!Objects.equals(nickName, user.getNickName())) {
+                stringBuilder.append(NICK_NAME);
+            }
+            if (!Objects.equals(followUserList, user.getFollowUserList())) {
+                stringBuilder.append(FOLLOW);
+            }
+            if (!Objects.equals(fansUserList, user.getFansUserList())) {
+                stringBuilder.append(FANS);
+            }
+            if (!Objects.equals(score, score)) {
+                stringBuilder.append(SCORE);
+            }
+            return stringBuilder.toString();
+        }
         return null;
     }
 }

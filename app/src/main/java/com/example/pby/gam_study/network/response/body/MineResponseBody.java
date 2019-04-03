@@ -1,5 +1,6 @@
 package com.example.pby.gam_study.network.response.body;
 
+import com.example.pby.gam_study.network.bean.MapBean;
 import com.example.pby.gam_study.network.bean.User;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +11,7 @@ public class MineResponseBody {
     @SerializedName("user")
     private User mUser;
     @SerializedName("list")
-    private List<Integer> mDataList;
+    private List<MapBean> mDataList;
 
     public User getUser() {
         return mUser;
@@ -20,11 +21,11 @@ public class MineResponseBody {
         this.mUser = user;
     }
 
-    public List<Integer> getDataList() {
+    public List<MapBean> getDataList() {
         return mDataList;
     }
 
-    public void setDataList(List<Integer> dataList) {
+    public void setDataList(List<MapBean> dataList) {
         this.mDataList = dataList;
     }
 }

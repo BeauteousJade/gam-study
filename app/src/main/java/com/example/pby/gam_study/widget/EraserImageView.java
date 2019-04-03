@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,7 +156,7 @@ public class EraserImageView extends View {
     }
 
     /**
-     * 根据当前位置计算大小为{@link #DEFAULT_SIZE}的矩阵内部的平均RGB值
+     * 根据当前位置计算大小为{@link #DEFAULT_SIZE}的矩阵内部的平均ARGB值
      *
      * @param x
      * @param y
@@ -166,7 +165,7 @@ public class EraserImageView extends View {
     private int calculateAvgColor(int x, int y) {
         x = (int) (x * (mBufferBitmap.getWidth() * 1.0f / getMeasuredWidth()));
         y = (int) (y * (mBufferBitmap.getHeight() * 1.0f / getMeasuredHeight()));
-        x = Math.max(0, x - 50);
+        x = Math.max(0, x - DEFAULT_SIZE / 2);
         if (x + DEFAULT_SIZE > mBufferBitmap.getWidth()) {
             x -= (x + DEFAULT_SIZE) - mBufferBitmap.getWidth();
         }
@@ -215,7 +214,6 @@ public class EraserImageView extends View {
             final float ratio = Math.min(DEFAULT_PIXEL * 1.0f / mBufferBitmap.getWidth(), 1);
             // 产生新的bitmap的目的就是为了压缩图片
             // ---
-            Log.i("pby123", "ratio = " + ratio + " mBufferBitmap.getWidth() = " + mBufferBitmap.getWidth() + " mBufferBitmap.getHeight() = " + mBufferBitmap.getHeight());
             Bitmap bitmap = Bitmap.createBitmap((int) (mBufferBitmap.getWidth() * ratio), (int) (mBufferBitmap.getHeight() * ratio), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
             matrix.setScale(ratio, ratio);

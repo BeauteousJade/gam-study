@@ -3,7 +3,9 @@ package com.example.pby.gam_study.page.home.page.mine;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
+import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.UserHeadClickPresenter;
 import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.UserInfoPresenter;
+import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.UserItemPresenter;
 
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class MineAdapter extends BaseRecyclerAdapter<Object> {
 
     private static final int TYPE_INFO = 1;
     private static final int TYPE_ITEM = 2;
+    private static final int TYPE_EMPTY = 3;
 
     public MineAdapter(List<Object> dataList) {
         super(dataList);
@@ -21,8 +24,10 @@ public class MineAdapter extends BaseRecyclerAdapter<Object> {
     public int getItemViewTypeNoEmpty(int position) {
         if (position == 0) {
             return TYPE_INFO;
-        } else {
+        } else if (mDataList.get(position) != null) {
             return TYPE_ITEM;
+        } else {
+            return TYPE_EMPTY;
         }
     }
 
@@ -33,8 +38,9 @@ public class MineAdapter extends BaseRecyclerAdapter<Object> {
                 return R.layout.item_mine_user;
             case TYPE_ITEM:
                 return R.layout.item_mine_item;
+            default:
+                return R.layout.item_mine_empty;
         }
-        return 0;
     }
 
     @Override
@@ -43,9 +49,10 @@ public class MineAdapter extends BaseRecyclerAdapter<Object> {
         switch (viewType) {
             case TYPE_INFO:
                 presenter.add(new UserInfoPresenter());
+                presenter.add(new UserHeadClickPresenter());
                 break;
             case TYPE_ITEM:
-                presenter.add(null);
+                presenter.add(new UserItemPresenter());
                 break;
         }
         return presenter;
