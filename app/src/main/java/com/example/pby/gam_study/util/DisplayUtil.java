@@ -40,9 +40,9 @@ public class DisplayUtil {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    public static boolean checkDeviceHasNavigationBar(Context activity) {
+    public static boolean checkDeviceHasNavigationBar(Context context) {
         //通过判断设备是否有返回键、菜单键(不是虚拟键,是手机屏幕外的按键)来确定是否有navigation bar
-        boolean hasMenuKey = ViewConfiguration.get(activity)
+        boolean hasMenuKey = ViewConfiguration.get(context)
                 .hasPermanentMenuKey();
         boolean hasBackKey = KeyCharacterMap
                 .deviceHasKey(KeyEvent.KEYCODE_BACK);

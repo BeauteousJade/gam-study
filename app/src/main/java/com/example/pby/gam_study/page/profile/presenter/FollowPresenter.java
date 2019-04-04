@@ -8,12 +8,10 @@ import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.network.bean.Follow;
 import com.example.pby.gam_study.network.bean.User;
 import com.example.pby.gam_study.page.profile.request.FollowRequest;
 import com.example.pby.gam_study.page.profile.request.UnFollowRequest;
 
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -38,22 +36,13 @@ public class FollowPresenter extends Presenter {
         if (Objects.equals(mUser.getId(), LoginManager.getCurrentUser().getId())) {
             // mFollowButton.setVisibility(View.INVISIBLE);
         }
-        if (isFollow(mUser.getFansUserList())) {
+        if (mUser.getIsFollow() == 1) {
             mFollowButton.setText(getString(R.string.followed));
             mFollowButton.setSelected(true);
         } else {
             mFollowButton.setText(getString(R.string.follow));
             mFollowButton.setSelected(false);
         }
-    }
-
-    private boolean isFollow(List<Follow> fansList) {
-        for (Follow follow : fansList) {
-            if (Objects.equals(follow.getFromUserId(), LoginManager.getCurrentUser().getId())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @OnClick(R.id.follow)
@@ -65,11 +54,11 @@ public class FollowPresenter extends Presenter {
             mUnFollowRequest.cancel();
         }
         if (mFollowButton.isSelected()) {
-            mUnFollowRequest = new UnFollowRequest(mUser.getId());
+            mUnFollowRequest = new UnFollowRequest(LoginManager.getCurrentUser().getId(), mUser.getId());
             mUnFollowRequest.enqueue();
             mFollowButton.setText(getString(R.string.follow));
         } else {
-            mFollowRequest = new FollowRequest(mUser.getId());
+            mFollowRequest = new FollowRequest(LoginManager.getCurrentUser().getId(), mUser.getId());
             mFollowRequest.enqueue();
             mFollowButton.setText(getString(R.string.followed));
         }

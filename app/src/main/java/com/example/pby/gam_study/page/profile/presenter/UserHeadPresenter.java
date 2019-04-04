@@ -10,6 +10,7 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.factory.GlideFactory;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.User;
+import com.example.pby.gam_study.util.ArrayUtil;
 
 import butterknife.BindView;
 
@@ -31,8 +32,8 @@ public class UserHeadPresenter extends Presenter {
     protected void onBind() {
         Glide.with(getCurrentFragment()).asBitmap().apply(GlideFactory.createCircleOption()).load(mUser.getHead()).into(mAvatar);
         mNickName.setText(mUser.getNickName());
-        mFansCount.setText(String.format(getString(R.string.regex_fans_count), formatCount(mUser.getFansUserList().size())));
-        mFollowCount.setText(String.format(getString(R.string.regex_follow_count), formatCount(mUser.getFollowUserList().size())));
+        mFansCount.setText(String.format(getString(R.string.regex_fans_count), formatCount(ArrayUtil.isEmpty(mUser.getFansUserList()) ? 0 : mUser.getFansUserList().size())));
+        mFollowCount.setText(String.format(getString(R.string.regex_follow_count), formatCount(ArrayUtil.isEmpty(mUser.getFollowUserList()) ? 0 : mUser.getFollowUserList().size())));
     }
 
     private String formatCount(int size) {

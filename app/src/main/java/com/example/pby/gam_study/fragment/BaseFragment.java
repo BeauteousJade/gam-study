@@ -2,7 +2,6 @@ package com.example.pby.gam_study.fragment;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,9 +50,6 @@ public abstract class BaseFragment extends Fragment implements Presence, BaseCon
         ButterKnife.bind(this, view);
         onPrepareBaseContext();
         mContext = onCreateBaseContext();
-        if (mContext instanceof Context) {
-            Log.i("pb123", "mFragment = " + this.getClass().getCanonicalName() + " context = " + ((Context) mContext).mFragment);
-        }
         mPresenter.bind(mContext, mExtraMap, view);
     }
 

@@ -1,4 +1,4 @@
-package com.example.pby.gam_study.page.home.page.mine;
+package com.example.pby.gam_study.page.home.page.mine.request;
 
 import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.network.NetWorkManager;

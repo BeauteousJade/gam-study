@@ -5,10 +5,13 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.Request;
 
+import androidx.annotation.CallSuper;
+
 public abstract class RefreshRecyclerViewFragment extends RecyclerViewFragment {
 
     private Request mRequest;
 
+    @CallSuper
     @Override
     public void onPrepareBaseContext() {
         super.onPrepareBaseContext();

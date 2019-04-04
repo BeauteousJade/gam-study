@@ -351,9 +351,9 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
             final T oldItem = mOldList.get(oldItemPosition);
             final T newItem = mNewList.get(newItemPosition);
             if (oldItem instanceof Diff && newItem instanceof Diff) {
-                return ((Diff) oldItem).areItemsTheSame((Diff) mNewList.get(newItemPosition));
+                return ((Diff) oldItem).areItemsTheSame((Diff) newItem);
             }
-            return Objects.equals(mOldList.get(oldItemPosition), mNewList.get(newItemPosition));
+            return Objects.equals(mOldList.get(oldItemPosition), newItem);
         }
 
         @Override
@@ -361,9 +361,9 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
             final T oldItem = mOldList.get(oldItemPosition);
             final T newItem = mNewList.get(newItemPosition);
             if (oldItem instanceof Diff && newItem instanceof Diff) {
-                return ((Diff) oldItem).onContentTheme((Diff) mNewList.get(newItemPosition));
+                return ((Diff) oldItem).onContentTheme((Diff) newItem);
             }
-            return Objects.equals(mOldList.get(oldItemPosition), mNewList.get(newItemPosition));
+            return Objects.equals(mOldList.get(oldItemPosition), newItem);
         }
 
         @Nullable
@@ -372,7 +372,7 @@ public abstract class BaseRecyclerAdapter<U> extends RecyclerView.Adapter<BaseVi
             final T oldItem = mOldList.get(oldItemPosition);
             final T newItem = mNewList.get(newItemPosition);
             if (oldItem instanceof Diff && newItem instanceof Diff) {
-                return ((Diff) oldItem).getChangePayload((Diff) mNewList.get(newItemPosition));
+                return ((Diff) oldItem).getChangePayload((Diff) newItem);
             }
             return super.getChangePayload(oldItemPosition, newItemPosition);
         }

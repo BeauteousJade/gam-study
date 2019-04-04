@@ -23,10 +23,7 @@ import androidx.core.content.ContextCompat;
 
 public class HomeActivity extends BaseActivity {
 
-    private final OnActivityResultListener mOnActivityResultListener = (requestCode, resultCode, data) -> {
-        Tencent.onActivityResultData(requestCode, resultCode, data, null);
-        return true;
-    };
+    private final OnActivityResultListener mOnActivityResultListener = (requestCode, resultCode, data) -> Tencent.onActivityResultData(requestCode, resultCode, data, null);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

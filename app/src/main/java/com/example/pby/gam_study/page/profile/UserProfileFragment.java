@@ -45,7 +45,7 @@ public class UserProfileFragment extends RefreshRecyclerViewFragment {
 
     @Override
     protected List<? extends RecyclerView.ItemDecoration> onCreateItemDecoration() {
-        return Collections.singletonList(new LinearLayoutManagerVerticalItemDecoration(2, ResourcesUtil.getColor(requireContext(), R.color.bg_color),
+        return Collections.singletonList(new LinearLayoutManagerVerticalItemDecoration(1, ResourcesUtil.getColor(requireContext(), R.color.bg_color),
                 DisplayUtil.dpToPx(requireContext(), 20)));
     }
 

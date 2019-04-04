@@ -5,6 +5,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 
+import java.util.Objects;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,12 +39,13 @@ public class LinearLayoutManagerVerticalItemDecoration extends RecyclerView.Item
 
     public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         final int childCount = parent.getChildCount();
+        final int itemCount = Objects.requireNonNull(parent.getAdapter()).getItemCount();
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
             final int position = parent.getChildViewHolder(child).getAdapterPosition();
-            if ((mOnItemOffsetListener != null && mOnItemOffsetListener.onItemOffset(position)) || position >= mStartIndex) {
-                int top = child.getTop() - mHeight;
-                int bottom = child.getTop();
+            if ((mOnItemOffsetListener != null && mOnItemOffsetListener.onItemOffset(position)) || position >= mStartIndex && position < itemCount - 1) {
+                int top = child.getBottom();
+                int bottom = top + mHeight;
                 int left = child.getLeft();
                 int right = child.getRight();
                 mDrawable.setBounds(left, top, right, bottom);
@@ -54,8 +57,9 @@ public class LinearLayoutManagerVerticalItemDecoration extends RecyclerView.Item
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         final int position = parent.getChildViewHolder(view).getAdapterPosition();
-        if ((mOnItemOffsetListener != null && mOnItemOffsetListener.onItemOffset(position)) || position >= mStartIndex) {
-            outRect.set(0, mHeight, 0, 0);
+        final int itemCount = Objects.requireNonNull(parent.getAdapter()).getItemCount();
+        if ((mOnItemOffsetListener != null && mOnItemOffsetListener.onItemOffset(position)) || position >= mStartIndex && position < itemCount - 1) {
+            outRect.set(0, 0, 0, mHeight);
         }
     }
 

@@ -12,6 +12,7 @@ import com.example.pby.gam_study.util.ArrayUtil;
 
 import java.util.List;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -32,6 +33,7 @@ public abstract class RecyclerViewFragment extends BaseFragment {
     private List<? extends RecyclerView.ItemDecoration> mItemDecorationList;
     private final Observable mObservable = new Observable();
 
+    @CallSuper
     @Override
     public void onPrepareBaseContext() {
         mRecyclerAdapter = onCreateAdapter();

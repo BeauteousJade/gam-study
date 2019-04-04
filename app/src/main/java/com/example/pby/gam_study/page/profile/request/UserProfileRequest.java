@@ -1,5 +1,6 @@
 package com.example.pby.gam_study.page.profile.request;
 
+import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.network.NetWorkManager;
 import com.example.pby.gam_study.network.Service;
 import com.example.pby.gam_study.network.request.BaseRequest;
@@ -19,6 +20,6 @@ public class UserProfileRequest extends BaseRequest<UserProfileResponseBody> {
     public Observable<UserProfileResponseBody> createObservable() {
         return NetWorkManager
                 .getService(Service.class)
-                .getUserProfile(mUserId);
+                .getUserProfile(LoginManager.getCurrentUser().getId(), mUserId);
     }
 }

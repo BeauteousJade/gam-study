@@ -32,11 +32,22 @@ public interface Service {
 
     @POST("/user/profile")
     @FormUrlEncoded
-    Observable<UserProfileResponseBody> getUserProfile(@Field("userId") String userId);
+    Observable<UserProfileResponseBody> getUserProfile(@Field("fromUserId") String fromUserId, @Field("toUserId") String toUserId);
 
     @POST("/user/mine")
     @FormUrlEncoded
     Observable<MineResponseBody> findUserInfo(@Field("id") String id);
+
+    @POST("/user/updateAvatar")
+    Observable<String> updateAvatar(@Body RequestBody requestBody);
+
+    @POST("/user/findFollowList")
+    @FormUrlEncoded
+    Observable<List<User>> findFollowList(@Field("userId") String userId);
+
+    @POST("/user/findFansList")
+    @FormUrlEncoded
+    Observable<List<User>> findFansList(@Field("userId") String userId);
 
     @POST("/kind/findAllKind")
     @FormUrlEncoded

@@ -19,6 +19,9 @@
     <string name="title_all">全部分类</string>
     <string name="title_find">发现</string>
     <string name="title_follow">关注</string>
+    <string name="title_follow_list">关注列表</string>
+    <string name="title_fans_list">粉丝列表</string>
+    <string name="title_mine_kind">我的分类</string>
     <string name="menu_item_new_kind">创建分类</string>
     <string name="menu_item_new_card">创建卡片</string>
     <string name="menu_send_post">动态</string>

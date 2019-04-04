@@ -23,6 +23,7 @@ public class User implements Parcelable, Diff {
     private String head;
     private String token;
     private String nickName;
+    private int isFollow;
     private List<Follow> followUserList;
     private List<Follow> fansUserList;
     private int score;
@@ -33,6 +34,7 @@ public class User implements Parcelable, Diff {
         token = in.readString();
         nickName = in.readString();
         score = in.readInt();
+        isFollow = in.readInt();
         followUserList = new ArrayList<>();
         fansUserList = new ArrayList<>();
         in.readList(followUserList, getClass().getClassLoader());
@@ -107,6 +109,14 @@ public class User implements Parcelable, Diff {
         this.score = score;
     }
 
+    public int getIsFollow() {
+        return isFollow;
+    }
+
+    public void setIsFollow(int isFollow) {
+        this.isFollow = isFollow;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj instanceof User) {
@@ -132,6 +142,7 @@ public class User implements Parcelable, Diff {
         dest.writeString(token);
         dest.writeString(nickName);
         dest.writeInt(score);
+        dest.writeInt(isFollow);
         dest.writeList(followUserList);
         dest.writeList(fansUserList);
     }

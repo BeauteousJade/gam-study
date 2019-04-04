@@ -8,7 +8,7 @@ import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.RequestCallback;
 import com.example.pby.gam_study.network.response.Response;
 import com.example.pby.gam_study.network.response.body.MineResponseBody;
-import com.example.pby.gam_study.page.home.page.mine.MineRequest;
+import com.example.pby.gam_study.page.home.page.mine.request.MineRequest;
 import com.example.pby.gam_study.util.ResourcesUtil;
 
 import java.util.ArrayList;

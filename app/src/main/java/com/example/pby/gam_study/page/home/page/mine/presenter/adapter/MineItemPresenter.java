@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class UserItemPresenter extends Presenter {
+public class MineItemPresenter extends Presenter {
 
     @Inject(AccessIds.ITEM_DATA)
     MapBean mMapBean;
