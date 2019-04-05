@@ -8,7 +8,10 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.MapBean;
+import com.example.pby.gam_study.page.about.AboutActivity;
+import com.example.pby.gam_study.page.card.CardActivity;
 import com.example.pby.gam_study.page.kind.KindActivity;
+import com.example.pby.gam_study.page.setting.SettingActivity;
 
 import butterknife.OnClick;
 
@@ -24,6 +27,13 @@ public class MineItemClickPresenter extends Presenter {
                 KindActivity.startActivity(getCurrentActivity(), LoginManager.getCurrentUser().getId());
                 break;
             case "卡片":
+                CardActivity.startActivity(getCurrentActivity(), null, getString(R.string.title_mine_card));
+                break;
+            case "设置":
+                SettingActivity.startActivity(getCurrentActivity());
+                break;
+            case "关于":
+                AboutActivity.startActivity(getCurrentActivity());
                 break;
         }
     }

@@ -28,6 +28,16 @@ public class SharedPreferencesUtil {
         return sSharedPreferences.getString(key, defValue);
     }
 
+    public static void putBoolean(Context context, String key, boolean value) {
+        checkInitialize(context);
+        sSharedPreferences.edit().putBoolean(key, value).apply();
+    }
+
+    public static boolean getBoolean(Context context, String key, boolean defValue) {
+        checkInitialize(context);
+        return sSharedPreferences.getBoolean(key, defValue);
+    }
+
     private static void checkInitialize(Context context) {
         if (sSharedPreferences == null) {
             sSharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);

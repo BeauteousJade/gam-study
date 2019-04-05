@@ -17,6 +17,8 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -152,4 +154,11 @@ public interface Service {
     @FormUrlEncoded
     Observable<Boolean> deleteMessageItemForToUser(@Field("id") String id);
 
+    @POST("/apk/downloadApk")
+    @FormUrlEncoded
+    Call<ResponseBody> downloadApk(@Field("url") String url);
+
+    @POST("/apk/checkUpdate")
+    @FormUrlEncoded
+    Observable<String> checkUpdate(@Field("code") String code);
 }

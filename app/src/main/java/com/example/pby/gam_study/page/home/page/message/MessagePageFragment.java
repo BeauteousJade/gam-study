@@ -65,7 +65,7 @@ public class MessagePageFragment extends RefreshRecyclerViewFragment implements 
     @Override
     protected List<? extends RecyclerView.ItemDecoration> onCreateItemDecoration() {
         return Collections.singletonList(new LinearLayoutManagerVerticalItemDecoration(0, ResourcesUtil.getColor(requireContext(), R.color.bg_color)
-                , DisplayUtil.dpToPx(requireContext(), 5)));
+                , DisplayUtil.dpToPx(requireContext(), 0.5f)));
     }
 
     @Override

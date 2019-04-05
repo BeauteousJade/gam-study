@@ -11,6 +11,7 @@ import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.editCard.EditCardActivity;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -24,6 +25,7 @@ public class CardTitleBarPresenter extends Presenter implements View.OnClickList
     TextView mTitleView;
     @Inject(AccessIds.TITLE)
     String mKindName;
+    @Nullable
     @Inject(AccessIds.KIND_ID)
     String mKindId;
 
@@ -34,7 +36,11 @@ public class CardTitleBarPresenter extends Presenter implements View.OnClickList
     protected void onBind() {
         mTitleView.setText(mKindName);
         mLeftView.setImageResource(R.drawable.bg_back);
-        mRightView.setImageResource(R.drawable.add);
+        if (mKindId != null) {
+            mRightView.setImageResource(R.drawable.add);
+        } else {
+            mRightView.setImageDrawable(null);
+        }
     }
 
     @OnClick(R.id.left_icon)
@@ -44,6 +50,9 @@ public class CardTitleBarPresenter extends Presenter implements View.OnClickList
 
     @OnClick(R.id.right_icon)
     public void onRightClick(View view) {
+        if (mKindId == null) {
+            return;
+        }
         if (mDialogFragment == null) {
             mDialogFragment = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_RIGHT_BOTTOM, R.layout.menu_card)
                     .setAnchorView(view)

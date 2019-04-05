@@ -4,7 +4,7 @@
     android:id="@+id/item_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_item"
+    android:background="@drawable/bg_item_white"
     android:orientation="vertical"
     android:paddingTop="8dp"
     android:paddingBottom="8dp">

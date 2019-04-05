@@ -71,6 +71,8 @@
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".page.userlist.UserListActivity" />
         <activity android:name=".page.kind.KindActivity" />
+        <activity android:name=".page.setting.SettingActivity" />
+        <activity android:name=".page.about.AboutActivity" />
 
         <meta-data
             android:name="com.netease.nim.appKey"

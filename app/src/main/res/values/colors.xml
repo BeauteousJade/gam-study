@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">@color/color_003</color>
 
-    <color name="windowBackgroundColor">@color/white</color>
+    <color name="windowBackgroundColor">@color/bg_color</color>
 
     <color name="color_start_blue">#4f8dfe</color>
     <color name="color_end_blue">#35bbfe</color>
@@ -39,4 +39,5 @@
     <color name="color_008">@color/windowBackgroundColor</color>
     <color name="color_009">#fba0c1</color>
     <color name="color_009_50">#85fba0c1</color>
+    <color name="color_010">#b6b6b6</color>
 </resources>

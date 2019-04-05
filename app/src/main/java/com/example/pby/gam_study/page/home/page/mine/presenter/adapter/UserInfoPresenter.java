@@ -7,9 +7,11 @@ import com.example.annation.Inject;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.GlideApp;
 import com.example.pby.gam_study.R;
-import com.example.pby.gam_study.factory.GlideFactory;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.User;
+import com.example.pby.gam_study.util.DisplayUtil;
+import com.example.pby.gam_study.util.GlideCircleWithBorder;
+import com.example.pby.gam_study.util.ResourcesUtil;
 
 import butterknife.BindView;
 
@@ -33,7 +35,7 @@ public class UserInfoPresenter extends Presenter {
     protected void onBind() {
         GlideApp.with(getCurrentFragment())
                 .asBitmap()
-                .apply(GlideFactory.createCircleOption())
+                .transform(new GlideCircleWithBorder(DisplayUtil.dpToPx(getCurrentActivity(), 0.5f), ResourcesUtil.getColor(getCurrentActivity(), R.color.bg_color)))
                 .load(mUser.getHead())
                 .into(mAvatarView);
         mNameView.setText(mUser.getNickName());

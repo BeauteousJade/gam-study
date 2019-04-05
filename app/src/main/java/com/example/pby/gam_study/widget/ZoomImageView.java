@@ -21,7 +21,6 @@ public class ZoomImageView extends ImageView {
     private static final int DEFAULT_MAX_RATIO = 4;
     private static final int DEFAULT_MID_RATIO = 2;
 
-
     private float mTouchSlop;
     private GestureDetector mGestureDetector;
     private ScaleGestureDetector mScaleGestureDetector;

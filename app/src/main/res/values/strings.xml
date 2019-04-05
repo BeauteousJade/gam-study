@@ -22,6 +22,10 @@
     <string name="title_follow_list">关注列表</string>
     <string name="title_fans_list">粉丝列表</string>
     <string name="title_mine_kind">我的分类</string>
+    <string name="title_mine_card">我的卡片</string>
+    <string name="title_update">有新版本啦</string>
+    <string name="title_about">关于</string>
+    <string name="title_setting">设置</string>
     <string name="menu_item_new_kind">创建分类</string>
     <string name="menu_item_new_card">创建卡片</string>
     <string name="menu_send_post">动态</string>
@@ -81,6 +85,11 @@
     <string name="regex_score_count">学习积分：%s</string>
     <string name="delete">删除</string>
     <string name="update_avatar">从相册中选择头像</string>
+    <string name="content_about">片刻学习，一款集学习和吹牛的App</string>
+    <string name="current_version">当前版本</string>
+    <string name="check_update">检查更新</string>
+    <string name="version_is_newest">当前版本已经是最新的!</string>
+    <string name="content_update">确定下载最新版本吗？</string>
     <plurals name="error_over_count">
         <item quantity="one">You can only select one media file</item>
         <item quantity="many">You can only select up to %1$d media files</item>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_item_white"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/color_item_dark"
+        android:textSize="@dimen/text_size_16" />
+
+    <com.example.pby.gam_study.widget.ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10dp"
+        app:checkedBackgroundDrawable="@drawable/bg_button_blue_radius_100"
+        app:circleColor="@color/color_006"
+        app:circleOffset="4dp"
+        app:unCheckBackgroundDrawable="@drawable/bg_button_gray_radius_100" />
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.pby.gam_study.util;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.ColorInt;
@@ -26,5 +27,16 @@ public class ResourcesUtil {
 
     public static int getDimens(Context context, @DimenRes int id) {
         return context.getResources().getDimensionPixelSize(id);
+    }
+
+    public static String getVersionName(Context context) {
+        PackageManager pManager = context.getPackageManager();
+        try {
+            return pManager.getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_CONFIGURATIONS).versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

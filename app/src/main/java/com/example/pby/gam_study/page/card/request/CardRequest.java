@@ -10,6 +10,10 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
+/**
+ * 获取某个分类的所有卡片
+ * {@link CardRequest#mKindId}可以为null，如果为null，表示获取该用户的所有卡片
+ */
 public class CardRequest extends BaseRequest<List<Card>> {
 
     private String mKindId;

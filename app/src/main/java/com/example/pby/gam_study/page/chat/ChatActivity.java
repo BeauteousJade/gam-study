@@ -12,9 +12,13 @@ public class ChatActivity extends BaseActivity {
     private User mToUser;
 
     public static void startActivity(BaseActivity activity, User toUser) {
+        activity.startActivity(getStartActivityIntent(activity, toUser));
+    }
+
+    public static Intent getStartActivityIntent(BaseActivity activity, User toUser) {
         Intent intent = new Intent(activity, ChatActivity.class);
         intent.putExtra(TO_USER, toUser);
-        activity.startActivity(intent);
+        return intent;
     }
 
 

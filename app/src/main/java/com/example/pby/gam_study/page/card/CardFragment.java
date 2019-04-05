@@ -1,10 +1,8 @@
 package com.example.pby.gam_study.page.card;
 
 import android.os.Bundle;
-
 import android.view.View;
 
-import com.example.annation.Provides;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
@@ -28,16 +26,16 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CardFragment extends RefreshRecyclerViewFragment {
 
     private static final String KIND_ID = "kind_id";
-    private static final String KIND_NAME = "kind_name";
+    private static final String TITLE = "title";
     private static final int MAX_VISIBLE_COUNT = 3;
     private String mKindId;
-    private String mKindName;
+    private String mTitle;
 
     public static CardFragment newInstance(String kindId, String kindName) {
         final CardFragment cardFragment = new CardFragment();
         final Bundle bundle = new Bundle();
         bundle.putString(KIND_ID, kindId);
-        bundle.putString(KIND_NAME, kindName);
+        bundle.putString(TITLE, kindName);
         cardFragment.setArguments(bundle);
         return cardFragment;
     }
@@ -46,19 +44,16 @@ public class CardFragment extends RefreshRecyclerViewFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
             mKindId = getArguments().getString(KIND_ID);
-            mKindName = getArguments().getString(KIND_NAME);
+            mTitle = getArguments().getString(TITLE);
         }
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> T onCreateBaseContext() {
-        Context context = new Context();
-        context.mContext = super.onCreateBaseContext();
-        context.mKindName = mKindName;
-        context.mKindId = mKindId;
-        return (T) context;
+    public void onPrepareBaseContext() {
+        super.onPrepareBaseContext();
+        putExtra(AccessIds.TITLE, mTitle);
+        putExtra(AccessIds.KIND_ID, mKindId);
     }
 
     @Override
@@ -98,14 +93,5 @@ public class CardFragment extends RefreshRecyclerViewFragment {
     @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
         return new SlideLayoutManager(MAX_VISIBLE_COUNT, SlideLayoutManager.Gravity.bottom);
-    }
-
-    public static class Context {
-        @Provides(value = AccessIds.TITLE)
-        public String mKindName;
-        @Provides(value = AccessIds.KIND_ID)
-        public String mKindId;
-        @Provides(deepProvides = true)
-        public RefreshRecyclerViewFragment.Context mContext;
     }
 }

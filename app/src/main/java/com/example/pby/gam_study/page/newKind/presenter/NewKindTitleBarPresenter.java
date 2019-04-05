@@ -48,10 +48,10 @@ public class NewKindTitleBarPresenter extends Presenter {
             switch (key) {
                 case NewKindFragment
                         .KEY_OBSERVABLE_COVER:
-                    mKindName = obj.toString();
+                    mCover = obj.toString();
                     break;
                 case NewKindFragment.KEY_OBSERVABLE_KIND_NAME:
-                    mCover = obj.toString();
+                    mKindName = obj.toString();
                     break;
             }
         }

@@ -1,5 +1,7 @@
 package com.example.pby.gam_study.page.home.page.message.presenter;
 
+import android.app.PendingIntent;
+
 import com.example.annation.Inject;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.manager.LoginManager;
@@ -8,8 +10,13 @@ import com.example.pby.gam_study.network.bean.MessageItem;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.network.request.RequestCallback;
 import com.example.pby.gam_study.network.response.Response;
+import com.example.pby.gam_study.page.chat.ChatActivity;
 import com.example.pby.gam_study.page.home.page.message.MessageAdapter;
 import com.example.pby.gam_study.page.home.page.message.request.SingleMessageItemRequest;
+import com.example.pby.gam_study.page.setting.SettingFragment;
+import com.example.pby.gam_study.util.DisplayUtil;
+import com.example.pby.gam_study.util.GamNotificationManager;
+import com.example.pby.gam_study.util.SharedPreferencesUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
@@ -18,11 +25,15 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 import java.util.List;
 import java.util.Objects;
 
+import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
+
 public class MessageObserverPresenter extends Presenter {
 
 
     @Inject(AccessIds.RECYCLER_ADAPTER)
     MessageAdapter mAdapter;
+
+    private PendingIntent mPendingIntent;
 
     private final Observer<List<IMMessage>> mIncomingMessageObserver =
             new Observer<List<IMMessage>>() {
@@ -32,7 +43,8 @@ public class MessageObserverPresenter extends Presenter {
                     int index;
                     if ((index = isContainUser(imMessage.getFromAccount())) != -1) {
                         MessageItem messageItem = mAdapter.getItem(index);
-                        if (Objects.equals(messageItem.getFromUser().getId().toLowerCase(), imMessage.getFromAccount())) {
+                        boolean isFromUser = Objects.equals(messageItem.getFromUser().getId().toLowerCase(), imMessage.getFromAccount());
+                        if (isFromUser) {
                             messageItem.setToUserUnReadCount(messageItem.getToUserUnReadCount() + messages.size());
                         } else {
                             messageItem.setFromUserUnReadCount(messageItem.getFromUserUnReadCount() + messages.size());
@@ -40,9 +52,13 @@ public class MessageObserverPresenter extends Presenter {
                         messageItem.setRecentContent(imMessage.getContent());
                         messageItem.setRecentTime(imMessage.getTime());
                         mAdapter.notifyItemChanged(index, MessageItem.COUNT + MessageItem.CONTENT + MessageItem.TIME);
+                        showNotification(messageItem);
                     } else {
                         mRequest = new SingleMessageItemRequest(imMessage.getFromAccount(), LoginManager.getCurrentUser().getId());
                         mRequest.enqueue(mRequestCallback);
+                    }
+                    if (SharedPreferencesUtil.getBoolean(getCurrentActivity(), SettingFragment.RINGTONE, false)) {
+                        DisplayUtil.playDefaultMediaPlayer(getCurrentActivity());
                     }
                 }
             };
@@ -51,7 +67,9 @@ public class MessageObserverPresenter extends Presenter {
         @Override
         public void onResult(Response<MessageItem> response) {
             if (response.getError() == null && response.getData() != null) {
-                mAdapter.addItem(0, response.getData());
+                MessageItem messageItem = response.getData();
+                mAdapter.addItem(0, messageItem);
+                showNotification(messageItem);
             }
         }
     };
@@ -68,6 +86,14 @@ public class MessageObserverPresenter extends Presenter {
     protected void onDestroy() {
         NIMClient.getService(MsgServiceObserve.class)
                 .observeReceiveMessage(mIncomingMessageObserver, false);
+    }
+
+    private void showNotification(MessageItem messageItem) {
+        if (SharedPreferencesUtil.getBoolean(getCurrentActivity(), SettingFragment.NOTIFICATION, false)) {
+            mPendingIntent = PendingIntent.getActivity(getCurrentActivity(), 0,
+                    ChatActivity.getStartActivityIntent(getCurrentActivity(), messageItem.getToUser()), FLAG_CANCEL_CURRENT);
+            GamNotificationManager.getInstance(getCurrentActivity()).setMessageNotification(mPendingIntent);
+        }
     }
 
     private int isContainUser(String userId) {

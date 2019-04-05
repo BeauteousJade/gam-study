@@ -2,6 +2,9 @@ package com.example.pby.gam_study.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyCharacterMap;
@@ -31,7 +34,7 @@ public class DisplayUtil {
         return metrics.heightPixels;
     }
 
-    public static int dpToPx(Context context, int value) {
+    public static int dpToPx(Context context, float value) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, context.getResources().getDisplayMetrics());
     }
 
@@ -64,5 +67,11 @@ public class DisplayUtil {
             }
         }
         return result;
+    }
+
+    public static void playDefaultMediaPlayer(Context context) {
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone r = RingtoneManager.getRingtone(context, notification);
+        r.play();
     }
 }

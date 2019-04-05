@@ -12,7 +12,7 @@
         android:id="@+id/post_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_item"
+        android:background="@drawable/bg_item_white"
         android:gravity="left|center_vertical"
         android:orientation="horizontal"
         android:paddingTop="10dp"
