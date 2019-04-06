@@ -15,6 +15,7 @@ import com.example.pby.gam_study.R;
 import java.io.File;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.FileProvider;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -63,11 +64,11 @@ public class GamNotificationManager {
         NotificationManager manager = (NotificationManager) mContext.getSystemService(NOTIFICATION_SERVICE);
         Notification notification = new NotificationCompat.Builder(mContext, "update")
                 .setContentTitle("正在下载")
-                .setContentText(String.format("下载进度：%s", progress))
+                .setContentText(String.format("下载进度：%s%%", progress))
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.mipmap.icon_app)
                 .setAutoCancel(false)
-                .setProgress(100, 0, false)
+                .setProgress(100, progress, false)
                 .build();
         manager.notify(1, notification);
     }
@@ -75,7 +76,14 @@ public class GamNotificationManager {
     public void sendDownloadSuccessNotification(File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(Uri.parse("file://" + file.toString()), "application/vnd.android.package-archive");
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(mContext, "com.example.pby.gam_study.provider", file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            uri = Uri.parse("file://" + file.toString());
+        }
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
         PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
         NotificationManager manager = (NotificationManager) mContext.getSystemService(NOTIFICATION_SERVICE);
         Notification notification = new NotificationCompat.Builder(mContext, "update")

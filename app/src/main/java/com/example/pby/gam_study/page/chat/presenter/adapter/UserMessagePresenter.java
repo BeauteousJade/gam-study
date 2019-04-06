@@ -13,7 +13,7 @@ import com.example.pby.gam_study.widget.EmojiTextView;
 
 import butterknife.BindView;
 
-public class ToUserMessagePresenter extends Presenter {
+public class UserMessagePresenter extends Presenter {
     @Inject(AccessIds.ITEM_DATA)
     Message mMessage;
 
@@ -21,12 +21,13 @@ public class ToUserMessagePresenter extends Presenter {
     ImageView mAvatarView;
     @BindView(R.id.content)
     EmojiTextView mContentView;
+
     @Override
     protected void onBind() {
         GlideApp.with(getCurrentFragment())
                 .asBitmap()
                 .apply(GlideFactory.createCircleOption())
-                .load(mMessage.getToUser().getHead())
+                .load(mMessage.getFromUser().getHead())
                 .into(mAvatarView);
 
         mContentView.setContent(mMessage.getContent());

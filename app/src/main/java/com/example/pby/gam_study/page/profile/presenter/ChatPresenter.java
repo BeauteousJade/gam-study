@@ -27,7 +27,7 @@ public class ChatPresenter extends Presenter {
     @Override
     protected void onBind() {
         if (Objects.equals(mUser.getId(), LoginManager.getCurrentUser().getId())) {
-            //mSendMessageButton.setVisibility(View.INVISIBLE);
+            mSendMessageButton.setVisibility(View.INVISIBLE);
         }
     }
 

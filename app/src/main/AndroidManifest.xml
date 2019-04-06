@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
 
     <permission
@@ -104,11 +105,23 @@
         <receiver android:name="com.netease.nimlib.service.ResponseReceiver" />
 
         <service android:name="com.netease.nimlib.service.ResponseService" />
+
         <provider
             android:name="com.netease.nimlib.ipc.NIMContentProvider"
             android:authorities="com.example.pby.gam_study.ipc.provider"
             android:exported="false"
             android:process=":core" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="$application_id.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

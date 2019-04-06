@@ -34,7 +34,7 @@ public class FollowPresenter extends Presenter {
     @Override
     protected void onBind() {
         if (Objects.equals(mUser.getId(), LoginManager.getCurrentUser().getId())) {
-            // mFollowButton.setVisibility(View.INVISIBLE);
+            mFollowButton.setVisibility(View.INVISIBLE);
         }
         if (mUser.getIsFollow() == 1) {
             mFollowButton.setText(getString(R.string.followed));

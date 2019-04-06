@@ -5,8 +5,7 @@ import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Message;
-import com.example.pby.gam_study.page.chat.presenter.adapter.FromUserMessagePresenter;
-import com.example.pby.gam_study.page.chat.presenter.adapter.ToUserMessagePresenter;
+import com.example.pby.gam_study.page.chat.presenter.adapter.UserMessagePresenter;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,14 +46,7 @@ public class ChatAdapter extends BaseRecyclerAdapter<Message> {
     @Override
     protected Presenter onCreatePresenterIfNoEmpty(int viewType) {
         Presenter presenter = new Presenter();
-        switch (viewType) {
-            case OTHER_USER_TYPE:
-                presenter.add(new FromUserMessagePresenter());
-                break;
-            case MINE_TYPE:
-                presenter.add(new ToUserMessagePresenter());
-                break;
-        }
+        presenter.add(new UserMessagePresenter());
         return presenter;
     }
 }
