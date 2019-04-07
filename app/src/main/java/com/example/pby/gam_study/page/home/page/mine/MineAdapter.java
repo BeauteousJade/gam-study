@@ -4,10 +4,11 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.MineItemClickPresenter;
+import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.MineItemPresenter;
 import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.UserFollowClickPresenter;
 import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.UserHeadClickPresenter;
 import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.UserInfoPresenter;
-import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.MineItemPresenter;
+import com.example.pby.gam_study.page.home.page.mine.presenter.adapter.UserNamePresenter;
 
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class MineAdapter extends BaseRecyclerAdapter<Object> {
                 presenter.add(new UserInfoPresenter());
                 presenter.add(new UserHeadClickPresenter());
                 presenter.add(new UserFollowClickPresenter());
+                presenter.add(new UserNamePresenter());
                 break;
             case TYPE_ITEM:
                 presenter.add(new MineItemPresenter());

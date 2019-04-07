@@ -9,7 +9,6 @@ import com.example.pby.gam_study.network.bean.DailyTask;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.home.page.home.adapter.DailyTaskAdapter;
 import com.example.pby.gam_study.page.home.page.home.request.DailyTaskRequest;
-import com.example.pby.gam_study.util.DisplayUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +26,6 @@ public class DailyTaskFragment extends RefreshRecyclerViewFragment {
     @Override
     public void onPrepareBaseContext() {
         super.onPrepareBaseContext();
-        getRecyclerView().setPadding(DisplayUtil.dpToPx(requireActivity(), 20), 0, DisplayUtil.dpToPx(requireActivity(), 20), 0);
     }
 
     @Override

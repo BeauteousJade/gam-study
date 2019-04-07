@@ -7,7 +7,6 @@ import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.page.newKind.NewKindActivity;
-import com.example.pby.gam_study.util.ToastUtil;
 
 import butterknife.OnClick;
 
@@ -28,7 +27,7 @@ public class TitleBarPresenter extends Presenter implements View.OnClickListener
         if (mGamDialogFragment == null) {
             mGamDialogFragment = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_RIGHT_BOTTOM, R.layout.menu_home)
                     .setAnchorView(view)
-                    .setOnViewClickListener(this, R.id.menu1, R.id.menu2, R.id.menu3)
+                    .setOnViewClickListener(this, R.id.menu1)
                     .build();
         }
         mGamDialogFragment.show(getCurrentActivity().getSupportFragmentManager(), "");
@@ -39,14 +38,6 @@ public class TitleBarPresenter extends Presenter implements View.OnClickListener
         switch (v.getId()) {
             case R.id.menu1:
                 NewKindActivity.startActivity(getCurrentActivity());
-                break;
-            case R.id.menu2:
-//                EditCardActivity.startActivity(getCurrentActivity());
-                break;
-            case R.id.menu3:
-                ToastUtil.info(getCurrentActivity(), "menu3");
-                break;
-            default:
                 break;
         }
         mGamDialogFragment.dismiss();

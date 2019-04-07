@@ -3,6 +3,7 @@ package com.example.pby.gam_study.fragment.dialog;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.activity.BaseActivity;
@@ -17,6 +19,7 @@ import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -60,6 +63,7 @@ public class GamDialogFragment extends DialogFragment {
     private int mWindowWidth = -1;
     private int mWindowHeight = -1;
     private int mAnimationStyle;
+    private SparseArray<String> mTextArray;
 
     private static GamDialogFragment newInstance(@LocationStyle int style, @LayoutRes int layoutId) {
         final GamDialogFragment customDialogFragment = new GamDialogFragment();
@@ -91,6 +95,17 @@ public class GamDialogFragment extends DialogFragment {
             }
         });
         setViewClickListener(contentView);
+        setTextIfNeed(view);
+    }
+
+    private void setTextIfNeed(View view) {
+        if (mTextArray != null) {
+            for (int i = 0; i < mTextArray.size(); i++) {
+                int key = mTextArray.keyAt(i);
+                TextView textView = view.findViewById(key);
+                textView.setText(mTextArray.get(key));
+            }
+        }
     }
 
     private void setViewClickListener(View view) {
@@ -208,6 +223,14 @@ public class GamDialogFragment extends DialogFragment {
         public Builder setOnViewClickListener(View.OnClickListener listener, int... id) {
             mCustomDialogFragment.mOnClickListener = listener;
             mCustomDialogFragment.mClickIds = id;
+            return this;
+        }
+
+        public Builder addTextEntry(@IdRes int id, String text) {
+            if (mCustomDialogFragment.mTextArray == null) {
+                mCustomDialogFragment.mTextArray = new SparseArray<>();
+            }
+            mCustomDialogFragment.mTextArray.put(id, text);
             return this;
         }
 

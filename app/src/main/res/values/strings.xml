@@ -26,6 +26,7 @@
     <string name="title_update">有新版本啦</string>
     <string name="title_about">关于</string>
     <string name="title_setting">设置</string>
+    <string name="title_modify_user_name">修改昵称</string>
     <string name="menu_item_new_kind">创建分类</string>
     <string name="menu_item_new_card">创建卡片</string>
     <string name="menu_send_post">动态</string>
@@ -66,6 +67,7 @@
     <string name="complete">去完成</string>
     <string name="completed">已完成</string>
     <string name="sign_success">签到成功, 学习积分+5</string>
+    <string name="commit_success">完成成功, 学习积分+20</string>
     <string name="sign_failure">签到失败</string>
     <string name="share_new_things">分享新鲜事…</string>
     <string name="album">相册</string>
@@ -90,6 +92,10 @@
     <string name="check_update">检查更新</string>
     <string name="version_is_newest">当前版本已经是最新的!</string>
     <string name="content_update">确定下载最新版本吗？</string>
+    <string name="modify_failure">修改失败</string>
+    <string name="modify_success">修改成功</string>
+    <string name="input_new_nick_name">请输入你的新昵称</string>
+    <string name="nick_name_empty">昵称为空!</string>
     <plurals name="error_over_count">
         <item quantity="one">You can only select one media file</item>
         <item quantity="many">You can only select up to %1$d media files</item>

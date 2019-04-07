@@ -1,4 +1,4 @@
-package com.example.pby.gam_study.page.profile.request;
+package com.example.pby.gam_study.page.modifyUserName;
 
 import com.example.pby.gam_study.network.NetWorkManager;
 import com.example.pby.gam_study.network.Service;
@@ -6,20 +6,20 @@ import com.example.pby.gam_study.network.request.BaseRequest;
 
 import io.reactivex.Observable;
 
-public class FollowRequest extends BaseRequest<Boolean> {
+public class ModifyUserNameRequest extends BaseRequest<Boolean> {
 
-    private String mToUserId;
-    private String mFromUserId;
+    private String mUserId;
+    private String mUserName;
 
-    public FollowRequest(String fromUserId, String toUserId) {
-        mFromUserId = fromUserId;
-        mToUserId = toUserId;
+    public ModifyUserNameRequest(String userId, String userName) {
+        mUserId = userId;
+        mUserName = userName;
     }
 
     @Override
     public Observable<Boolean> createObservable() {
         return NetWorkManager
                 .getService(Service.class)
-                .followUser(mFromUserId, mToUserId);
+                .modifyUserName(mUserId, mUserName);
     }
 }

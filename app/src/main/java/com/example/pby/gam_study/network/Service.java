@@ -51,6 +51,10 @@ public interface Service {
     @FormUrlEncoded
     Observable<List<User>> findFansList(@Field("userId") String userId);
 
+    @POST("/user/modifyUserName")
+    @FormUrlEncoded
+    Observable<Boolean> modifyUserName(@Field("userId") String userId, @Field("userName") String userName);
+
     @POST("/kind/findAllKind")
     @FormUrlEncoded
     Observable<List<Kind>> findAllKind(@Field("userId") String userId);
@@ -91,6 +95,10 @@ public interface Service {
     @POST("/daily/updateDailyCard")
     @FormUrlEncoded
     Observable<Boolean> updateDailyCard(@Field("userId") String userId, @Field("cardId") String cardId);
+
+    @POST("/daily/commitDailyTask")
+    @FormUrlEncoded
+    Observable<Boolean> commitDailyTask(@Field("userId") String userId);
 
     @POST("/post/insertPost")
     Observable<Post> insertPost(@Body RequestBody requestBody);

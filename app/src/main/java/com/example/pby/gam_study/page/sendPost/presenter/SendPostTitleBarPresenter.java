@@ -88,7 +88,7 @@ public class SendPostTitleBarPresenter extends Presenter {
         post.setContent(Objects.requireNonNull(mEditText.getText()).toString());
         post.setUser(LoginManager.getCurrentUser());
         List<String> imageUrlList = new ArrayList<>((List) mAdapter.getDataList());
-        if (imageUrlList.size() < 5) {
+        if (imageUrlList.size() < 6) {
             imageUrlList.remove(imageUrlList.size() - 1);
         }
         post.setImageUrlList(imageUrlList);

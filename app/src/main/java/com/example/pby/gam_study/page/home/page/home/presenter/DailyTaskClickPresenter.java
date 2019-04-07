@@ -7,6 +7,7 @@ import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.fragment.dialog.GamDialogFragment;
+import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.bean.Card;
 import com.example.pby.gam_study.network.bean.DailyTask;
@@ -14,7 +15,9 @@ import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.network.request.RequestCallback;
 import com.example.pby.gam_study.network.response.Response;
 import com.example.pby.gam_study.page.dailyCard.DailyCardActivity;
+import com.example.pby.gam_study.page.home.page.home.request.CommitDailyTaskRequest;
 import com.example.pby.gam_study.page.home.page.home.request.SignRequest;
+import com.example.pby.gam_study.util.ArrayUtil;
 import com.example.pby.gam_study.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -32,28 +35,48 @@ public class DailyTaskClickPresenter extends Presenter implements View.OnClickLi
 
     private final RequestCallback<Boolean> mRequestCallback = new RequestCallback<Boolean>() {
 
-        @SuppressWarnings("unchecked")
         @Override
         public void onResult(Response<Boolean> response) {
             if (response.getError() == null && response.getData()) {
                 final DailyTask dailyTask = (DailyTask) mAdapter.getDataList().get(mPosition);
                 dailyTask.setIsSign(true);
-                mAdapter.setData(mPosition, dailyTask, false);
-                mDialog.show(getCurrentFragment().getChildFragmentManager(), "");
+                mAdapter.notifyItemChanged(mPosition, "");
+                mSignSuccessDialog.show(getCurrentFragment().getChildFragmentManager(), "");
             } else {
                 ToastUtil.error(getCurrentActivity(), getString(R.string.sign_failure));
             }
         }
     };
 
-    private GamDialogFragment mDialog;
+    private final RequestCallback<Boolean> mCommitDailyTaskRequestCallback = new RequestCallback<Boolean>() {
+        @Override
+        public void onResult(Response<Boolean> response) {
+            if (response.getError() == null && response.getData()) {
+                final DailyTask dailyTask = (DailyTask) mAdapter.getDataList().get(mPosition);
+                dailyTask.setIsSign(true);
+                mAdapter.notifyItemChanged(mPosition, "");
+                mCommitSuccessDialog.show(getCurrentFragment().getChildFragmentManager(), "");
+            }
+        }
+    };
     private final Request<Boolean> mSignRequest = new SignRequest();
+
+    private GamDialogFragment mSignSuccessDialog;
+    private GamDialogFragment mCommitSuccessDialog;
+    private Request<Boolean> mCommitDailyTaskRequest;
 
     @Override
     protected void onCreate() {
-        mDialog = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_CENTER, R.layout.dialog_sign_success)
+        mSignSuccessDialog = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_CENTER, R.layout.dialog_sign)
                 .setAnchorView(getRootView())
                 .setOnViewClickListener(this, R.id.sure)
+                .addTextEntry(R.id.blessing_text, getString(R.string.sign_success))
+                .build();
+
+        mCommitSuccessDialog = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_CENTER, R.layout.dialog_sign)
+                .setAnchorView(getRootView())
+                .setOnViewClickListener(this, R.id.sure)
+                .addTextEntry(R.id.blessing_text, getString(R.string.commit_success))
                 .build();
     }
 
@@ -65,11 +88,18 @@ public class DailyTaskClickPresenter extends Presenter implements View.OnClickLi
     @Override
     protected void onUnBind() {
         mSignRequest.cancel();
+        if (mCommitDailyTaskRequest != null) {
+            mCommitDailyTaskRequest.cancel();
+        }
     }
 
     @Override
     protected void onDestroy() {
         mSignRequest.cancel();
+        if (mCommitDailyTaskRequest != null) {
+            mCommitDailyTaskRequest.cancel();
+        }
+        dismissDialog();
     }
 
     @OnClick(R.id.button)
@@ -77,12 +107,26 @@ public class DailyTaskClickPresenter extends Presenter implements View.OnClickLi
         if (mDailyTask.getDailyCard() == null) {
             mSignRequest.enqueue(mRequestCallback);
         } else {
-            DailyCardActivity.startActivity(getCurrentActivity(), (ArrayList<Card>) mDailyTask.getDailyCard());
+            if (!ArrayUtil.isEmpty(mDailyTask.getDailyCard())) {
+                DailyCardActivity.startActivity(getCurrentActivity(), (ArrayList<Card>) mDailyTask.getDailyCard());
+            } else {
+                mCommitDailyTaskRequest = new CommitDailyTaskRequest(LoginManager.getCurrentUser().getId());
+                mCommitDailyTaskRequest.enqueue(mCommitDailyTaskRequestCallback);
+            }
         }
     }
 
     @Override
     public void onClick(View v) {
-        mDialog.dismiss();
+        dismissDialog();
+    }
+
+    private void dismissDialog() {
+        if (mSignSuccessDialog.isVisible()) {
+            mSignSuccessDialog.dismiss();
+        }
+        if (mCommitSuccessDialog.isVisible()) {
+            mCommitSuccessDialog.dismiss();
+        }
     }
 }

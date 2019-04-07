@@ -42,6 +42,20 @@
         app:layout_constraintTop_toBottomOf="@id/avatar" />
 
     <LinearLayout
+        android:id="@+id/image_container"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@id/avatar"
+        app:layout_constraintRight_toRightOf="@id/operation_container"
+        app:layout_constraintTop_toBottomOf="@id/post_content" />
+
+    <LinearLayout
         android:id="@+id/operation_container"
         android:layout_width="0dp"
         android:layout_height="40dp"
@@ -50,7 +64,7 @@
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="@id/avatar"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/post_content">
+        app:layout_constraintTop_toBottomOf="@id/image_container">
 
         <ImageView
             android:id="@+id/comment_operation"
@@ -76,17 +90,6 @@
         app:layout_constraintRight_toRightOf="@id/operation_container"
         app:layout_constraintTop_toBottomOf="@id/operation_container" />
 
-    <LinearLayout
-        android:id="@+id/image_container"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="@id/avatar"
-        app:layout_constraintRight_toRightOf="@id/operation_container"
-        app:layout_constraintTop_toBottomOf="@id/line" />
 
     <com.example.pby.gam_study.widget.LikeTextView
         android:id="@+id/like"
@@ -98,7 +101,7 @@
         app:layout_constraintBottom_toTopOf="@id/comment_container"
         app:layout_constraintLeft_toLeftOf="@id/avatar"
         app:layout_constraintRight_toRightOf="@id/operation_container"
-        app:layout_constraintTop_toBottomOf="@id/image_container" />
+        app:layout_constraintTop_toBottomOf="@id/line" />
 
     <LinearLayout
         android:id="@+id/comment_container"

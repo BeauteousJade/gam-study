@@ -157,7 +157,11 @@ public class User implements Parcelable, Diff {
     public boolean onContentTheme(Diff diff) {
         if (diff instanceof User) {
             final User user = (User) diff;
-            return Objects.equals(head, user.getHead()) && Objects.equals(nickName, user.getNickName()) && Objects.equals(followUserList, user.getFollowUserList()) && Objects.equals(fansUserList, user.getFansUserList());
+            return Objects.equals(head, user.getHead())
+                    && Objects.equals(nickName, user.getNickName())
+                    && Objects.equals(followUserList, user.getFollowUserList())
+                    && Objects.equals(fansUserList, user.getFansUserList())
+                    && score == user.score;
         }
         return false;
     }

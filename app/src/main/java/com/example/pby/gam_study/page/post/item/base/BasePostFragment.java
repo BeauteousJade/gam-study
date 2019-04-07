@@ -8,8 +8,8 @@ import com.example.pby.gam_study.mvp.Presenter;
 import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.post.PostLinearLayoutManager;
 import com.example.pby.gam_study.page.post.adapter.PostAdapter;
-import com.example.pby.gam_study.presenter.InputPresenter;
 import com.example.pby.gam_study.page.post.request.FindRequest;
+import com.example.pby.gam_study.presenter.InputPresenter;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
 
@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BasePostFragment extends RefreshRecyclerViewFragment {
+
     @Override
     public void onPrepareBaseContext() {
         super.onPrepareBaseContext();

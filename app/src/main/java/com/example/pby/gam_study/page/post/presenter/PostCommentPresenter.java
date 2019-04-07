@@ -67,7 +67,7 @@ public class PostCommentPresenter extends Presenter {
 
     private TextView generateCommentTextView(Comment comment) {
         EmojiTextView commentTextView = new EmojiTextView(getCurrentActivity());
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         commentTextView.setLayoutParams(lp);
         commentTextView.setTextColor(getColor(R.color.black));
         commentTextView.append(generateNickName(comment.getFromUser()));

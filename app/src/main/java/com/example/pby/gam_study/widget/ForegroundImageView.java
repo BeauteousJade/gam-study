@@ -32,7 +32,9 @@ public class ForegroundImageView extends AppCompatImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mDrawable.setBounds(0, 0, getWidth(), getHeight());
-        mDrawable.draw(canvas);
+        if (mDrawable != null) {
+            mDrawable.setBounds(0, 0, getWidth(), getHeight());
+            mDrawable.draw(canvas);
+        }
     }
 }
