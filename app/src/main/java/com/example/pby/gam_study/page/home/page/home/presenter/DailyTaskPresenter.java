@@ -40,7 +40,7 @@ public class DailyTaskPresenter extends Presenter {
             mProgressBar.setCurrentProgress(mDailyTask.getDailyTaskCount() - mDailyTask.getDailyCard().size());
             boolean isComplete = mProgressBar.getCurrentProgress() == mProgressBar.getMaxProgress();
             mButton.setSelected(isComplete && mDailyTask.isSign());
-            mButton.setEnabled(!mDailyTask.isSign());
+            mButton.setEnabled(!mDailyTask.isSign() || mProgressBar.getMaxProgress() != 0);
             mButton.setText(isComplete ? getString(R.string.completed) : getString(R.string.complete));
             mTextView.setText(getString(R.string.daily_card));
         }

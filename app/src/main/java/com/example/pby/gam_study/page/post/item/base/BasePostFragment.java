@@ -5,10 +5,8 @@ import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.decoration.LinearLayoutManagerVerticalItemDecoration;
 import com.example.pby.gam_study.fragment.RefreshRecyclerViewFragment;
 import com.example.pby.gam_study.mvp.Presenter;
-import com.example.pby.gam_study.network.request.Request;
 import com.example.pby.gam_study.page.post.PostLinearLayoutManager;
 import com.example.pby.gam_study.page.post.adapter.PostAdapter;
-import com.example.pby.gam_study.page.post.request.FindRequest;
 import com.example.pby.gam_study.presenter.InputPresenter;
 import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ResourcesUtil;
@@ -20,7 +18,7 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class BasePostFragment extends RefreshRecyclerViewFragment {
+public abstract class BasePostFragment extends RefreshRecyclerViewFragment {
 
     @Override
     public void onPrepareBaseContext() {
@@ -44,11 +42,6 @@ public class BasePostFragment extends RefreshRecyclerViewFragment {
     protected List<? extends RecyclerView.ItemDecoration> onCreateItemDecoration() {
         return Collections.singletonList(new LinearLayoutManagerVerticalItemDecoration(0, ResourcesUtil.getColor(requireContext(), R.color.bg_color),
                 DisplayUtil.dpToPx(requireContext(), 20)));
-    }
-
-    @Override
-    public Request onCreateRequest() {
-        return new FindRequest();
     }
 
     @Override

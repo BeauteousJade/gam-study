@@ -5,7 +5,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class NetWorkManager {
     private static final Retrofit RETROFIT = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.129:8080")
+            .baseUrl("http://pby.john30n.com:8080/gam/")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(LenientGsonConverterFactory.create())
             .build();
