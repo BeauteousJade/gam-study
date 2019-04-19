@@ -30,12 +30,5 @@ public class UserItemInfoPresenter extends Presenter {
     protected void onBind() {
         GlideApp.with(getCurrentFragment()).asBitmap().apply(GlideFactory.createCircleOption()).load(mUser.getHead()).into(mAvatarView);
         mNameView.setText(mUser.getNickName());
-        if (mUser.getIsFollow() == 1) {
-            mFollowButton.setSelected(true);
-            mFollowButton.setText("取消关注");
-        } else {
-            mFollowButton.setSelected(false);
-            mFollowButton.setText("关注");
-        }
     }
 }

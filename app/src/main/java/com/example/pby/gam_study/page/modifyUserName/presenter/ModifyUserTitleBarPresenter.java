@@ -46,7 +46,7 @@ public class ModifyUserTitleBarPresenter extends Presenter {
                 getCurrentActivity().setResult(Activity.RESULT_OK, intent);
 
                 getCurrentActivity().finish();
-                ToastUtil.error(getCurrentActivity(), getString(R.string.modify_success));
+                ToastUtil.info(getCurrentActivity(), getString(R.string.modify_success));
             } else {
                 ToastUtil.error(getCurrentActivity(), getString(R.string.modify_failure));
             }

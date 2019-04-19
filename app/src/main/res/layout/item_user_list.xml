@@ -35,6 +35,7 @@
         android:background="@drawable/bg_button_select_02"
         android:minWidth="70dp"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/avatar" />

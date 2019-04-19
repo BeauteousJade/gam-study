@@ -54,7 +54,7 @@ public class PostTitleBarPresenter extends Presenter implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send_post:
-                SendPostActivity.startActivity(getCurrentActivity());
+                SendPostActivity.startActivity(getCurrentActivity(), "");
                 break;
         }
         mDialog.dismiss();

@@ -17,7 +17,10 @@ import com.example.pby.gam_study.network.response.Response;
 import com.example.pby.gam_study.page.dailyCard.DailyCardActivity;
 import com.example.pby.gam_study.page.home.page.home.request.CommitDailyTaskRequest;
 import com.example.pby.gam_study.page.home.page.home.request.SignRequest;
+import com.example.pby.gam_study.page.sendPost.SendPostActivity;
+import com.example.pby.gam_study.page.shareFans.ShareFansActivity;
 import com.example.pby.gam_study.util.ArrayUtil;
+import com.example.pby.gam_study.util.DisplayUtil;
 import com.example.pby.gam_study.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -63,6 +66,7 @@ public class DailyTaskClickPresenter extends Presenter implements View.OnClickLi
 
     private GamDialogFragment mSignSuccessDialog;
     private GamDialogFragment mCommitSuccessDialog;
+    private GamDialogFragment mShareOptionDialog;
     private Request<Boolean> mCommitDailyTaskRequest;
 
     @Override
@@ -73,10 +77,16 @@ public class DailyTaskClickPresenter extends Presenter implements View.OnClickLi
                 .addTextEntry(R.id.blessing_text, getString(R.string.sign_success))
                 .build();
 
-        mCommitSuccessDialog = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_CENTER, R.layout.dialog_sign)
+        mCommitSuccessDialog = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_CENTER, R.layout.dialog_commit)
                 .setAnchorView(getRootView())
-                .setOnViewClickListener(this, R.id.sure)
+                .setOnViewClickListener(this, R.id.share)
                 .addTextEntry(R.id.blessing_text, getString(R.string.commit_success))
+                .build();
+        mShareOptionDialog = new GamDialogFragment.Builder(GamDialogFragment.LocationStyle.STYLE_CENTER_BOTTOM, R.layout.dialog_share_options)
+                .setAnchorView(getCurrentActivity().findViewById(android.R.id.content))
+                .setOnViewClickListener(this, R.id.post_container, R.id.fans_container)
+                .setAnimationStyle(R.style.menu_show_animation)
+                .setWindowWidth(DisplayUtil.getScreenWidth(getCurrentActivity()))
                 .build();
     }
 
@@ -118,7 +128,22 @@ public class DailyTaskClickPresenter extends Presenter implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        dismissDialog();
+        switch (v.getId()) {
+            case R.id.sure:
+                dismissDialog();
+                break;
+            case R.id.share:
+                mShareOptionDialog.show(getCurrentFragment().getChildFragmentManager(), "");
+                break;
+            case R.id.post_container:
+                SendPostActivity.startActivity(getCurrentActivity(), getString(R.string.share_content));
+                dismissDialog();
+                break;
+            case R.id.fans_container:
+                ShareFansActivity.startActivity(getCurrentActivity());
+                dismissDialog();
+                break;
+        }
     }
 
     private void dismissDialog() {
@@ -127,6 +152,9 @@ public class DailyTaskClickPresenter extends Presenter implements View.OnClickLi
         }
         if (mCommitSuccessDialog.isVisible()) {
             mCommitSuccessDialog.dismiss();
+        }
+        if (mShareOptionDialog.isVisible()) {
+            mShareOptionDialog.dismiss();
         }
     }
 }

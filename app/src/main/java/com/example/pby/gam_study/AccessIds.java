@@ -25,4 +25,5 @@ public final class AccessIds {
     public static final String USER = "user";
     public static final String USER_ID = "user_id";
     public static final String CLICKABLE = "clickable";
+    public static final String POST_CONTENT = "post_content";
 }

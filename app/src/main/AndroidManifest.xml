@@ -75,6 +75,7 @@
         <activity android:name=".page.setting.SettingActivity" />
         <activity android:name=".page.about.AboutActivity" />
         <activity android:name=".page.modifyUserName.ModifyUserNameActivity" />
+        <activity android:name=".page.shareFans.ShareFansActivity" />
 
         <meta-data
             android:name="com.netease.nim.appKey"

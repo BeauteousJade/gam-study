@@ -22,7 +22,6 @@ public class DailyTaskFragment extends RefreshRecyclerViewFragment {
         return new DailyTaskFragment();
     }
 
-
     @Override
     public void onPrepareBaseContext() {
         super.onPrepareBaseContext();

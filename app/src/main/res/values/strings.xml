@@ -2,6 +2,8 @@
     <string name="app_name">片刻学习</string>
 
     <string name="sure">确定</string>
+    <string name="share">分享</string>
+    <string name="fans">粉丝</string>
     <string name="forget_password">忘记密码？</string>
     <string name="login">登录</string>
     <string name="cancel">取消</string>
@@ -27,6 +29,7 @@
     <string name="title_about">关于</string>
     <string name="title_setting">设置</string>
     <string name="title_modify_user_name">修改昵称</string>
+    <string name="title_share_fans">分享给粉丝</string>
     <string name="menu_item_new_kind">创建分类</string>
     <string name="menu_item_new_card">创建卡片</string>
     <string name="menu_send_post">动态</string>
@@ -96,6 +99,8 @@
     <string name="modify_success">修改成功</string>
     <string name="input_new_nick_name">请输入你的新昵称</string>
     <string name="nick_name_empty">昵称为空!</string>
+    <string name="share_content">我已经完成了今天的学习任务，快来跟我一起学习吧#088.png##088.png#</string>
+    <string name="sure_share">确定分享吗？</string>
     <plurals name="error_over_count">
         <item quantity="one">You can only select one media file</item>
         <item quantity="many">You can only select up to %1$d media files</item>
