@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.annation.Provides;
+import com.blade.annotation.Provides;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.activity.BaseActivity;

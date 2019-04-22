@@ -1,6 +1,6 @@
 package com.example.pby.gam_study.factory.experssion.presenter;
 
-import com.example.annation.Inject;
+import com.blade.annotation.Inject;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;
 import com.example.pby.gam_study.factory.experssion.ExpressionRequest;

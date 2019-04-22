@@ -2,7 +2,7 @@ package com.example.pby.gam_study.page.shareFans.presenter;
 
 import android.view.View;
 
-import com.example.annation.Inject;
+import com.blade.annotation.Inject;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.factory.DialogFactory;

@@ -3,8 +3,8 @@ package com.example.pby.gam_study.page.post.presenter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blade.annotation.Inject;
 import com.bumptech.glide.Glide;
-import com.example.annation.Inject;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.factory.GlideFactory;

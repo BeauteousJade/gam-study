@@ -4,8 +4,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
-import com.example.annation.Inject;
-import com.example.inject.Blade;
+import com.blade.annotation.Inject;
+import com.blade.inject.Blade;
 import com.example.pby.gam_study.activity.BaseActivity;
 import com.example.pby.gam_study.fragment.BaseFragment;
 import com.example.pby.gam_study.util.ArrayUtil;

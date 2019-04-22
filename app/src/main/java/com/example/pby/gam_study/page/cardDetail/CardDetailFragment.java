@@ -2,7 +2,7 @@ package com.example.pby.gam_study.page.cardDetail;
 
 import android.os.Bundle;
 
-import com.example.annation.Provides;
+import com.blade.annotation.Provides;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.fragment.BaseFragment;

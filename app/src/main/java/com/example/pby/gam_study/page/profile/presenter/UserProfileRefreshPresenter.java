@@ -1,6 +1,6 @@
 package com.example.pby.gam_study.page.profile.presenter;
 
-import com.example.annation.Inject;
+import com.blade.annotation.Inject;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;

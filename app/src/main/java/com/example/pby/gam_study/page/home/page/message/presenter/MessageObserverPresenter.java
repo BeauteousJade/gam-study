@@ -2,7 +2,7 @@ package com.example.pby.gam_study.page.home.page.message.presenter;
 
 import android.app.PendingIntent;
 
-import com.example.annation.Inject;
+import com.blade.annotation.Inject;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.manager.LoginManager;
 import com.example.pby.gam_study.mvp.Presenter;

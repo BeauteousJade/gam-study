@@ -31,5 +31,5 @@ ext {
     basesdk = "6.1.1"
 
     // myself
-    injector = "1.4.5"
+    injector = "1.5.0"
 }

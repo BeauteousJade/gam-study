@@ -2,7 +2,7 @@ package com.example.pby.gam_study.page.editCard;
 
 import android.os.Bundle;
 
-import com.example.annation.Provides;
+import com.blade.annotation.Provides;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.R;
 import com.example.pby.gam_study.adapter.base.BaseRecyclerAdapter;

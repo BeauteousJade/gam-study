@@ -3,7 +3,7 @@ package com.example.pby.gam_study.page.home.page.mine.presenter.adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.annation.Inject;
+import com.blade.annotation.Inject;
 import com.example.pby.gam_study.AccessIds;
 import com.example.pby.gam_study.GlideApp;
 import com.example.pby.gam_study.R;
